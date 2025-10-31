@@ -197,14 +197,19 @@ export class FlowchartParser {
     // Check for edge label |text|
     if (this.check('PIPE')) {
       this.advance(); // consume |
-      if (this.check('IDENTIFIER') || this.check('STRING')) {
-        label = this.advance().value;
+      
+      // Collect all tokens until closing pipe
+      const labelParts: string[] = [];
+      while (!this.check('PIPE') && !this.isAtEnd()) {
+        labelParts.push(this.advance().value);
       }
+      label = labelParts.join(' ');
+      
       this.consume('PIPE', 'Expected closing |');
     }
 
-    // Get target node
-    if (!this.check('IDENTIFIER')) {
+    // Get target node (allow keywords as node IDs)
+    if (!this.check('IDENTIFIER') && !this.checkKeywordAsId()) {
       throw new ParserError('Expected target node identifier');
     }
 
@@ -311,6 +316,18 @@ export class FlowchartParser {
       this.check('INVISIBLE') ||
       this.check('CIRCLE_EDGE') ||
       this.check('CROSS_EDGE')
+    );
+  }
+
+  private checkKeywordAsId(): boolean {
+    // Allow certain keywords to be used as node IDs
+    return (
+      this.check('END') ||
+      this.check('TB') ||
+      this.check('TD') ||
+      this.check('BT') ||
+      this.check('LR') ||
+      this.check('RL')
     );
   }
 

@@ -190,6 +190,10 @@ export class Tokenizer {
         this.tokens.push(this.createToken('COMMA', ','));
         break;
 
+      case '&':
+        this.tokens.push(this.createToken('AMPERSAND', '&'));
+        break;
+
       case '"':
       case "'":
         this.scanString(char);
@@ -379,6 +383,14 @@ export class Tokenizer {
   }
 
   private isAlphaNumeric(char: string): boolean {
-    return this.isAlpha(char) || this.isDigit(char);
+    return this.isAlpha(char) || this.isDigit(char) || this.isSpecialChar(char);
+  }
+
+  private isSpecialChar(char: string): boolean {
+    // Allow common special characters in node labels
+    // Note: / and \ are now allowed for parallelogram/trapezoid shapes
+    // & is used for multi-edge syntax but also allowed in labels
+    const allowed = '?!:;,.\'"@#$%^&*+-=<>~`/\\';
+    return allowed.includes(char);
   }
 }

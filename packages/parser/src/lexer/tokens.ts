@@ -51,6 +51,7 @@ export const TokenTypeSchema = z.enum([
   'SEMICOLON', // ;
   'COLON', // :
   'COMMA', // ,
+  'AMPERSAND', // &
   'NEWLINE',
   'WHITESPACE',
   'COMMENT',
