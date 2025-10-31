@@ -13,15 +13,15 @@ describe('E2E: Flowchart Examples', () => {
     expect(mmdFiles.length).toBe(100);
   });
   
-  it('should parse manual examples correctly', async () => {
+  it('should parse all 100 examples and report success rate', async () => {
     const files = await readdir(examplesDir);
-    const manualFiles = files.filter(f => f.includes('manual') || f.includes('extra')).sort();
+    const mmdFiles = files.filter(f => f.endsWith('.mmd')).sort();
     
     let successCount = 0;
     let failCount = 0;
-    const failures: string[] = [];
+    const failures: Array<{ file: string; error: string }> = [];
     
-    for (const file of manualFiles.slice(0, 10)) {
+    for (const file of mmdFiles) {
       const filePath = join(examplesDir, file);
       const content = await readFile(filePath, 'utf-8');
       
@@ -32,16 +32,29 @@ describe('E2E: Flowchart Examples', () => {
         successCount++;
       } catch (error) {
         failCount++;
-        failures.push(`${file}: ${error instanceof Error ? error.message : String(error)}`);
+        const errorMsg = error instanceof Error ? error.message : String(error);
+        failures.push({ file, error: errorMsg.split('\n')[0] });
       }
     }
     
-    console.log(`\n📊 Manual Examples: ${successCount}/${successCount + failCount} passed`);
-    if (failures.length > 0) {
-      console.log('❌ Failures:', failures);
+    const successRate = ((successCount / mmdFiles.length) * 100).toFixed(1);
+    
+    console.log(`\n📊 E2E Test Results:`);
+    console.log(`   Success: ${successCount}/${mmdFiles.length} (${successRate}%)`);
+    console.log(`   Failed:  ${failCount}/${mmdFiles.length}`);
+    
+    if (failures.length > 0 && failures.length <= 20) {
+      console.log(`\n❌ Failed examples:`);
+      for (const failure of failures.slice(0, 10)) {
+        console.log(`   ${failure.file}: ${failure.error}`);
+      }
+      if (failures.length > 10) {
+        console.log(`   ... and ${failures.length - 10} more`);
+      }
     }
     
-    expect(successCount).toBeGreaterThan(0);
+    // At least 50% should pass
+    expect(successCount).toBeGreaterThanOrEqual(mmdFiles.length * 0.5);
   });
   
   it('should parse simple flowcharts correctly', async () => {
