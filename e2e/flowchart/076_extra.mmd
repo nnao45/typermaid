@@ -1,0 +1,7 @@
+flowchart LR
+    A[Start] --> B{Check}
+    B -->|OK| C[Process]
+    B -->|NG| D((Error))
+    C --> E[(DB)]
+    E --> F[End]
+    D --> F

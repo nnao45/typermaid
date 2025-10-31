@@ -1,0 +1,10 @@
+flowchart LR
+    A[Client] -->|Request| B[Load Balancer]
+    B --> C[Server 1]
+    B --> D[Server 2]
+    B --> E[Server 3]
+    C --> F[(Database)]
+    D --> F
+    E --> F
+    F --> G[Cache]
+    G --> H[Response]

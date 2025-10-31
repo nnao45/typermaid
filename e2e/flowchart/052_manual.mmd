@@ -1,0 +1,11 @@
+flowchart TB
+    subgraph TOP
+      subgraph B1
+        i1 -->f1
+      end
+      subgraph B2
+        i2 -->f2
+      end
+    end
+    A --> TOP --> B
+    B1 --> B2

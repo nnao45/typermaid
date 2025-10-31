@@ -1,0 +1,8 @@
+flowchart TB
+    Start[Start Process] --> Input{Input Data?}
+    Input -->|Valid| Process[Process Data]
+    Input -->|Invalid| Error[Show Error]
+    Process --> Save[(Save to DB)]
+    Save --> Success[Success]
+    Error --> End[End]
+    Success --> End

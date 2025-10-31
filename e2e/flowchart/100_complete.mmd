@@ -1,0 +1,24 @@
+flowchart TB
+    subgraph Authentication
+      Login[User Login] --> Validate{Valid?}
+      Validate -->|Yes| Token[Generate Token]
+      Validate -->|No| Error[Show Error]
+    end
+    
+    subgraph Authorization
+      Token --> CheckRole{Check Role}
+      CheckRole -->|Admin| AdminDash[Admin Dashboard]
+      CheckRole -->|User| UserDash[User Dashboard]
+      CheckRole -->|Guest| GuestView[Guest View]
+    end
+    
+    subgraph DataAccess
+      AdminDash --> DB[(Database)]
+      UserDash --> DB
+      GuestView --> Cache[(Cache)]
+      Cache --> DB
+    end
+    
+    Error --> Login
+    DB --> Response[Send Response]
+    Response --> End((End))

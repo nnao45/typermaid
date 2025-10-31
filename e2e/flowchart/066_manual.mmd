@@ -1,0 +1,12 @@
+flowchart TB
+    A[Auth] -->|Success| B[Dashboard]
+    A -->|Fail| C[Login]
+    B --> D{Action?}
+    D -->|Create| E[Form]
+    D -->|Read| F[List]
+    D -->|Update| G[Edit]
+    D -->|Delete| H[Confirm]
+    E --> I[(Save)]
+    F --> I
+    G --> I
+    H --> I
