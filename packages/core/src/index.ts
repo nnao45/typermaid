@@ -1,3 +1,3 @@
-export { NodeTypeSchema, NodeSchema, EdgeSchema, DiagramSchema } from './schema.js';
-export type { NodeType, Node, Edge, Diagram, DiagramConfig } from './schema.js';
-export { validateDiagram, validateDiagramSafe, ValidationError } from './validator.js';
+export type { Diagram, DiagramConfig, Edge, Node, NodeType } from './schema.js';
+export { DiagramSchema, EdgeSchema, NodeSchema, NodeTypeSchema } from './schema.js';
+export { ValidationError, validateDiagram, validateDiagramSafe } from './validator.js';

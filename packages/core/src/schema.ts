@@ -1,13 +1,6 @@
 import { z } from 'zod';
 
-export const NodeTypeSchema = z.enum([
-  'start',
-  'end',
-  'process',
-  'decision',
-  'input',
-  'output',
-]);
+export const NodeTypeSchema = z.enum(['start', 'end', 'process', 'decision', 'input', 'output']);
 
 export const NodeSchema = z.object({
   id: z.string().min(1),

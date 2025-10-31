@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { validateDiagram, validateDiagramSafe, ValidationError } from './validator.js';
+import { describe, expect, it } from 'vitest';
 import type { Diagram } from './schema.js';
+import { ValidationError, validateDiagram, validateDiagramSafe } from './validator.js';
 
 describe('validateDiagram', () => {
   it('should validate a valid flowchart diagram', () => {
