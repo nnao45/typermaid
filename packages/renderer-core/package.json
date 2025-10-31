@@ -1,0 +1,47 @@
+{
+  "name": "@lyric-js/renderer-core",
+  "version": "0.1.0",
+  "description": "Core rendering engine for Lyric-JS diagrams",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "biome check src",
+    "lint:fix": "biome check --write src"
+  },
+  "dependencies": {
+    "@lyric-js/core": "workspace:*",
+    "@lyric-js/parser": "workspace:*",
+    "dagre": "^0.8.5"
+  },
+  "devDependencies": {
+    "@types/dagre": "^0.7.52",
+    "@types/node": "^20.10.5",
+    "typescript": "^5.3.3",
+    "vitest": "^2.1.8"
+  },
+  "keywords": [
+    "mermaid",
+    "diagram",
+    "renderer",
+    "svg",
+    "canvas",
+    "layout"
+  ],
+  "author": "nnao45",
+  "license": "MIT"
+}

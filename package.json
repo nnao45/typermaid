@@ -35,5 +35,9 @@
     "typescript": "^5.9.3",
     "vitest": "^4.0.6",
     "zod": "^4.1.12"
+  },
+  "dependencies": {
+    "@types/dagre": "^0.7.53",
+    "dagre": "^0.8.5"
   }
 }
