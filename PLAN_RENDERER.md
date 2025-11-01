@@ -133,10 +133,10 @@ packages/
 - [x] テキスト測定 & サイズ計算
 - [x] パディング & マージン計算
 
-#### 1-3: Edge Generators 🔄
-- [ ] 11種類のエッジパス生成
-- [ ] エッジラベル配置
-- [ ] 矢印/装飾生成
+#### 1-3: Edge Generators ✅
+- [x] 11種類のエッジパス生成
+- [x] エッジラベル配置
+- [x] 矢印/装飾生成
 
 #### 1-4: SVG Primitives
 - [ ] SVG要素生成関数
@@ -222,11 +222,15 @@ packages/
 
 ## 🎯 Milestone Timeline
 
-### Week 1: Foundation
+### Week 1: Foundation ✅
 - ✅ Parser完成 (Done!)
 - ✅ Phase 1-1: Layout Engine (Done!)
 - ✅ Phase 1-2: Shape Generators (Done!)
-- 🔄 Phase 1-3: Edge Generators (In Progress)
+- ✅ Phase 1-3: Edge Generators (Done!)
+
+### Week 2: Rendering 🔄
+- 🔄 Phase 1-4: SVG Primitives (In Progress)
+- [ ] Phase 2-1: Base Components
 
 ### Week 2: Rendering
 - [ ] Phase 1-3: Edge Generators
