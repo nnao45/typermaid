@@ -122,18 +122,18 @@ packages/
 ### Phase 1: Core Renderer (Foundation) 🏗️
 **Goal:** AST → レンダリング可能なデータ構造
 
-#### 1-1: Layout Engine Setup
-- [ ] Dagre導入 & セットアップ
-- [ ] AST → Dagre Graph 変換
-- [ ] ノード位置計算
-- [ ] エッジパス計算
+#### 1-1: Layout Engine Setup ✅
+- [x] Dagre導入 & セットアップ
+- [x] AST → Dagre Graph 変換
+- [x] ノード位置計算
+- [x] エッジパス計算
 
-#### 1-2: Shape Generators
-- [ ] 全14種類のノード形状SVGパス生成
-- [ ] テキスト測定 & サイズ計算
-- [ ] パディング & マージン計算
+#### 1-2: Shape Generators ✅
+- [x] 全14種類のノード形状SVGパス生成
+- [x] テキスト測定 & サイズ計算
+- [x] パディング & マージン計算
 
-#### 1-3: Edge Generators
+#### 1-3: Edge Generators 🔄
 - [ ] 11種類のエッジパス生成
 - [ ] エッジラベル配置
 - [ ] 矢印/装飾生成
@@ -224,8 +224,9 @@ packages/
 
 ### Week 1: Foundation
 - ✅ Parser完成 (Done!)
-- [ ] Phase 1-1: Layout Engine
-- [ ] Phase 1-2: Shape Generators
+- ✅ Phase 1-1: Layout Engine (Done!)
+- ✅ Phase 1-2: Shape Generators (Done!)
+- 🔄 Phase 1-3: Edge Generators (In Progress)
 
 ### Week 2: Rendering
 - [ ] Phase 1-3: Edge Generators
