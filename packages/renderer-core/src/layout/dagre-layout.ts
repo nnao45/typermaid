@@ -58,7 +58,9 @@ export function createLayout(
   diagram: FlowchartDiagram,
   options: LayoutOptions = {},
 ): Layout {
-  const opts = { ...DEFAULT_LAYOUT_OPTIONS, ...options };
+  // Use diagram direction if not overridden by options
+  const rankdir = options.rankdir || diagram.direction || 'TB';
+  const opts = { ...DEFAULT_LAYOUT_OPTIONS, ...options, rankdir };
   
   // Create Dagre graph
   const g = new dagre.graphlib.Graph();

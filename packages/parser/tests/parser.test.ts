@@ -79,18 +79,26 @@ describe('Flowchart Parser', () => {
       const diagram = ast.body[0];
 
       if (diagram?.type === 'FlowchartDiagram') {
-        expect(diagram.body).toHaveLength(2);
+        expect(diagram.body).toHaveLength(3); // A node, edge, B node
 
         const node1 = diagram.body[0];
         const edge = diagram.body[1];
+        const node2 = diagram.body[2];
 
         expect(node1?.type).toBe('Node');
         expect(edge?.type).toBe('Edge');
+        expect(node2?.type).toBe('Node');
 
         if (edge?.type === 'Edge') {
           expect(edge.from).toBe('A');
           expect(edge.to).toBe('B');
           expect(edge.edgeType).toBe('-->');
+        }
+        
+        if (node2?.type === 'Node') {
+          expect(node2.id).toBe('B');
+          expect(node2.label).toBe('End');
+          expect(node2.shape).toBe('square');
         }
       }
     });

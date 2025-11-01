@@ -142,6 +142,10 @@ export class FlowchartParser {
       // After parsing node, check if there's an edge following
       if (this.checkEdge()) {
         const edge = this.parseEdge(id);
+        // edge can be EdgeAST or [EdgeAST, NodeAST]
+        if (Array.isArray(edge)) {
+          return [node, ...edge];
+        }
         return [node, edge];
       }
 
@@ -183,7 +187,7 @@ export class FlowchartParser {
     };
   }
 
-  private parseEdge(fromId: string): EdgeAST | FlowchartNodeAST {
+  private parseEdge(fromId: string): EdgeAST | ASTNode[] {
     const edgeToken = this.peek();
     if (!edgeToken) {
       throw new ParserError('Expected edge type');
@@ -216,26 +220,21 @@ export class FlowchartParser {
     const toToken = this.advance();
     const toId = toToken.value;
 
-    // Check if target has node shape definition
-    if (this.checkNodeShape()) {
-      // Return edge, but we need to parse the target node too
-      // This is handled by continuing to parse in the main loop
-      return {
-        type: 'Edge',
-        from: fromId,
-        to: toId,
-        edgeType,
-        label,
-      };
-    }
-
-    return {
+    const edge: EdgeAST = {
       type: 'Edge',
       from: fromId,
       to: toId,
       edgeType,
       label,
     };
+
+    // Check if target has node shape definition
+    if (this.checkNodeShape()) {
+      const targetNode = this.parseNode(toId);
+      return [edge, targetNode];
+    }
+
+    return edge;
   }
 
   private getNodeShape(shapeValue: string): NodeShape {
