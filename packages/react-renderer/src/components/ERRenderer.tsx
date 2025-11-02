@@ -17,25 +17,24 @@ export const ERRenderer: React.FC<ERRendererProps> = ({
   height = 600,
 }) => {
   // Extract entities and relationships from diagram structure
-  const diagramData = diagram.diagram || diagram;
-  const explicitEntities = diagramData.entities || [];
-  const relationships = diagramData.relationships || [];
+  const explicitEntities = diagram.entities || [];
+  const relationships = diagram.relationships || [];
 
   // Create entities from relationships if not explicitly defined
   const entityMap = new Map<string, EREntity>();
 
   // Add explicit entities
   for (const entity of explicitEntities) {
-    entityMap.set(entity.name || entity.id, entity);
+    entityMap.set(entity.name, entity);
   }
 
   // Add implicit entities from relationships
   for (const rel of relationships) {
     if (!entityMap.has(rel.from)) {
-      entityMap.set(rel.from, { id: rel.from, name: rel.from, attributes: [] });
+      entityMap.set(rel.from, { name: rel.from, attributes: [] });
     }
     if (!entityMap.has(rel.to)) {
-      entityMap.set(rel.to, { id: rel.to, name: rel.to, attributes: [] });
+      entityMap.set(rel.to, { name: rel.to, attributes: [] });
     }
   }
 
@@ -62,7 +61,7 @@ export const ERRenderer: React.FC<ERRendererProps> = ({
         const totalHeight = entityHeaderHeight + attributes.length * attributeHeight + 10;
 
         return (
-          <g key={entity.id || index}>
+          <g key={entity.name || index}>
             <rect
               x={x}
               y={y}
@@ -91,11 +90,11 @@ export const ERRenderer: React.FC<ERRendererProps> = ({
               textAnchor="middle"
               dominantBaseline="middle"
             >
-              {entity.name || entity.id}
+              {entity.name}
             </text>
 
             {attributes.map((attr: ERAttribute, i: number) => (
-              <g key={`${entity.id}-attr-${i}`}>
+              <g key={`${entity.name}-attr-${i}`}>
                 <text
                   x={x + 10}
                   y={y + entityHeaderHeight + (i + 1) * attributeHeight}
@@ -112,8 +111,8 @@ export const ERRenderer: React.FC<ERRendererProps> = ({
       })}
 
       {relationships.map((rel: ERRelationship, index: number) => {
-        const fromEntity = entities.find((e: EREntity) => e.id === rel.from);
-        const toEntity = entities.find((e: EREntity) => e.id === rel.to);
+        const fromEntity = entities.find((e: EREntity) => e.name === rel.from);
+        const toEntity = entities.find((e: EREntity) => e.name === rel.to);
 
         if (!fromEntity || !toEntity) return null;
 
@@ -142,7 +141,7 @@ export const ERRenderer: React.FC<ERRendererProps> = ({
               fontSize={11}
               textAnchor="middle"
             >
-              {rel.label || rel.relationship}
+              {rel.label}
             </text>
           </g>
         );

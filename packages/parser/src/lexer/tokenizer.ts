@@ -389,6 +389,7 @@ export class Tokenizer {
       click: 'CLICK',
       style: 'STYLE',
       state: 'STATE',
+      as: 'AS',
       direction: 'DIRECTION',
       note: 'NOTE',
       of: 'OF',

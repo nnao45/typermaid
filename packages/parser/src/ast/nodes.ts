@@ -1,11 +1,12 @@
-import type {
-  ClassDiagram,
-  Direction,
-  ERDiagram,
-  GanttDiagram,
-  NodeShape,
-  SequenceDiagram,
-  StateDiagram,
+import {
+  ClassDiagramSchema,
+  DirectionSchema,
+  EdgeTypeSchema,
+  ERDiagramSchema,
+  GanttDiagramSchema,
+  NodeShapeSchema,
+  SequenceDiagramSchema,
+  StateDiagramSchema,
 } from '@lyric-js/core';
 import { z } from 'zod';
 
@@ -52,7 +53,7 @@ export const BaseASTNodeSchema = z.object({
 export const FlowchartNodeASTSchema = BaseASTNodeSchema.extend({
   type: z.literal('Node'),
   id: z.string(),
-  shape: z.string() as z.ZodType<NodeShape>,
+  shape: NodeShapeSchema,
   label: z.string(),
 });
 
@@ -63,7 +64,7 @@ export const EdgeASTSchema = BaseASTNodeSchema.extend({
   type: z.literal('Edge'),
   from: z.string(),
   to: z.string(),
-  edgeType: z.string(),
+  edgeType: EdgeTypeSchema,
   label: z.string().optional(),
   length: z.number().optional(),
 });
@@ -71,21 +72,29 @@ export const EdgeASTSchema = BaseASTNodeSchema.extend({
 /**
  * Subgraph AST
  */
-export const SubgraphASTSchema = BaseASTNodeSchema.extend({
+export type SubgraphAST = z.infer<typeof BaseASTNodeSchema> & {
+  type: 'Subgraph';
+  id: string;
+  label?: string | undefined;
+  direction?: z.infer<typeof DirectionSchema> | undefined;
+  body: Array<z.infer<typeof FlowchartNodeASTSchema> | z.infer<typeof EdgeASTSchema> | SubgraphAST>;
+};
+
+export const SubgraphASTSchema: z.ZodType<SubgraphAST> = BaseASTNodeSchema.extend({
   type: z.literal('Subgraph'),
   id: z.string(),
   label: z.string().optional(),
-  direction: z.string().optional() as z.ZodType<Direction | undefined>,
-  body: z.array(z.unknown()), // Will contain nodes and edges
-});
+  direction: DirectionSchema.optional(),
+  body: z.lazy(() => z.array(z.union([FlowchartNodeASTSchema, EdgeASTSchema, SubgraphASTSchema]))),
+}) as z.ZodType<SubgraphAST>;
 
 /**
  * Flowchart Diagram AST
  */
 export const FlowchartDiagramASTSchema = BaseASTNodeSchema.extend({
   type: z.literal('FlowchartDiagram'),
-  direction: z.string() as z.ZodType<Direction>,
-  body: z.array(z.unknown()), // Will contain nodes, edges, subgraphs
+  direction: DirectionSchema,
+  body: z.lazy(() => z.array(z.union([FlowchartNodeASTSchema, EdgeASTSchema, SubgraphASTSchema]))),
 });
 
 /**
@@ -93,7 +102,7 @@ export const FlowchartDiagramASTSchema = BaseASTNodeSchema.extend({
  */
 export const SequenceDiagramASTSchema = BaseASTNodeSchema.extend({
   type: z.literal('SequenceDiagram'),
-  diagram: z.unknown() as z.ZodType<SequenceDiagram>,
+  diagram: SequenceDiagramSchema,
 });
 
 /**
@@ -101,7 +110,7 @@ export const SequenceDiagramASTSchema = BaseASTNodeSchema.extend({
  */
 export const ClassDiagramASTSchema = BaseASTNodeSchema.extend({
   type: z.literal('ClassDiagram'),
-  diagram: z.unknown() as z.ZodType<ClassDiagram>,
+  diagram: ClassDiagramSchema,
 });
 
 /**
@@ -109,7 +118,7 @@ export const ClassDiagramASTSchema = BaseASTNodeSchema.extend({
  */
 export const ERDiagramASTSchema = BaseASTNodeSchema.extend({
   type: z.literal('ERDiagram'),
-  diagram: z.unknown() as z.ZodType<ERDiagram>,
+  diagram: ERDiagramSchema,
 });
 
 /**
@@ -117,7 +126,7 @@ export const ERDiagramASTSchema = BaseASTNodeSchema.extend({
  */
 export const StateDiagramASTSchema = BaseASTNodeSchema.extend({
   type: z.literal('StateDiagram'),
-  diagram: z.unknown() as z.ZodType<StateDiagram>,
+  diagram: StateDiagramSchema,
 });
 
 /**
@@ -125,7 +134,7 @@ export const StateDiagramASTSchema = BaseASTNodeSchema.extend({
  */
 export const GanttDiagramASTSchema = BaseASTNodeSchema.extend({
   type: z.literal('GanttDiagram'),
-  diagram: z.unknown() as z.ZodType<GanttDiagram>,
+  diagram: GanttDiagramSchema,
 });
 
 /**
@@ -133,14 +142,25 @@ export const GanttDiagramASTSchema = BaseASTNodeSchema.extend({
  */
 export const ProgramASTSchema = BaseASTNodeSchema.extend({
   type: z.literal('Program'),
-  body: z.array(z.unknown()), // Will contain diagrams
+  body: z.lazy(() =>
+    z.array(
+      z.union([
+        FlowchartDiagramASTSchema,
+        SequenceDiagramASTSchema,
+        ClassDiagramASTSchema,
+        ERDiagramASTSchema,
+        StateDiagramASTSchema,
+        GanttDiagramASTSchema,
+      ])
+    )
+  ),
 });
 
 export type ASTNodeType = z.infer<typeof ASTNodeTypeSchema>;
 export type BaseASTNode = z.infer<typeof BaseASTNodeSchema>;
 export type FlowchartNodeAST = z.infer<typeof FlowchartNodeASTSchema>;
 export type EdgeAST = z.infer<typeof EdgeASTSchema>;
-export type SubgraphAST = z.infer<typeof SubgraphASTSchema>;
+// SubgraphAST is defined above with explicit type annotation
 export type FlowchartDiagramAST = z.infer<typeof FlowchartDiagramASTSchema>;
 export type SequenceDiagramAST = z.infer<typeof SequenceDiagramASTSchema>;
 export type ClassDiagramAST = z.infer<typeof ClassDiagramASTSchema>;

@@ -111,7 +111,9 @@ export type {
   Opt,
   Par,
   Participant,
+  Rect,
   SequenceDiagram,
+  SequenceStatement,
 } from './sequence.js';
 export {
   Actor as ActorSchema,
@@ -126,10 +128,14 @@ export {
   Opt as OptSchema,
   Par as ParSchema,
   Participant as ParticipantSchema,
+  Rect as RectSchema,
   SequenceDiagram as SequenceDiagramSchema,
+  SequenceStatement as SequenceStatementSchema,
 } from './sequence.js';
 export type {
   ConcurrencyRegion,
+  Content,
+  HTMLContent,
   State,
   StateDiagram,
   StateDirection,
@@ -139,6 +145,8 @@ export type {
 } from './state.js';
 export {
   ConcurrencyRegionSchema,
+  ContentSchema,
+  HTMLContentSchema,
   StateDiagramSchema,
   StateDirection as StateDirectionSchema,
   StateNoteSchema,

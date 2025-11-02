@@ -101,6 +101,25 @@ export const EXAMPLE_STATE = [
     Moving --> Crash
     Crash --> [*]`,
   },
+  {
+    id: 'html-state',
+    title: 'HTML Embedded State',
+    code: `stateDiagram-v2
+    state "Name with <b>bold</b>" as s1
+    state "Name with <i>italic</i>" as s2
+    [*] --> s1
+    s1 --> s2 : Transition with <code>code</code>
+    s2 --> [*]`,
+  },
+  {
+    id: 'html-description',
+    title: 'HTML in Description',
+    code: `stateDiagram-v2
+    state "Processing" as s1
+    s1 : Description with <i>italic</i>
+    [*] --> s1
+    s1 --> [*]`,
+  },
 ];
 
 export const EXAMPLE_GANTT = [

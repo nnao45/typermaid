@@ -1,6 +1,7 @@
 import type { State, StateDiagram, StateTransition } from '@lyric-js/core';
 import type React from 'react';
 import type { Theme } from '../themes/types';
+import { ContentRenderer } from './ContentRenderer';
 
 interface StateRendererProps {
   diagram: StateDiagram;
@@ -16,10 +17,8 @@ export const StateRenderer: React.FC<StateRendererProps> = ({
   width = 800,
   height = 600,
 }) => {
-  // Handle both AST structure (diagram.diagram) and direct structure
-  const diagramData = diagram.diagram || diagram;
-  const states = diagramData.states || [];
-  const transitions = diagramData.transitions || [];
+  const states = diagram.states || [];
+  const transitions = diagram.transitions || [];
 
   const stateWidth = 140;
   const stateHeight = 60;
@@ -37,8 +36,8 @@ export const StateRenderer: React.FC<StateRendererProps> = ({
         const x = leftMargin + (index % 4) * spacing;
         const y = topMargin + Math.floor(index / 4) * spacing;
 
-        const isStart = state.type === 'start' || state.id === '[*]';
-        const isEnd = state.type === 'end';
+        const isStart = state.type === 'START';
+        const isEnd = state.type === 'END';
 
         if (isStart || isEnd) {
           return (
@@ -66,28 +65,61 @@ export const StateRenderer: React.FC<StateRendererProps> = ({
               strokeWidth={2}
               rx={8}
             />
-            <text
-              x={x + stateWidth / 2}
-              y={y + stateHeight / 2}
-              fill={theme.colors.text}
-              fontSize={14}
-              fontWeight="bold"
-              textAnchor="middle"
-              dominantBaseline="middle"
-            >
-              {state.label || state.id}
-            </text>
-            {state.description && (
+            {state.label ? (
+              typeof state.label === 'string' ? (
+                <text
+                  x={x + stateWidth / 2}
+                  y={y + stateHeight / 2}
+                  fill={theme.colors.text}
+                  fontSize={14}
+                  fontWeight="bold"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                >
+                  {state.label}
+                </text>
+              ) : (
+                <ContentRenderer
+                  content={state.label}
+                  x={x + stateWidth / 2}
+                  y={y + stateHeight / 2}
+                  width={stateWidth - 10}
+                  height={30}
+                />
+              )
+            ) : (
               <text
                 x={x + stateWidth / 2}
-                y={y + stateHeight / 2 + 15}
+                y={y + stateHeight / 2}
                 fill={theme.colors.text}
-                fontSize={10}
+                fontSize={14}
+                fontWeight="bold"
                 textAnchor="middle"
+                dominantBaseline="middle"
               >
-                {state.description}
+                {state.id}
               </text>
             )}
+            {state.description &&
+              (typeof state.description === 'string' ? (
+                <text
+                  x={x + stateWidth / 2}
+                  y={y + stateHeight / 2 + 15}
+                  fill={theme.colors.text}
+                  fontSize={10}
+                  textAnchor="middle"
+                >
+                  {state.description}
+                </text>
+              ) : (
+                <ContentRenderer
+                  content={state.description}
+                  x={x + stateWidth / 2}
+                  y={y + stateHeight / 2 + 15}
+                  width={stateWidth - 10}
+                  height={20}
+                />
+              ))}
           </g>
         );
       })}
@@ -117,17 +149,26 @@ export const StateRenderer: React.FC<StateRendererProps> = ({
               strokeWidth={2}
               markerEnd="url(#arrowhead-state)"
             />
-            {transition.label && (
-              <text
-                x={(x1 + x2) / 2}
-                y={(y1 + y2) / 2 - 5}
-                fill={theme.colors.text}
-                fontSize={11}
-                textAnchor="middle"
-              >
-                {transition.label}
-              </text>
-            )}
+            {transition.label &&
+              (typeof transition.label === 'string' ? (
+                <text
+                  x={(x1 + x2) / 2}
+                  y={(y1 + y2) / 2 - 5}
+                  fill={theme.colors.text}
+                  fontSize={11}
+                  textAnchor="middle"
+                >
+                  {transition.label}
+                </text>
+              ) : (
+                <ContentRenderer
+                  content={transition.label}
+                  x={(x1 + x2) / 2}
+                  y={(y1 + y2) / 2 - 5}
+                  width={120}
+                  height={25}
+                />
+              ))}
           </g>
         );
       })}

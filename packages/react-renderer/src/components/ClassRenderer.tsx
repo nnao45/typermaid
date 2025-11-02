@@ -16,10 +16,8 @@ export const ClassRenderer: React.FC<ClassRendererProps> = ({
   width = 800,
   height = 600,
 }) => {
-  // Handle both AST structure (diagram.diagram) and direct structure
-  const diagramData = diagram.diagram || diagram;
-  const classes = diagramData.classes || [];
-  const relationships = diagramData.relations || diagramData.relationships || [];
+  const classes = diagram.classes || [];
+  const relationships = diagram.relations || [];
 
   const classWidth = 200;
   const classHeaderHeight = 40;
@@ -39,8 +37,7 @@ export const ClassRenderer: React.FC<ClassRendererProps> = ({
         const y = topMargin + Math.floor(index / 3) * 300;
 
         const members = cls.members || [];
-        const methods = cls.methods || [];
-        const totalHeight = classHeaderHeight + (members.length + methods.length) * itemHeight + 10;
+        const totalHeight = classHeaderHeight + members.length * itemHeight + 10;
 
         return (
           <g key={cls.id || index}>
@@ -93,29 +90,6 @@ export const ClassRenderer: React.FC<ClassRendererProps> = ({
                 {member.visibility || '+'} {member.name}: {member.returnType || 'any'}
               </text>
             ))}
-
-            {members.length > 0 && methods.length > 0 && (
-              <line
-                x1={x}
-                y1={y + classHeaderHeight + members.length * itemHeight + 5}
-                x2={x + classWidth}
-                y2={y + classHeaderHeight + members.length * itemHeight + 5}
-                stroke={theme.colors.node.stroke}
-                strokeWidth={1}
-              />
-            )}
-
-            {methods.map((method: ClassMember, i: number) => (
-              <text
-                key={`${cls.id}-method-${i}`}
-                x={x + 10}
-                y={y + classHeaderHeight + (members.length + i + 1) * itemHeight}
-                fill={theme.colors.text}
-                fontSize={12}
-              >
-                {method.visibility || '+'} {method.name}(): {method.returnType || 'void'}
-              </text>
-            ))}
           </g>
         );
       })}
@@ -143,7 +117,7 @@ export const ClassRenderer: React.FC<ClassRendererProps> = ({
             y2={y2}
             stroke={theme.colors.edge.stroke}
             strokeWidth={2}
-            markerEnd={rel.type === 'inheritance' ? 'url(#triangle)' : 'url(#arrow)'}
+            markerEnd={rel.relationType === '<|--' ? 'url(#triangle)' : 'url(#arrow)'}
           />
         );
       })}

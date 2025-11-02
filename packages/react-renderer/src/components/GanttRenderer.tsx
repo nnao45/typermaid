@@ -16,9 +16,11 @@ export const GanttRenderer: React.FC<GanttRendererProps> = ({
   width = 900,
   height = 500,
 }) => {
-  // Handle both AST structure (diagram.diagram) and direct structure
-  const diagramData = diagram.diagram || diagram;
-  const tasks = diagramData.tasks || [];
+  const config = diagram.config;
+  const sections = diagram.sections || [];
+
+  // Flatten all tasks from sections
+  const tasks: GanttTask[] = sections.flatMap((section) => section.tasks || []);
 
   const taskHeight = 30;
   const taskSpacing = 10;
@@ -40,7 +42,7 @@ export const GanttRenderer: React.FC<GanttRendererProps> = ({
         fontWeight="bold"
         textAnchor="middle"
       >
-        {diagramData.title || 'Gantt Chart'}
+        {config.title || 'Gantt Chart'}
       </text>
 
       {tasks.map((task: GanttTask, index: number) => {

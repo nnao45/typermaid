@@ -1,5 +1,22 @@
 import { z } from 'zod';
 
+// HTML content type for embedded HTML in labels, notes, descriptions
+export const HTMLContentSchema = z.object({
+  type: z.literal('html'),
+  raw: z.string(), // Raw HTML string
+  sanitized: z.string().optional(), // Sanitized HTML (processed by renderer)
+});
+
+export type HTMLContent = z.infer<typeof HTMLContentSchema>;
+
+// Text or HTML content (Union type)
+export const ContentSchema = z.union([
+  z.string(), // Plain text
+  HTMLContentSchema, // HTML content
+]);
+
+export type Content = z.infer<typeof ContentSchema>;
+
 // State types
 export const StateType = z.enum([
   'STATE', // Normal state
@@ -20,14 +37,16 @@ export type StateDirection = z.infer<typeof StateDirection>;
 export type State = {
   id: string;
   type: StateType;
-  description?: string | undefined;
+  label?: Content | undefined; // HTML support for state labels
+  description?: Content | undefined; // HTML support for state descriptions
   compositeStates?: State[] | undefined;
 };
 
 export const StateSchema: z.ZodType<State> = z.object({
   id: z.string(),
   type: StateType.default('STATE'),
-  description: z.string().optional(),
+  label: ContentSchema.optional(),
+  description: ContentSchema.optional(),
   compositeStates: z.lazy(() => z.array(StateSchema)).optional(),
 });
 
@@ -35,7 +54,7 @@ export const StateSchema: z.ZodType<State> = z.object({
 export const StateTransitionSchema = z.object({
   from: z.string(),
   to: z.string(),
-  label: z.string().optional(),
+  label: ContentSchema.optional(), // HTML support for transition labels
 });
 
 export type StateTransition = z.infer<typeof StateTransitionSchema>;
@@ -43,7 +62,7 @@ export type StateTransition = z.infer<typeof StateTransitionSchema>;
 // Note
 export const StateNoteSchema = z.object({
   state: z.string(),
-  note: z.string(),
+  note: ContentSchema, // HTML support for notes
   position: z.enum(['left', 'right']).optional(),
 });
 

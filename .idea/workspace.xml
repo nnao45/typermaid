@@ -8,45 +8,30 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AGENTS.md" beforeDir="false" afterPath="$PROJECT_DIR$/AGENTS.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PLAN.md" beforeDir="false" afterPath="$PROJECT_DIR$/PLAN.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PLAN_RENDERER.md" beforeDir="false" afterPath="$PROJECT_DIR$/PLAN_RENDERER.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e2e/flowchart.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/e2e/flowchart.test.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/core/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/schemas/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/schemas/state.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/core/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/demo/src/examples/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/demo/src/examples/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/nodes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/ast/nodes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/error.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/error.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/class.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/class.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/er.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/er.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/sequence.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/sequence.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/state.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/parser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/parser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/tests/parser.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/tests/parser.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/tsconfig.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/parser/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/edges/generators.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/edges/generators.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/edges/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/edges/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/edges/markers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/edges/markers.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/edges/path-utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/edges/path-utils.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/edges/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/edges/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/layout/dagre-layout.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/layout/dagre-layout.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/shapes/generators.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/shapes/generators.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/shapes/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/shapes/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/shapes/text-measure.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/shapes/text-measure.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/shapes/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/shapes/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/types/layout.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/types/layout.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/react-renderer/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/ClassRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/ClassRenderer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/ERRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/ERRenderer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/GanttRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/GanttRenderer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/MermaidDiagram.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/MermaidDiagram.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/SequenceRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/SequenceRenderer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/StateRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/StateRenderer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/react-renderer/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/tsconfig.tsbuildinfo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/utils/ast-converter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/utils/ast-converter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/tests/edges.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/tests/edges.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/tests/layout.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/tests/layout.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/tests/shapes.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/tests/shapes.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/tsconfig.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/renderer-core/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/tsconfig.tsbuildinfo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/add-manual-examples.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/add-manual-examples.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/add-more-examples.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/add-more-examples.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/add-quality-examples.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/add-quality-examples.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/fetch-examples.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/fetch-examples.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vitest.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vitest.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +79,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1761921340844</updated>
-      <workItem from="1761921342231" duration="10998000" />
+      <workItem from="1761921342231" duration="14980000" />
     </task>
     <servers />
   </component>

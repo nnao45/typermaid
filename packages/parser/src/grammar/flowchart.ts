@@ -1,4 +1,4 @@
-import type { Direction, NodeShape } from '@lyric-js/core';
+import type { Direction, EdgeType, NodeShape } from '@lyric-js/core';
 import type {
   ASTNode,
   EdgeAST,
@@ -25,7 +25,7 @@ export class FlowchartParser {
    * Parse tokens into AST
    */
   parse(): ProgramAST {
-    const body: ASTNode[] = [];
+    const body: (FlowchartDiagramAST | ASTNode)[] = [];
 
     while (!this.isAtEnd()) {
       const diagram = this.parseDiagram();
@@ -36,7 +36,7 @@ export class FlowchartParser {
 
     return {
       type: 'Program',
-      body,
+      body: body as ProgramAST['body'],
     };
   }
 
@@ -55,7 +55,7 @@ export class FlowchartParser {
     }
 
     // Parse body (nodes, edges, subgraphs)
-    const body: ASTNode[] = [];
+    const body: (FlowchartNodeAST | EdgeAST | SubgraphAST)[] = [];
 
     while (!this.isAtEnd() && !this.check('FLOWCHART') && !this.check('GRAPH')) {
       if (this.check('SUBGRAPH')) {
@@ -64,9 +64,9 @@ export class FlowchartParser {
         const stmts = this.parseStatement();
         if (stmts) {
           if (Array.isArray(stmts)) {
-            body.push(...stmts);
+            body.push(...(stmts as (FlowchartNodeAST | EdgeAST)[]));
           } else {
-            body.push(stmts);
+            body.push(stmts as FlowchartNodeAST | EdgeAST | SubgraphAST);
           }
         }
       } else {
@@ -100,16 +100,16 @@ export class FlowchartParser {
       this.consumeClosing();
     }
 
-    const body: ASTNode[] = [];
+    const body: (FlowchartNodeAST | EdgeAST | SubgraphAST)[] = [];
 
     while (!this.isAtEnd() && !this.check('END')) {
       if (this.check('IDENTIFIER')) {
         const stmts = this.parseStatement();
         if (stmts) {
           if (Array.isArray(stmts)) {
-            body.push(...stmts);
+            body.push(...(stmts as (FlowchartNodeAST | EdgeAST | SubgraphAST)[]));
           } else {
-            body.push(stmts);
+            body.push(stmts as FlowchartNodeAST | EdgeAST | SubgraphAST);
           }
         }
       } else {
@@ -119,13 +119,18 @@ export class FlowchartParser {
 
     this.consume('END', 'Expected end keyword');
 
-    return {
+    const result: SubgraphAST = {
       type: 'Subgraph',
       id,
-      label,
       direction: undefined,
       body,
     };
+
+    if (label !== undefined) {
+      result.label = label;
+    }
+
+    return result;
   }
 
   private parseStatement(): ASTNode | ASTNode[] | null {
@@ -193,7 +198,7 @@ export class FlowchartParser {
       throw new ParserError('Expected edge type');
     }
 
-    const edgeType = edgeToken.value;
+    const edgeType = this.getEdgeType(edgeToken.value);
     this.advance(); // consume edge
 
     let label: string | undefined;
@@ -254,6 +259,24 @@ export class FlowchartParser {
     };
 
     return shapeMap[shapeValue] ?? 'square';
+  }
+
+  private getEdgeType(edgeValue: string): EdgeType {
+    const edgeMap: Record<string, EdgeType> = {
+      '-->': 'arrow',
+      '---': 'line',
+      '-.->': 'dotted_arrow',
+      '-.-': 'dotted_line',
+      '==>': 'thick_arrow',
+      '===': 'thick_line',
+      '~~~': 'invisible',
+      '--o': 'circle_arrow',
+      '--x': 'cross_arrow',
+      '<-->': 'multi_arrow',
+      '<---': 'multi_line',
+    };
+
+    return edgeMap[edgeValue] ?? 'arrow';
   }
 
   // Helper methods

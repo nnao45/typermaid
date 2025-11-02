@@ -1,5 +1,5 @@
 import type { FlowchartDiagram, FlowchartEdge, FlowchartNode } from '@lyric-js/core';
-import type { EdgeAST, FlowchartNodeAST, ProgramAST } from '@lyric-js/parser';
+import type { EdgeAST, FlowchartDiagramAST, ProgramAST } from '@lyric-js/parser';
 
 /**
  * Convert Parser AST to Schema-compatible format
@@ -7,7 +7,7 @@ import type { EdgeAST, FlowchartNodeAST, ProgramAST } from '@lyric-js/parser';
 export function astToSchema(ast: ProgramAST): FlowchartDiagram {
   // Get first flowchart diagram
   const diagram = ast.body.find(
-    (node): node is { type: 'FlowchartDiagram'; direction: string; body: unknown[] } =>
+    (node: unknown): node is FlowchartDiagramAST =>
       (node as { type: string }).type === 'FlowchartDiagram'
   );
 
@@ -20,20 +20,19 @@ export function astToSchema(ast: ProgramAST): FlowchartDiagram {
   let edgeIdCounter = 0;
 
   // Process statements recursively to handle subgraphs
-  function processStatements(statements: unknown[]) {
-    for (const statement of statements) {
-      const stmt = statement as { type: string; body?: unknown[] };
-
-      if (stmt.type === 'Node') {
-        const node = stmt as FlowchartNodeAST;
+  function processStatements(statements: unknown[]): void {
+    for (const stmt of statements) {
+      const s = stmt as { type: string };
+      if (s.type === 'Node') {
+        const node = stmt as unknown as { id: string; shape: string; label: string };
         nodeMap.set(node.id, {
           id: node.id,
-          shape: node.shape,
+          shape: node.shape as FlowchartNode['shape'],
           label: node.label || node.id,
         });
-      } else if (stmt.type === 'Subgraph' && stmt.body) {
+      } else if (s.type === 'Subgraph') {
         // Recursively process subgraph contents
-        processStatements(stmt.body);
+        processStatements((stmt as unknown as { body: unknown[] }).body);
       }
     }
   }
@@ -42,12 +41,11 @@ export function astToSchema(ast: ProgramAST): FlowchartDiagram {
   processStatements(diagram.body);
 
   // Second pass: collect edges and create implicit nodes
-  function processEdges(statements: unknown[]) {
-    for (const statement of statements) {
-      const stmt = statement as { type: string; body?: unknown[] };
-
-      if (stmt.type === 'Edge') {
-        const edge = stmt as EdgeAST;
+  function processEdges(statements: unknown[]): void {
+    for (const stmt of statements) {
+      const s = stmt as { type: string };
+      if (s.type === 'Edge') {
+        const edge = s as EdgeAST;
 
         // Create implicit nodes if they don't exist
         if (!nodeMap.has(edge.from)) {
@@ -73,9 +71,9 @@ export function astToSchema(ast: ProgramAST): FlowchartDiagram {
           type: mapEdgeType(edge.edgeType),
           label: edge.label,
         });
-      } else if (stmt.type === 'Subgraph' && stmt.body) {
+      } else if (s.type === 'Subgraph') {
         // Recursively process subgraph contents
-        processEdges(stmt.body);
+        processEdges((stmt as unknown as { body: unknown[] }).body);
       }
     }
   }
@@ -84,7 +82,7 @@ export function astToSchema(ast: ProgramAST): FlowchartDiagram {
 
   return {
     type: 'flowchart',
-    direction: diagram.direction as 'TB' | 'TD' | 'BT' | 'LR' | 'RL',
+    direction: diagram.direction,
     nodes: Array.from(nodeMap.values()),
     edges,
   };
@@ -93,20 +91,7 @@ export function astToSchema(ast: ProgramAST): FlowchartDiagram {
 /**
  * Map Parser edge type to Schema edge type
  */
-function mapEdgeType(parserType: string): FlowchartEdge['type'] {
-  const mapping: Record<string, FlowchartEdge['type']> = {
-    '-->': 'arrow',
-    '---': 'line',
-    '-.->': 'dotted_arrow',
-    '-.-': 'dotted_line',
-    '==>': 'thick_arrow',
-    '===': 'thick_line',
-    '~~~': 'invisible',
-    '--o': 'circle_arrow',
-    'o--': 'circle_arrow',
-    '--x': 'cross_arrow',
-    'x--': 'cross_arrow',
-  };
-
-  return mapping[parserType] || 'arrow';
+function mapEdgeType(parserType: EdgeAST['edgeType']): FlowchartEdge['type'] {
+  // EdgeType enum values are already in the correct format
+  return parserType;
 }

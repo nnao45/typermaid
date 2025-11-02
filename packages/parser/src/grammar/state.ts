@@ -1,4 +1,12 @@
-import type { State, StateDirection, StateNote, StateTransition, StateType } from '@lyric-js/core';
+import type {
+  Content,
+  HTMLContent,
+  State,
+  StateDirection,
+  StateNote,
+  StateTransition,
+  StateType,
+} from '@lyric-js/core';
 import { ParserError } from '../error.js';
 import type { Token } from '../lexer/tokens.js';
 
@@ -56,6 +64,13 @@ export class StateParser {
         continue;
       }
 
+      // Parse state with label (state "Label" as ID)
+      if (this.checkStateWithLabel()) {
+        const state = this.parseStateWithLabel();
+        states.push(state);
+        continue;
+      }
+
       // Parse special state (<<choice>>, <<fork>>, <<join>>)
       if (this.checkSpecialState()) {
         const state = this.parseSpecialState();
@@ -81,10 +96,66 @@ export class StateParser {
       this.advance();
     }
 
+    // Extract states from transitions if not explicitly defined
+    const stateMap = new Map<string, State>();
+
+    // Add explicitly defined states
+    for (const state of states) {
+      stateMap.set(state.id, state);
+    }
+
+    // Extract states from transitions
+    for (const transition of transitions) {
+      if (transition.from && transition.from !== '[*]' && !stateMap.has(transition.from)) {
+        stateMap.set(transition.from, {
+          id: transition.from,
+          type: 'STATE',
+        });
+      }
+      if (transition.to && transition.to !== '[*]' && !stateMap.has(transition.to)) {
+        stateMap.set(transition.to, {
+          id: transition.to,
+          type: 'STATE',
+        });
+      }
+    }
+
+    // Add start/end states if referenced
+    const hasStart = transitions.some((t) => t.from === '[*]');
+    const hasEnd = transitions.some((t) => t.to === '[*]');
+
+    // Create separate start and end states if needed
+    if (hasStart && !stateMap.has('[*]_start')) {
+      stateMap.set('[*]_start', {
+        id: '[*]_start',
+        type: 'START',
+      });
+      // Update transitions to use the new start state ID
+      transitions.forEach((t) => {
+        if (t.from === '[*]') {
+          t.from = '[*]_start';
+        }
+      });
+    }
+    if (hasEnd && !stateMap.has('[*]_end')) {
+      stateMap.set('[*]_end', {
+        id: '[*]_end',
+        type: 'END',
+      });
+      // Update transitions to use the new end state ID
+      transitions.forEach((t) => {
+        if (t.to === '[*]') {
+          t.to = '[*]_end';
+        }
+      });
+    }
+
+    const allStates = Array.from(stateMap.values());
+
     const result: StateDiagramAST = {
       type: 'state',
       version,
-      states,
+      states: allStates,
       transitions,
       notes,
     };
@@ -94,6 +165,21 @@ export class StateParser {
     }
 
     return result;
+  }
+
+  // HTML content parser: detects HTML tags and returns Content type
+  private parseHTMLContent(text: string): Content {
+    const htmlTagRegex = /<[^>]+>/;
+
+    if (htmlTagRegex.test(text)) {
+      const htmlContent: HTMLContent = {
+        type: 'html',
+        raw: text,
+      };
+      return htmlContent;
+    }
+
+    return text; // Plain text
   }
 
   private checkDirection(): boolean {
@@ -170,7 +256,45 @@ export class StateParser {
     return {
       id,
       type: 'STATE',
-      description: description.trim(),
+      description: this.parseHTMLContent(description.trim()),
+    };
+  }
+
+  private checkStateWithLabel(): boolean {
+    const saved = this.current;
+    if (this.check('STATE')) {
+      this.advance();
+      this.skipWhitespace();
+      const hasString = this.check('STRING');
+      this.current = saved;
+      return hasString;
+    }
+    return false;
+  }
+
+  private parseStateWithLabel(): State {
+    this.consume('STATE', 'Expected state keyword');
+    this.skipWhitespace();
+
+    // Parse quoted label
+    const labelToken = this.consume('STRING', 'Expected quoted label');
+    let label = labelToken.value;
+
+    // Remove quotes
+    if (label.startsWith('"') && label.endsWith('"')) {
+      label = label.slice(1, -1);
+    }
+
+    this.skipWhitespace();
+    this.consume('AS', 'Expected as keyword');
+    this.skipWhitespace();
+
+    const id = this.consume('IDENTIFIER', 'Expected state id').value;
+
+    return {
+      id,
+      type: 'STATE',
+      label: this.parseHTMLContent(label),
     };
   }
 
@@ -357,7 +481,7 @@ export class StateParser {
 
     return {
       state,
-      note: note.trim(),
+      note: this.parseHTMLContent(note.trim()),
       position: position === 'left' || position === 'right' ? position : undefined,
     };
   }
@@ -415,7 +539,7 @@ export class StateParser {
     this.skipWhitespace();
 
     // Parse arrow and collect tokens until we find the target state
-    let label: string | undefined;
+    let label: Content | undefined;
 
     // Skip arrow tokens (-->, --, -, etc.)
     while (
@@ -451,11 +575,11 @@ export class StateParser {
       this.advance();
       this.skipWhitespace();
 
-      label = '';
+      let labelText = '';
       while (!this.check('NEWLINE') && !this.isAtEnd()) {
-        label += this.advance().value;
+        labelText += this.advance().value;
       }
-      label = label.trim();
+      label = this.parseHTMLContent(labelText.trim());
     }
 
     return {

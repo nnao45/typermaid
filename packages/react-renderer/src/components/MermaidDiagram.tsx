@@ -1,3 +1,11 @@
+import type {
+  ClassDiagram,
+  ERDiagram,
+  GanttDiagram,
+  SequenceDiagram,
+  StateDiagram,
+} from '@lyric-js/core';
+import type { ASTNode, FlowchartDiagramAST } from '@lyric-js/parser';
 import type { LayoutEdge, LayoutNode } from '@lyric-js/renderer-core';
 import type React from 'react';
 import { useMermaidParser } from '../hooks/useMermaidParser';
@@ -54,27 +62,27 @@ export const MermaidDiagram: React.FC<MermaidDiagramProps> = ({
     );
   }
 
-  const diagram = ast.body[0];
+  const diagram = ast.body[0] as ASTNode;
 
   switch (diagram.type) {
     case 'FlowchartDiagram': {
-      const flowchartProps = {
-        diagram,
-        theme,
-        width,
-        height,
-        interactive,
-        onNodeClick: interactive ? onNodeClick : undefined,
-        onEdgeClick: interactive ? onEdgeClick : undefined,
-      };
-
-      return <FlowchartRenderer {...flowchartProps} />;
+      return (
+        <FlowchartRenderer
+          diagram={diagram as FlowchartDiagramAST}
+          theme={theme}
+          {...(width !== undefined && { width })}
+          {...(height !== undefined && { height })}
+          {...(interactive !== undefined && { interactive })}
+          {...(interactive && onNodeClick && { onNodeClick })}
+          {...(interactive && onEdgeClick && { onEdgeClick })}
+        />
+      );
     }
 
     case 'SequenceDiagram':
       return (
         <SequenceRenderer
-          diagram={diagram}
+          diagram={(diagram as { diagram: SequenceDiagram }).diagram}
           theme={theme}
           {...(width !== undefined && { width })}
           {...(height !== undefined && { height })}
@@ -85,7 +93,7 @@ export const MermaidDiagram: React.FC<MermaidDiagramProps> = ({
     case 'ClassDiagram':
       return (
         <ClassRenderer
-          diagram={diagram}
+          diagram={(diagram as { diagram: ClassDiagram }).diagram}
           theme={theme}
           {...(width !== undefined && { width })}
           {...(height !== undefined && { height })}
@@ -96,7 +104,7 @@ export const MermaidDiagram: React.FC<MermaidDiagramProps> = ({
     case 'ERDiagram':
       return (
         <ERRenderer
-          diagram={diagram}
+          diagram={(diagram as { diagram: ERDiagram }).diagram}
           theme={theme}
           {...(width !== undefined && { width })}
           {...(height !== undefined && { height })}
@@ -107,7 +115,7 @@ export const MermaidDiagram: React.FC<MermaidDiagramProps> = ({
     case 'GanttDiagram':
       return (
         <GanttRenderer
-          diagram={diagram}
+          diagram={(diagram as { diagram: GanttDiagram }).diagram}
           theme={theme}
           {...(width !== undefined && { width })}
           {...(height !== undefined && { height })}
@@ -118,7 +126,7 @@ export const MermaidDiagram: React.FC<MermaidDiagramProps> = ({
     case 'StateDiagram':
       return (
         <StateRenderer
-          diagram={diagram}
+          diagram={(diagram as { diagram: StateDiagram }).diagram}
           theme={theme}
           {...(width !== undefined && { width })}
           {...(height !== undefined && { height })}

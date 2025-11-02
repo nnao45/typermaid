@@ -45,6 +45,14 @@ export class ERParser {
       else if (this.lookAheadForRelationship()) {
         const relationship = this.parseRelationship();
         relationships.push(relationship);
+
+        // Auto-create entities from relationships if they don't exist
+        if (!entities.find(e => e.name === relationship.from)) {
+          entities.push({ name: relationship.from, attributes: [] });
+        }
+        if (!entities.find(e => e.name === relationship.to)) {
+          entities.push({ name: relationship.to, attributes: [] });
+        }
       }
       // Skip unknown tokens
       else {

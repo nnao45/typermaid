@@ -68,6 +68,40 @@ export class ClassParser {
       if (this.isRelationLine(line)) {
         const relation = this.parseRelation(line);
         diagram.relations.push(relation);
+
+        // Auto-create classes from relations if they don't exist
+        if (!diagram.classes.find(c => c.id === relation.from)) {
+          diagram.classes.push({ id: relation.from, name: relation.from, members: [] });
+        }
+        if (!diagram.classes.find(c => c.id === relation.to)) {
+          diagram.classes.push({ id: relation.to, name: relation.to, members: [] });
+        }
+
+        this.currentLine++;
+        continue;
+      }
+
+      // Class member definition outside of class block: ClassName : member
+      if (line.includes(':') && !line.includes('::')) {
+        const colonIndex = line.indexOf(':');
+        const className = line.substring(0, colonIndex).trim();
+        const memberDef = line.substring(colonIndex + 1).trim();
+
+        if (className && memberDef) {
+          // Find or create class
+          let classData = diagram.classes.find(c => c.id === className);
+          if (!classData) {
+            classData = { id: className, name: className, members: [] };
+            diagram.classes.push(classData);
+          }
+
+          // Parse and add member
+          const member = this.parseClassMember(memberDef);
+          if (member) {
+            classData.members.push(member);
+          }
+        }
+
         this.currentLine++;
         continue;
       }

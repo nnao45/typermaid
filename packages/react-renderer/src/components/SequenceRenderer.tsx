@@ -16,7 +16,7 @@ export const SequenceRenderer: React.FC<SequenceRendererProps> = ({
   width = 800,
   height = 600,
 }) => {
-  const statements = diagram.diagram?.statements || [];
+  const statements = diagram.statements || [];
 
   interface MessageType {
     from: string;
@@ -25,26 +25,65 @@ export const SequenceRenderer: React.FC<SequenceRendererProps> = ({
     arrowType?: string;
   }
 
-  // Extract participants from statements
+  // Extract participants and messages recursively from statements
   const participantsMap = new Map<string, Participant>();
   const messages: MessageType[] = [];
 
-  for (const stmt of statements) {
-    if (stmt.type === 'message') {
-      if (!participantsMap.has(stmt.from)) {
-        participantsMap.set(stmt.from, { id: stmt.from, label: stmt.from });
+  const extractMessagesRecursively = (stmts: typeof statements) => {
+    for (const stmt of stmts) {
+      if (stmt.type === 'message') {
+        if (!participantsMap.has(stmt.from)) {
+          participantsMap.set(stmt.from, { type: 'participant', id: stmt.from });
+        }
+        if (!participantsMap.has(stmt.to)) {
+          participantsMap.set(stmt.to, { type: 'participant', id: stmt.to });
+        }
+        messages.push({
+          from: stmt.from,
+          to: stmt.to,
+          message: stmt.text || '',
+          arrowType: stmt.arrowType,
+        });
+      } else if (
+        stmt.type === 'loop' ||
+        stmt.type === 'alt' ||
+        stmt.type === 'opt' ||
+        stmt.type === 'par' ||
+        stmt.type === 'critical' ||
+        stmt.type === 'break' ||
+        stmt.type === 'rect'
+      ) {
+        // Recursively extract messages from nested blocks
+        if ('statements' in stmt && Array.isArray(stmt.statements)) {
+          extractMessagesRecursively(stmt.statements);
+        }
+        // Handle elseBlocks, andBlocks, optionBlocks
+        if ('elseBlocks' in stmt && Array.isArray(stmt.elseBlocks)) {
+          for (const block of stmt.elseBlocks) {
+            if (Array.isArray(block.statements)) {
+              extractMessagesRecursively(block.statements);
+            }
+          }
+        }
+        if ('andBlocks' in stmt && Array.isArray(stmt.andBlocks)) {
+          for (const block of stmt.andBlocks) {
+            if (Array.isArray(block.statements)) {
+              extractMessagesRecursively(block.statements);
+            }
+          }
+        }
+        if ('optionBlocks' in stmt && Array.isArray(stmt.optionBlocks)) {
+          for (const block of stmt.optionBlocks) {
+            if (Array.isArray(block.statements)) {
+              extractMessagesRecursively(block.statements);
+            }
+          }
+        }
       }
-      if (!participantsMap.has(stmt.to)) {
-        participantsMap.set(stmt.to, { id: stmt.to, label: stmt.to });
-      }
-      messages.push({
-        from: stmt.from,
-        to: stmt.to,
-        message: stmt.text || stmt.message,
-        arrowType: stmt.arrowType,
-      });
     }
-  }
+  };
+
+  extractMessagesRecursively(statements);
 
   const participants = Array.from(participantsMap.values());
 
@@ -90,7 +129,7 @@ export const SequenceRenderer: React.FC<SequenceRendererProps> = ({
               textAnchor="middle"
               dominantBaseline="middle"
             >
-              {participant.label || participant.id}
+              {participant.alias || participant.id}
             </text>
             <line
               x1={x + participantWidth / 2}
@@ -135,7 +174,7 @@ export const SequenceRenderer: React.FC<SequenceRendererProps> = ({
               fontSize={12}
               textAnchor="middle"
             >
-              {message.message || message.label}
+              {message.message}
             </text>
           </g>
         );

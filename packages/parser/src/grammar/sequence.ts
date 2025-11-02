@@ -1,10 +1,18 @@
 import type {
+  Alt,
   ArrowType,
+  Break,
+  Critical,
+  Loop,
   Message,
   Note,
   NotePosition,
+  Opt,
+  Par,
   Participant,
+  Rect,
   SequenceDiagram,
+  SequenceStatement,
 } from '@lyric-js/core';
 import { ParserError } from '../error.js';
 import { SequenceTokenizer } from '../lexer/sequence-tokenizer.js';
@@ -26,9 +34,7 @@ export class SequenceParser {
     this.consume('SEQUENCEDIAGRAM');
     this.skipNewlines();
 
-    const participants: Participant[] = [];
-    const messages: Message[] = [];
-    const notes: Note[] = [];
+    const statements: SequenceStatement[] = [];
     let autonumber = false;
 
     while (!this.isAtEnd() && this.peek().type !== 'EOF') {
@@ -39,11 +45,11 @@ export class SequenceParser {
       const token = this.peek();
 
       if (token.type === 'PARTICIPANT') {
-        participants.push(this.parseParticipant());
+        statements.push(this.parseParticipant());
       } else if (token.type === 'ACTOR') {
         this.parseActor();
       } else if (token.type === 'NOTE') {
-        notes.push(this.parseNote());
+        statements.push(this.parseNote());
       } else if (token.type === 'AUTONUMBER') {
         this.advance();
         autonumber = true;
@@ -60,40 +66,27 @@ export class SequenceParser {
         // Skip box statements
         this.skipUntilEnd();
       } else if (token.type === 'RECT') {
-        // Skip rect blocks for now
-        this.skipRect();
+        statements.push(this.parseRect());
       } else if (token.type === 'LOOP') {
-        // TODO: implement loop parsing
-        this.skipUntilEnd();
+        statements.push(this.parseLoop());
       } else if (token.type === 'ALT') {
-        // TODO: implement alt parsing
-        this.skipUntilEnd();
+        statements.push(this.parseAlt());
       } else if (token.type === 'OPT') {
-        // TODO: implement opt parsing
-        this.skipUntilEnd();
+        statements.push(this.parseOpt());
       } else if (token.type === 'PAR') {
-        // TODO: implement par parsing
-        this.skipUntilEnd();
+        statements.push(this.parsePar());
       } else if (token.type === 'CRITICAL') {
-        // TODO: implement critical parsing
-        this.skipUntilEnd();
+        statements.push(this.parseCritical());
       } else if (token.type === 'BREAK') {
-        // TODO: implement break parsing
-        this.skipUntilEnd();
+        statements.push(this.parseBreak());
       } else if (token.type === 'IDENTIFIER') {
-        messages.push(this.parseMessage());
+        statements.push(this.parseMessage());
       } else {
         this.advance();
       }
 
       this.skipNewlines();
     }
-
-    const statements: Array<Participant | Message | Note> = [
-      ...participants,
-      ...messages,
-      ...notes,
-    ];
 
     return {
       type: 'sequence',
@@ -250,32 +243,247 @@ export class SequenceParser {
     return this.readUntilNewline();
   }
 
-  private skipRect(): void {
-    this.consume('RECT');
-    // Skip rect parameters (rgb, rgba, etc)
-    while (!this.isAtEnd() && !this.match('NEWLINE') && !this.match('IDENTIFIER')) {
-      this.advance();
-    }
+  private parseLoop(): Loop {
+    this.consume('LOOP');
+    const conditionText = this.readUntilNewline().trim();
     this.skipNewlines();
-    // Skip until matching end
-    let depth = 1;
-    while (!this.isAtEnd() && depth > 0) {
-      const token = this.peek();
-      if (
-        token.type === 'LOOP' ||
-        token.type === 'ALT' ||
-        token.type === 'OPT' ||
-        token.type === 'PAR' ||
-        token.type === 'CRITICAL' ||
-        token.type === 'BREAK' ||
-        token.type === 'RECT' ||
-        token.type === 'BOX'
-      ) {
-        depth++;
-      } else if (token.type === 'END') {
-        depth--;
+
+    const statements = this.parseStatementsUntilEnd();
+
+    return {
+      type: 'loop',
+      ...(conditionText ? { condition: conditionText } : {}),
+      statements,
+    } as Loop;
+  }
+
+  private parseAlt(): Alt {
+    this.consume('ALT');
+    const conditionText = this.readUntilNewline().trim();
+    this.skipNewlines();
+
+    const statements: SequenceStatement[] = [];
+    const elseBlocks: Array<{ condition?: string | undefined; statements: SequenceStatement[] }> = [];
+
+    // Parse statements until ELSE or END
+    while (!this.isAtEnd() && !this.match('ELSE') && !this.match('END')) {
+      this.skipNewlines();
+      if (this.match('ELSE') || this.match('END')) break;
+      const stmt = this.parseStatementInBlock();
+      if (stmt) statements.push(stmt);
+      this.skipNewlines();
+    }
+
+    // Parse else blocks
+    while (this.match('ELSE')) {
+      this.advance(); // consume ELSE
+      const elseCondText = this.readUntilNewline().trim();
+      this.skipNewlines();
+
+      const elseStmts: SequenceStatement[] = [];
+      while (!this.isAtEnd() && !this.match('ELSE') && !this.match('END')) {
+        this.skipNewlines();
+        if (this.match('ELSE') || this.match('END')) break;
+        const stmt = this.parseStatementInBlock();
+        if (stmt) elseStmts.push(stmt);
+        this.skipNewlines();
       }
+
+      elseBlocks.push({
+        ...(elseCondText ? { condition: elseCondText } : {}),
+        statements: elseStmts,
+      } as { condition?: string | undefined; statements: SequenceStatement[] });
+    }
+
+    this.consume('END');
+
+    return {
+      type: 'alt',
+      ...(conditionText ? { condition: conditionText } : {}),
+      statements,
+      elseBlocks,
+    } as Alt;
+  }
+
+  private parseOpt(): Opt {
+    this.consume('OPT');
+    const conditionText = this.readUntilNewline().trim();
+    this.skipNewlines();
+
+    const statements = this.parseStatementsUntilEnd();
+
+    return {
+      type: 'opt',
+      ...(conditionText ? { condition: conditionText } : {}),
+      statements,
+    } as Opt;
+  }
+
+  private parsePar(): Par {
+    this.consume('PAR');
+    const conditionText = this.readUntilNewline().trim();
+    this.skipNewlines();
+
+    const statements: SequenceStatement[] = [];
+    const andBlocks: Array<{ condition?: string | undefined; statements: SequenceStatement[] }> = [];
+
+    // Parse statements until AND or END
+    while (!this.isAtEnd() && !this.match('AND') && !this.match('END')) {
+      this.skipNewlines();
+      if (this.match('AND') || this.match('END')) break;
+      const stmt = this.parseStatementInBlock();
+      if (stmt) statements.push(stmt);
+      this.skipNewlines();
+    }
+
+    // Parse and blocks
+    while (this.match('AND')) {
+      this.advance(); // consume AND
+      const andCondText = this.readUntilNewline().trim();
+      this.skipNewlines();
+
+      const andStmts: SequenceStatement[] = [];
+      while (!this.isAtEnd() && !this.match('AND') && !this.match('END')) {
+        this.skipNewlines();
+        if (this.match('AND') || this.match('END')) break;
+        const stmt = this.parseStatementInBlock();
+        if (stmt) andStmts.push(stmt);
+        this.skipNewlines();
+      }
+
+      andBlocks.push({
+        ...(andCondText ? { condition: andCondText } : {}),
+        statements: andStmts,
+      } as { condition?: string | undefined; statements: SequenceStatement[] });
+    }
+
+    this.consume('END');
+
+    return {
+      type: 'par',
+      ...(conditionText ? { condition: conditionText } : {}),
+      statements,
+      andBlocks,
+    } as Par;
+  }
+
+  private parseCritical(): Critical {
+    this.consume('CRITICAL');
+    const conditionText = this.readUntilNewline().trim();
+    this.skipNewlines();
+
+    const statements: SequenceStatement[] = [];
+    const optionBlocks: Array<{ condition?: string | undefined; statements: SequenceStatement[] }> = [];
+
+    // Parse statements until OPTION or END
+    while (!this.isAtEnd() && !this.match('OPTION') && !this.match('END')) {
+      this.skipNewlines();
+      if (this.match('OPTION') || this.match('END')) break;
+      const stmt = this.parseStatementInBlock();
+      if (stmt) statements.push(stmt);
+      this.skipNewlines();
+    }
+
+    // Parse option blocks
+    while (this.match('OPTION')) {
+      this.advance(); // consume OPTION
+      const optCondText = this.readUntilNewline().trim();
+      this.skipNewlines();
+
+      const optStmts: SequenceStatement[] = [];
+      while (!this.isAtEnd() && !this.match('OPTION') && !this.match('END')) {
+        this.skipNewlines();
+        if (this.match('OPTION') || this.match('END')) break;
+        const stmt = this.parseStatementInBlock();
+        if (stmt) optStmts.push(stmt);
+        this.skipNewlines();
+      }
+
+      optionBlocks.push({
+        ...(optCondText ? { condition: optCondText } : {}),
+        statements: optStmts,
+      } as { condition?: string | undefined; statements: SequenceStatement[] });
+    }
+
+    this.consume('END');
+
+    return {
+      type: 'critical',
+      ...(conditionText ? { condition: conditionText } : {}),
+      statements,
+      optionBlocks,
+    } as Critical;
+  }
+
+  private parseBreak(): Break {
+    this.consume('BREAK');
+    const conditionText = this.readUntilNewline().trim();
+    this.skipNewlines();
+
+    const statements = this.parseStatementsUntilEnd();
+
+    return {
+      type: 'break',
+      ...(conditionText ? { condition: conditionText } : {}),
+      statements,
+    } as Break;
+  }
+
+  private parseRect(): Rect {
+    this.consume('RECT');
+    const colorText = this.readUntilNewline().trim();
+    this.skipNewlines();
+
+    const statements = this.parseStatementsUntilEnd();
+
+    return {
+      type: 'rect',
+      ...(colorText ? { color: colorText } : {}),
+      statements,
+    } as Rect;
+  }
+
+  private parseStatementsUntilEnd(): SequenceStatement[] {
+    const statements: SequenceStatement[] = [];
+
+    while (!this.isAtEnd() && !this.match('END')) {
+      this.skipNewlines();
+      if (this.match('END')) break;
+      const stmt = this.parseStatementInBlock();
+      if (stmt) statements.push(stmt);
+      this.skipNewlines();
+    }
+
+    this.consume('END');
+    return statements;
+  }
+
+  private parseStatementInBlock(): SequenceStatement | null {
+    const token = this.peek();
+
+    if (token.type === 'NOTE') {
+      return this.parseNote();
+    } else if (token.type === 'LOOP') {
+      return this.parseLoop();
+    } else if (token.type === 'ALT') {
+      return this.parseAlt();
+    } else if (token.type === 'OPT') {
+      return this.parseOpt();
+    } else if (token.type === 'PAR') {
+      return this.parsePar();
+    } else if (token.type === 'CRITICAL') {
+      return this.parseCritical();
+    } else if (token.type === 'BREAK') {
+      return this.parseBreak();
+    } else if (token.type === 'RECT') {
+      return this.parseRect();
+    } else if (token.type === 'IDENTIFIER') {
+      return this.parseMessage();
+    } else if (token.type === 'PARTICIPANT') {
+      return this.parseParticipant();
+    } else {
       this.advance();
+      return null;
     }
   }
 

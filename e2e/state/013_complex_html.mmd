@@ -1,0 +1,7 @@
+stateDiagram-v2
+    state "Processing" as s1
+    state s2 {
+        state "Nested with <b>bold</b>" as s21
+    }
+    s1 --> s2 : Go to <code>next</code>
+    s1 : Description with <i>italic</i>
