@@ -1,4 +1,26 @@
 export type {
+  ClassAnnotation,
+  ClassDefinition,
+  ClassDiagram,
+  ClassMember,
+  ClassMemberType,
+  ClassNamespace,
+  ClassRelation,
+  ClassRelationType,
+  ClassVisibility,
+} from './class.js';
+export {
+  ClassAnnotation as ClassAnnotationSchema,
+  ClassDefinition as ClassDefinitionSchema,
+  ClassDiagram as ClassDiagramSchema,
+  ClassMember as ClassMemberSchema,
+  ClassMemberType as ClassMemberTypeSchema,
+  ClassNamespace as ClassNamespaceSchema,
+  ClassRelation as ClassRelationSchema,
+  ClassRelationType as ClassRelationTypeSchema,
+  ClassVisibility as ClassVisibilitySchema,
+} from './class.js';
+export type {
   Color,
   Direction,
   FillStyle,
@@ -25,6 +47,26 @@ export {
   VerticalAlignSchema,
 } from './common.js';
 export type {
+  ERAttribute,
+  ERAttributeKey,
+  ERAttributeType,
+  ERCardinality,
+  ERDiagram,
+  EREntity,
+  ERIdentification,
+  ERRelationship,
+} from './er.js';
+export {
+  ERAttribute as ERAttributeSchema,
+  ERAttributeKey as ERAttributeKeySchema,
+  ERAttributeType as ERAttributeTypeSchema,
+  ERCardinality as ERCardinalitySchema,
+  ERDiagram as ERDiagramSchema,
+  EREntity as EREntitySchema,
+  ERIdentification as ERIdentificationSchema,
+  ERRelationship as ERRelationshipSchema,
+} from './er.js';
+export type {
   ClassDef,
   EdgeType,
   FlowchartDiagram,
@@ -42,3 +84,65 @@ export {
   NodeShapeSchema,
   SubgraphSchema,
 } from './flowchart.js';
+export type {
+  GanttConfig,
+  GanttDiagram,
+  GanttSection,
+  GanttTask,
+  GanttTaskStatus,
+} from './gantt.js';
+export {
+  GanttConfig as GanttConfigSchema,
+  GanttDiagram as GanttDiagramSchema,
+  GanttSection as GanttSectionSchema,
+  GanttTask as GanttTaskSchema,
+  GanttTaskStatus as GanttTaskStatusSchema,
+} from './gantt.js';
+export type {
+  Actor,
+  Alt,
+  ArrowType,
+  Break,
+  Critical,
+  Loop,
+  Message,
+  Note,
+  NotePosition,
+  Opt,
+  Par,
+  Participant,
+  SequenceDiagram,
+} from './sequence.js';
+export {
+  Actor as ActorSchema,
+  Alt as AltSchema,
+  ArrowType as ArrowTypeSchema,
+  Break as BreakSchema,
+  Critical as CriticalSchema,
+  Loop as LoopSchema,
+  Message as MessageSchema,
+  Note as NoteSchema,
+  NotePosition as NotePositionSchema,
+  Opt as OptSchema,
+  Par as ParSchema,
+  Participant as ParticipantSchema,
+  SequenceDiagram as SequenceDiagramSchema,
+} from './sequence.js';
+export type {
+  ConcurrencyRegion,
+  State,
+  StateDiagram,
+  StateDirection,
+  StateNote,
+  StateTransition,
+  StateType,
+} from './state.js';
+export {
+  ConcurrencyRegionSchema,
+  StateDiagramSchema,
+  StateDirection as StateDirectionSchema,
+  StateNoteSchema,
+  StateSchema,
+  StateTransitionSchema,
+  StateType as StateTypeSchema,
+} from './state.js';

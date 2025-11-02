@@ -94,7 +94,7 @@ describe('Flowchart Parser', () => {
           expect(edge.to).toBe('B');
           expect(edge.edgeType).toBe('-->');
         }
-        
+
         if (node2?.type === 'Node') {
           expect(node2.id).toBe('B');
           expect(node2.label).toBe('End');

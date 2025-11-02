@@ -139,7 +139,11 @@ export class Tokenizer {
         break;
 
       case '>':
-        this.tokens.push(this.createToken('ASYMMETRIC', '>'));
+        this.tokens.push(this.createToken('ANGLE_CLOSE', '>'));
+        break;
+
+      case '<':
+        this.tokens.push(this.createToken('ANGLE_OPEN', '<'));
         break;
 
       case '-':
@@ -155,7 +159,8 @@ export class Tokenizer {
         break;
 
       case '.':
-        // Skip standalone dots (not part of dotted edges)
+        // Create DOT token for ER diagrams (used in identifying relationships)
+        this.tokens.push(this.createToken('DOT', '.'));
         break;
 
       case 'o':
@@ -176,6 +181,10 @@ export class Tokenizer {
 
       case '|':
         this.tokens.push(this.createToken('PIPE', '|'));
+        break;
+
+      case '*':
+        this.tokens.push(this.createToken('ASTERISK', '*'));
         break;
 
       case ';':
@@ -347,6 +356,21 @@ export class Tokenizer {
   private scanIdentifier(first: string): void {
     let value = first;
     while (this.isAlphaNumeric(this.peek())) {
+      // Stop if we encounter an edge pattern (-, =, ~, ., o, x followed by -)
+      const next = this.peek();
+      if (next === '-' || next === '=' || next === '~' || next === '.') {
+        const nextNext = this.peekNext();
+        if (
+          nextNext === '-' ||
+          nextNext === '>' ||
+          nextNext === ')' ||
+          nextNext === ']' ||
+          nextNext === '}' ||
+          nextNext === '|'
+        ) {
+          break;
+        }
+      }
       value += this.advance();
     }
 
@@ -364,6 +388,15 @@ export class Tokenizer {
       class: 'CLASS',
       click: 'CLICK',
       style: 'STYLE',
+      state: 'STATE',
+      direction: 'DIRECTION',
+      note: 'NOTE',
+      of: 'OF',
+      erDiagram: 'ERDIAGRAM',
+      'stateDiagram-v2': 'STATEDIAGRAM',
+      stateDiagram: 'STATEDIAGRAM',
+      gantt: 'GANTT',
+      section: 'SECTION',
       TB: 'TB',
       TD: 'TD',
       BT: 'BT',
@@ -390,7 +423,8 @@ export class Tokenizer {
     // Allow common special characters in node labels
     // Note: / and \ are now allowed for parallelogram/trapezoid shapes
     // & is used for multi-edge syntax but also allowed in labels
-    const allowed = '?!:;,.\'"@#$%^&*+-=<>~`/\\';
+    // : is excluded as it's used as a separator in state descriptions
+    const allowed = '?!;,.\'"@#$%^&*+-=<>~`/\\';
     return allowed.includes(char);
   }
 }

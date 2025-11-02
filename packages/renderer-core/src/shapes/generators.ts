@@ -1,6 +1,6 @@
-import type { ShapeGenerator, ShapePath, ShapeOptions } from './types.js';
-import { DEFAULT_SHAPE_OPTIONS } from './types.js';
 import { calculateTextBox } from './text-measure.js';
+import type { ShapeGenerator, ShapeOptions, ShapePath } from './types.js';
+import { DEFAULT_SHAPE_OPTIONS } from './types.js';
 
 /**
  * Generate rectangle (square) shape
@@ -14,12 +14,12 @@ export const square: ShapeGenerator = (options: ShapeOptions): ShapePath => {
     opts.padding,
     opts.fontFamily,
     opts.minWidth,
-    opts.minHeight,
+    opts.minHeight
   );
-  
+
   // Simple rectangle path
   const path = `M 0,0 L ${width},0 L ${width},${height} L 0,${height} Z`;
-  
+
   return {
     path,
     width,
@@ -45,11 +45,11 @@ export const round: ShapeGenerator = (options: ShapeOptions): ShapePath => {
     opts.padding,
     opts.fontFamily,
     opts.minWidth,
-    opts.minHeight,
+    opts.minHeight
   );
-  
+
   const radius = Math.min(height / 2, 20);
-  
+
   // Rounded rectangle path
   const path = `
     M ${radius},0
@@ -62,8 +62,10 @@ export const round: ShapeGenerator = (options: ShapeOptions): ShapePath => {
     L 0,${radius}
     Q 0,0 ${radius},0
     Z
-  `.trim().replace(/\s+/g, ' ');
-  
+  `
+    .trim()
+    .replace(/\s+/g, ' ');
+
   return {
     path,
     width,
@@ -89,11 +91,11 @@ export const stadium: ShapeGenerator = (options: ShapeOptions): ShapePath => {
     opts.padding * 1.5, // More padding for curved ends
     opts.fontFamily,
     opts.minWidth,
-    opts.minHeight,
+    opts.minHeight
   );
-  
+
   const radius = height / 2;
-  
+
   // Stadium path
   const path = `
     M ${radius},0
@@ -102,8 +104,10 @@ export const stadium: ShapeGenerator = (options: ShapeOptions): ShapePath => {
     L ${radius},${height}
     A ${radius},${radius} 0 0,1 ${radius},0
     Z
-  `.trim().replace(/\s+/g, ' ');
-  
+  `
+    .trim()
+    .replace(/\s+/g, ' ');
+
   return {
     path,
     width,
@@ -129,18 +133,20 @@ export const subroutine: ShapeGenerator = (options: ShapeOptions): ShapePath => 
     opts.padding * 1.5, // More padding for inner lines
     opts.fontFamily,
     opts.minWidth,
-    opts.minHeight,
+    opts.minHeight
   );
-  
+
   const lineOffset = 10;
-  
+
   // Rectangle with double vertical lines
   const path = `
     M 0,0 L ${width},0 L ${width},${height} L 0,${height} Z
     M ${lineOffset},0 L ${lineOffset},${height}
     M ${width - lineOffset},0 L ${width - lineOffset},${height}
-  `.trim().replace(/\s+/g, ' ');
-  
+  `
+    .trim()
+    .replace(/\s+/g, ' ');
+
   return {
     path,
     width,
@@ -166,11 +172,11 @@ export const cylindrical: ShapeGenerator = (options: ShapeOptions): ShapePath =>
     opts.padding,
     opts.fontFamily,
     opts.minWidth,
-    opts.minHeight,
+    opts.minHeight
   );
-  
+
   const ellipseHeight = height * 0.15;
-  
+
   // Cylinder path
   const path = `
     M 0,${ellipseHeight}
@@ -180,8 +186,10 @@ export const cylindrical: ShapeGenerator = (options: ShapeOptions): ShapePath =>
     Z
     M 0,${ellipseHeight}
     A ${width / 2},${ellipseHeight} 0 0,0 ${width},${ellipseHeight}
-  `.trim().replace(/\s+/g, ' ');
-  
+  `
+    .trim()
+    .replace(/\s+/g, ' ');
+
   return {
     path,
     width,
@@ -201,29 +209,21 @@ export const cylindrical: ShapeGenerator = (options: ShapeOptions): ShapePath =>
  */
 export const circle: ShapeGenerator = (options: ShapeOptions): ShapePath => {
   const opts = { ...DEFAULT_SHAPE_OPTIONS, ...options };
-  const textMetrics = calculateTextBox(
-    opts.text,
-    opts.fontSize,
-    opts.padding,
-    opts.fontFamily,
-  );
-  
+  const textMetrics = calculateTextBox(opts.text, opts.fontSize, opts.padding, opts.fontFamily);
+
   // Circle diameter is the larger of width/height
-  const diameter = Math.max(
-    textMetrics.width,
-    textMetrics.height,
-    opts.minWidth,
-    opts.minHeight,
-  );
+  const diameter = Math.max(textMetrics.width, textMetrics.height, opts.minWidth, opts.minHeight);
   const radius = diameter / 2;
-  
+
   // Circle path
   const path = `
     M ${radius},0
     A ${radius},${radius} 0 0,1 ${radius},${diameter}
     A ${radius},${radius} 0 0,1 ${radius},0
-  `.trim().replace(/\s+/g, ' ');
-  
+  `
+    .trim()
+    .replace(/\s+/g, ' ');
+
   return {
     path,
     width: diameter,
@@ -249,12 +249,12 @@ export const rhombus: ShapeGenerator = (options: ShapeOptions): ShapePath => {
     opts.padding * 2, // More padding for angled sides
     opts.fontFamily,
     opts.minWidth,
-    opts.minHeight,
+    opts.minHeight
   );
-  
+
   const width = textMetrics.width * 1.5; // Wider for diamond shape
   const height = textMetrics.height;
-  
+
   // Diamond path
   const path = `
     M ${width / 2},0
@@ -262,8 +262,10 @@ export const rhombus: ShapeGenerator = (options: ShapeOptions): ShapePath => {
     L ${width / 2},${height}
     L 0,${height / 2}
     Z
-  `.trim().replace(/\s+/g, ' ');
-  
+  `
+    .trim()
+    .replace(/\s+/g, ' ');
+
   return {
     path,
     width,
@@ -289,12 +291,12 @@ export const hexagon: ShapeGenerator = (options: ShapeOptions): ShapePath => {
     opts.padding,
     opts.fontFamily,
     opts.minWidth,
-    opts.minHeight,
+    opts.minHeight
   );
-  
+
   const sideWidth = height / 2;
   const width = baseWidth + sideWidth * 2;
-  
+
   // Hexagon path
   const path = `
     M ${sideWidth},0
@@ -304,8 +306,10 @@ export const hexagon: ShapeGenerator = (options: ShapeOptions): ShapePath => {
     L ${sideWidth},${height}
     L 0,${height / 2}
     Z
-  `.trim().replace(/\s+/g, ' ');
-  
+  `
+    .trim()
+    .replace(/\s+/g, ' ');
+
   return {
     path,
     width,
@@ -331,12 +335,12 @@ export const parallelogram: ShapeGenerator = (options: ShapeOptions): ShapePath 
     opts.padding,
     opts.fontFamily,
     opts.minWidth,
-    opts.minHeight,
+    opts.minHeight
   );
-  
+
   const skew = height * 0.3;
   const width = baseWidth + skew;
-  
+
   // Parallelogram path (leaning right)
   const path = `
     M ${skew},0
@@ -344,8 +348,10 @@ export const parallelogram: ShapeGenerator = (options: ShapeOptions): ShapePath 
     L ${width - skew},${height}
     L 0,${height}
     Z
-  `.trim().replace(/\s+/g, ' ');
-  
+  `
+    .trim()
+    .replace(/\s+/g, ' ');
+
   return {
     path,
     width,
@@ -371,12 +377,12 @@ export const parallelogram_alt: ShapeGenerator = (options: ShapeOptions): ShapeP
     opts.padding,
     opts.fontFamily,
     opts.minWidth,
-    opts.minHeight,
+    opts.minHeight
   );
-  
+
   const skew = height * 0.3;
   const width = baseWidth + skew;
-  
+
   // Parallelogram path (leaning left)
   const path = `
     M 0,0
@@ -384,8 +390,10 @@ export const parallelogram_alt: ShapeGenerator = (options: ShapeOptions): ShapeP
     L ${width},${height}
     L ${skew},${height}
     Z
-  `.trim().replace(/\s+/g, ' ');
-  
+  `
+    .trim()
+    .replace(/\s+/g, ' ');
+
   return {
     path,
     width,
@@ -411,11 +419,11 @@ export const trapezoid: ShapeGenerator = (options: ShapeOptions): ShapePath => {
     opts.padding,
     opts.fontFamily,
     opts.minWidth,
-    opts.minHeight,
+    opts.minHeight
   );
-  
+
   const inset = width * 0.15;
-  
+
   // Trapezoid path (wider at bottom)
   const path = `
     M ${inset},0
@@ -423,8 +431,10 @@ export const trapezoid: ShapeGenerator = (options: ShapeOptions): ShapePath => {
     L ${width},${height}
     L 0,${height}
     Z
-  `.trim().replace(/\s+/g, ' ');
-  
+  `
+    .trim()
+    .replace(/\s+/g, ' ');
+
   return {
     path,
     width,
@@ -450,11 +460,11 @@ export const trapezoid_alt: ShapeGenerator = (options: ShapeOptions): ShapePath 
     opts.padding,
     opts.fontFamily,
     opts.minWidth,
-    opts.minHeight,
+    opts.minHeight
   );
-  
+
   const inset = width * 0.15;
-  
+
   // Trapezoid path (wider at top)
   const path = `
     M 0,0
@@ -462,8 +472,10 @@ export const trapezoid_alt: ShapeGenerator = (options: ShapeOptions): ShapePath 
     L ${width - inset},${height}
     L ${inset},${height}
     Z
-  `.trim().replace(/\s+/g, ' ');
-  
+  `
+    .trim()
+    .replace(/\s+/g, ' ');
+
   return {
     path,
     width,
@@ -487,18 +499,13 @@ export const double_circle: ShapeGenerator = (options: ShapeOptions): ShapePath 
     opts.text,
     opts.fontSize,
     opts.padding * 1.5, // More padding for double circle
-    opts.fontFamily,
+    opts.fontFamily
   );
-  
-  const diameter = Math.max(
-    textMetrics.width,
-    textMetrics.height,
-    opts.minWidth,
-    opts.minHeight,
-  );
+
+  const diameter = Math.max(textMetrics.width, textMetrics.height, opts.minWidth, opts.minHeight);
   const outerRadius = diameter / 2;
   const innerRadius = outerRadius - 5;
-  
+
   // Double circle path
   const path = `
     M ${outerRadius},0
@@ -507,8 +514,10 @@ export const double_circle: ShapeGenerator = (options: ShapeOptions): ShapePath 
     M ${outerRadius},5
     A ${innerRadius},${innerRadius} 0 0,0 ${outerRadius},${diameter - 5}
     A ${innerRadius},${innerRadius} 0 0,0 ${outerRadius},5
-  `.trim().replace(/\s+/g, ' ');
-  
+  `
+    .trim()
+    .replace(/\s+/g, ' ');
+
   return {
     path,
     width: diameter,
@@ -534,12 +543,12 @@ export const asymmetric: ShapeGenerator = (options: ShapeOptions): ShapePath => 
     opts.padding,
     opts.fontFamily,
     opts.minWidth,
-    opts.minHeight,
+    opts.minHeight
   );
-  
+
   const pointWidth = height * 0.3;
   const width = baseWidth + pointWidth;
-  
+
   // Asymmetric shape path
   const path = `
     M 0,0
@@ -548,8 +557,10 @@ export const asymmetric: ShapeGenerator = (options: ShapeOptions): ShapePath => 
     L ${width - pointWidth},${height}
     L 0,${height}
     Z
-  `.trim().replace(/\s+/g, ' ');
-  
+  `
+    .trim()
+    .replace(/\s+/g, ' ');
+
   return {
     path,
     width,

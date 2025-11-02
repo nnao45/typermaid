@@ -6,22 +6,22 @@ import type { EdgeType } from '@lyric-js/core';
 export interface EdgeOptions {
   /** Start point coordinates */
   from: { x: number; y: number };
-  
+
   /** End point coordinates */
   to: { x: number; y: number };
-  
+
   /** Edge label text (optional) */
   label?: string;
-  
+
   /** Path points from layout engine (optional) */
   points?: Array<{ x: number; y: number }>;
-  
+
   /** Curve tension (0 = straight, 1 = very curved) */
   tension?: number;
-  
+
   /** Arrow size */
   arrowSize?: number;
-  
+
   /** Line thickness */
   thickness?: number;
 }
@@ -32,19 +32,19 @@ export interface EdgeOptions {
 export interface EdgePath {
   /** SVG path data */
   path: string;
-  
+
   /** Marker ID for arrow/decoration */
   markerId?: string;
-  
+
   /** Marker SVG definition */
   markerDef?: string;
-  
+
   /** Label position (midpoint) */
   labelPosition?: { x: number; y: number };
-  
+
   /** Stroke dash array for dotted/dashed lines */
   strokeDasharray?: string;
-  
+
   /** Stroke width */
   strokeWidth: number;
 }
@@ -71,11 +71,11 @@ export const DEFAULT_EDGE_OPTIONS: Partial<EdgeOptions> = {
 /**
  * Marker (arrow) types
  */
-export type MarkerType = 
-  | 'arrow'      // Normal arrow >
-  | 'cross'      // Cross x
-  | 'circle'     // Circle o
-  | 'none';      // No marker
+export type MarkerType =
+  | 'arrow' // Normal arrow >
+  | 'cross' // Cross x
+  | 'circle' // Circle o
+  | 'none'; // No marker
 
 /**
  * Arrow/marker definition

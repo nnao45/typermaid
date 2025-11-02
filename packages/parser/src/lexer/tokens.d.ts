@@ -1,0 +1,245 @@
+import { z } from 'zod';
+/**
+ * Token types for lexical analysis
+ */
+export declare const TokenTypeSchema: z.ZodEnum<{
+  TB: 'TB';
+  BT: 'BT';
+  LR: 'LR';
+  RL: 'RL';
+  TD: 'TD';
+  STATE: 'STATE';
+  END: 'END';
+  FLOWCHART: 'FLOWCHART';
+  GRAPH: 'GRAPH';
+  SEQUENCEDIAGRAM: 'SEQUENCEDIAGRAM';
+  ERDIAGRAM: 'ERDIAGRAM';
+  STATEDIAGRAM: 'STATEDIAGRAM';
+  GANTT: 'GANTT';
+  SUBGRAPH: 'SUBGRAPH';
+  CLASSDEF: 'CLASSDEF';
+  CLASS: 'CLASS';
+  CLICK: 'CLICK';
+  STYLE: 'STYLE';
+  DIRECTION: 'DIRECTION';
+  SECTION: 'SECTION';
+  PARTICIPANT: 'PARTICIPANT';
+  ACTOR: 'ACTOR';
+  NOTE: 'NOTE';
+  LOOP: 'LOOP';
+  ALT: 'ALT';
+  ELSE: 'ELSE';
+  OPT: 'OPT';
+  PAR: 'PAR';
+  AND: 'AND';
+  CRITICAL: 'CRITICAL';
+  OPTION: 'OPTION';
+  BREAK: 'BREAK';
+  AUTONUMBER: 'AUTONUMBER';
+  ACTIVATE: 'ACTIVATE';
+  DEACTIVATE: 'DEACTIVATE';
+  LEFT_OF: 'LEFT_OF';
+  RIGHT_OF: 'RIGHT_OF';
+  OVER: 'OVER';
+  AS: 'AS';
+  OF: 'OF';
+  RECT: 'RECT';
+  RGB: 'RGB';
+  RGBA: 'RGBA';
+  LINK: 'LINK';
+  LINKS: 'LINKS';
+  PROPERTIES: 'PROPERTIES';
+  CREATE: 'CREATE';
+  DESTROY: 'DESTROY';
+  BOX: 'BOX';
+  SQUARE_OPEN: 'SQUARE_OPEN';
+  SQUARE_CLOSE: 'SQUARE_CLOSE';
+  ROUND_OPEN: 'ROUND_OPEN';
+  ROUND_CLOSE: 'ROUND_CLOSE';
+  CURLY_OPEN: 'CURLY_OPEN';
+  CURLY_CLOSE: 'CURLY_CLOSE';
+  ASYMMETRIC: 'ASYMMETRIC';
+  ARROW: 'ARROW';
+  LINE: 'LINE';
+  DOTTED_ARROW: 'DOTTED_ARROW';
+  DOTTED_LINE: 'DOTTED_LINE';
+  THICK_ARROW: 'THICK_ARROW';
+  THICK_LINE: 'THICK_LINE';
+  INVISIBLE: 'INVISIBLE';
+  CIRCLE_EDGE: 'CIRCLE_EDGE';
+  CROSS_EDGE: 'CROSS_EDGE';
+  SEQ_SOLID_ARROW: 'SEQ_SOLID_ARROW';
+  SEQ_DOTTED_ARROW: 'SEQ_DOTTED_ARROW';
+  SEQ_SOLID_OPEN: 'SEQ_SOLID_OPEN';
+  SEQ_DOTTED_OPEN: 'SEQ_DOTTED_OPEN';
+  SEQ_SOLID_CROSS: 'SEQ_SOLID_CROSS';
+  SEQ_DOTTED_CROSS: 'SEQ_DOTTED_CROSS';
+  SEQ_SOLID_OPEN_ASYNC: 'SEQ_SOLID_OPEN_ASYNC';
+  SEQ_DOTTED_OPEN_ASYNC: 'SEQ_DOTTED_OPEN_ASYNC';
+  ER_RELATIONSHIP: 'ER_RELATIONSHIP';
+  IDENTIFIER: 'IDENTIFIER';
+  STRING: 'STRING';
+  NUMBER: 'NUMBER';
+  TEXT: 'TEXT';
+  DOT: 'DOT';
+  PIPE: 'PIPE';
+  ASTERISK: 'ASTERISK';
+  ANGLE_OPEN: 'ANGLE_OPEN';
+  ANGLE_CLOSE: 'ANGLE_CLOSE';
+  SEMICOLON: 'SEMICOLON';
+  COLON: 'COLON';
+  COMMA: 'COMMA';
+  AMPERSAND: 'AMPERSAND';
+  PLUS: 'PLUS';
+  MINUS: 'MINUS';
+  SPECIAL_CHAR: 'SPECIAL_CHAR';
+  NEWLINE: 'NEWLINE';
+  WHITESPACE: 'WHITESPACE';
+  COMMENT: 'COMMENT';
+  EOF: 'EOF';
+}>;
+/**
+ * Position in source code
+ */
+export declare const PositionSchema: z.ZodObject<
+  {
+    line: z.ZodNumber;
+    column: z.ZodNumber;
+    offset: z.ZodNumber;
+  },
+  z.core.$strip
+>;
+/**
+ * Token schema
+ */
+export declare const TokenSchema: z.ZodObject<
+  {
+    type: z.ZodEnum<{
+      TB: 'TB';
+      BT: 'BT';
+      LR: 'LR';
+      RL: 'RL';
+      TD: 'TD';
+      STATE: 'STATE';
+      END: 'END';
+      FLOWCHART: 'FLOWCHART';
+      GRAPH: 'GRAPH';
+      SEQUENCEDIAGRAM: 'SEQUENCEDIAGRAM';
+      ERDIAGRAM: 'ERDIAGRAM';
+      STATEDIAGRAM: 'STATEDIAGRAM';
+      GANTT: 'GANTT';
+      SUBGRAPH: 'SUBGRAPH';
+      CLASSDEF: 'CLASSDEF';
+      CLASS: 'CLASS';
+      CLICK: 'CLICK';
+      STYLE: 'STYLE';
+      DIRECTION: 'DIRECTION';
+      SECTION: 'SECTION';
+      PARTICIPANT: 'PARTICIPANT';
+      ACTOR: 'ACTOR';
+      NOTE: 'NOTE';
+      LOOP: 'LOOP';
+      ALT: 'ALT';
+      ELSE: 'ELSE';
+      OPT: 'OPT';
+      PAR: 'PAR';
+      AND: 'AND';
+      CRITICAL: 'CRITICAL';
+      OPTION: 'OPTION';
+      BREAK: 'BREAK';
+      AUTONUMBER: 'AUTONUMBER';
+      ACTIVATE: 'ACTIVATE';
+      DEACTIVATE: 'DEACTIVATE';
+      LEFT_OF: 'LEFT_OF';
+      RIGHT_OF: 'RIGHT_OF';
+      OVER: 'OVER';
+      AS: 'AS';
+      OF: 'OF';
+      RECT: 'RECT';
+      RGB: 'RGB';
+      RGBA: 'RGBA';
+      LINK: 'LINK';
+      LINKS: 'LINKS';
+      PROPERTIES: 'PROPERTIES';
+      CREATE: 'CREATE';
+      DESTROY: 'DESTROY';
+      BOX: 'BOX';
+      SQUARE_OPEN: 'SQUARE_OPEN';
+      SQUARE_CLOSE: 'SQUARE_CLOSE';
+      ROUND_OPEN: 'ROUND_OPEN';
+      ROUND_CLOSE: 'ROUND_CLOSE';
+      CURLY_OPEN: 'CURLY_OPEN';
+      CURLY_CLOSE: 'CURLY_CLOSE';
+      ASYMMETRIC: 'ASYMMETRIC';
+      ARROW: 'ARROW';
+      LINE: 'LINE';
+      DOTTED_ARROW: 'DOTTED_ARROW';
+      DOTTED_LINE: 'DOTTED_LINE';
+      THICK_ARROW: 'THICK_ARROW';
+      THICK_LINE: 'THICK_LINE';
+      INVISIBLE: 'INVISIBLE';
+      CIRCLE_EDGE: 'CIRCLE_EDGE';
+      CROSS_EDGE: 'CROSS_EDGE';
+      SEQ_SOLID_ARROW: 'SEQ_SOLID_ARROW';
+      SEQ_DOTTED_ARROW: 'SEQ_DOTTED_ARROW';
+      SEQ_SOLID_OPEN: 'SEQ_SOLID_OPEN';
+      SEQ_DOTTED_OPEN: 'SEQ_DOTTED_OPEN';
+      SEQ_SOLID_CROSS: 'SEQ_SOLID_CROSS';
+      SEQ_DOTTED_CROSS: 'SEQ_DOTTED_CROSS';
+      SEQ_SOLID_OPEN_ASYNC: 'SEQ_SOLID_OPEN_ASYNC';
+      SEQ_DOTTED_OPEN_ASYNC: 'SEQ_DOTTED_OPEN_ASYNC';
+      ER_RELATIONSHIP: 'ER_RELATIONSHIP';
+      IDENTIFIER: 'IDENTIFIER';
+      STRING: 'STRING';
+      NUMBER: 'NUMBER';
+      TEXT: 'TEXT';
+      DOT: 'DOT';
+      PIPE: 'PIPE';
+      ASTERISK: 'ASTERISK';
+      ANGLE_OPEN: 'ANGLE_OPEN';
+      ANGLE_CLOSE: 'ANGLE_CLOSE';
+      SEMICOLON: 'SEMICOLON';
+      COLON: 'COLON';
+      COMMA: 'COMMA';
+      AMPERSAND: 'AMPERSAND';
+      PLUS: 'PLUS';
+      MINUS: 'MINUS';
+      SPECIAL_CHAR: 'SPECIAL_CHAR';
+      NEWLINE: 'NEWLINE';
+      WHITESPACE: 'WHITESPACE';
+      COMMENT: 'COMMENT';
+      EOF: 'EOF';
+    }>;
+    value: z.ZodString;
+    start: z.ZodObject<
+      {
+        line: z.ZodNumber;
+        column: z.ZodNumber;
+        offset: z.ZodNumber;
+      },
+      z.core.$strip
+    >;
+    end: z.ZodObject<
+      {
+        line: z.ZodNumber;
+        column: z.ZodNumber;
+        offset: z.ZodNumber;
+      },
+      z.core.$strip
+    >;
+  },
+  z.core.$strip
+>;
+export type TokenType = z.infer<typeof TokenTypeSchema>;
+export type Position = z.infer<typeof PositionSchema>;
+export type Token = z.infer<typeof TokenSchema>;
+/**
+ * Helper to create tokens
+ */
+export declare function createToken(
+  type: TokenType,
+  value: string,
+  start: Position,
+  end: Position
+): Token;
+//# sourceMappingURL=tokens.d.ts.map

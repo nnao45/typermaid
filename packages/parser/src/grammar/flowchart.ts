@@ -201,14 +201,14 @@ export class FlowchartParser {
     // Check for edge label |text|
     if (this.check('PIPE')) {
       this.advance(); // consume |
-      
+
       // Collect all tokens until closing pipe
       const labelParts: string[] = [];
       while (!this.check('PIPE') && !this.isAtEnd()) {
         labelParts.push(this.advance().value);
       }
       label = labelParts.join(' ');
-      
+
       this.consume('PIPE', 'Expected closing |');
     }
 
@@ -334,7 +334,11 @@ export class FlowchartParser {
     if (this.check(type)) {
       return this.advance();
     }
-    throw new ParserError(message, this.peek());
+    const token = this.peek();
+    if (!token) {
+      throw new ParserError(message);
+    }
+    throw new ParserError(message, token.start.line, token.start.column, token);
   }
 
   private consumeClosing(): void {

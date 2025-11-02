@@ -1,4 +1,12 @@
-import type { Direction, NodeShape } from '@lyric-js/core';
+import type {
+  ClassDiagram,
+  Direction,
+  ERDiagram,
+  GanttDiagram,
+  NodeShape,
+  SequenceDiagram,
+  StateDiagram,
+} from '@lyric-js/core';
 import { z } from 'zod';
 
 /**
@@ -7,6 +15,11 @@ import { z } from 'zod';
 export const ASTNodeTypeSchema = z.enum([
   'Program',
   'FlowchartDiagram',
+  'SequenceDiagram',
+  'ClassDiagram',
+  'ERDiagram',
+  'StateDiagram',
+  'GanttDiagram',
   'Node',
   'Edge',
   'Subgraph',
@@ -76,6 +89,46 @@ export const FlowchartDiagramASTSchema = BaseASTNodeSchema.extend({
 });
 
 /**
+ * Sequence Diagram AST
+ */
+export const SequenceDiagramASTSchema = BaseASTNodeSchema.extend({
+  type: z.literal('SequenceDiagram'),
+  diagram: z.unknown() as z.ZodType<SequenceDiagram>,
+});
+
+/**
+ * Class Diagram AST
+ */
+export const ClassDiagramASTSchema = BaseASTNodeSchema.extend({
+  type: z.literal('ClassDiagram'),
+  diagram: z.unknown() as z.ZodType<ClassDiagram>,
+});
+
+/**
+ * ER Diagram AST
+ */
+export const ERDiagramASTSchema = BaseASTNodeSchema.extend({
+  type: z.literal('ERDiagram'),
+  diagram: z.unknown() as z.ZodType<ERDiagram>,
+});
+
+/**
+ * State Diagram AST
+ */
+export const StateDiagramASTSchema = BaseASTNodeSchema.extend({
+  type: z.literal('StateDiagram'),
+  diagram: z.unknown() as z.ZodType<StateDiagram>,
+});
+
+/**
+ * Gantt Diagram AST
+ */
+export const GanttDiagramASTSchema = BaseASTNodeSchema.extend({
+  type: z.literal('GanttDiagram'),
+  diagram: z.unknown() as z.ZodType<GanttDiagram>,
+});
+
+/**
  * Program (root) AST
  */
 export const ProgramASTSchema = BaseASTNodeSchema.extend({
@@ -89,6 +142,21 @@ export type FlowchartNodeAST = z.infer<typeof FlowchartNodeASTSchema>;
 export type EdgeAST = z.infer<typeof EdgeASTSchema>;
 export type SubgraphAST = z.infer<typeof SubgraphASTSchema>;
 export type FlowchartDiagramAST = z.infer<typeof FlowchartDiagramASTSchema>;
+export type SequenceDiagramAST = z.infer<typeof SequenceDiagramASTSchema>;
+export type ClassDiagramAST = z.infer<typeof ClassDiagramASTSchema>;
+export type ERDiagramAST = z.infer<typeof ERDiagramASTSchema>;
+export type StateDiagramAST = z.infer<typeof StateDiagramASTSchema>;
+export type GanttDiagramAST = z.infer<typeof GanttDiagramASTSchema>;
 export type ProgramAST = z.infer<typeof ProgramASTSchema>;
 
-export type ASTNode = ProgramAST | FlowchartDiagramAST | FlowchartNodeAST | EdgeAST | SubgraphAST;
+export type ASTNode =
+  | ProgramAST
+  | FlowchartDiagramAST
+  | SequenceDiagramAST
+  | ClassDiagramAST
+  | ERDiagramAST
+  | StateDiagramAST
+  | GanttDiagramAST
+  | FlowchartNodeAST
+  | EdgeAST
+  | SubgraphAST;

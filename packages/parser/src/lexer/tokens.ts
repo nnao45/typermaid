@@ -4,15 +4,55 @@ import { z } from 'zod';
  * Token types for lexical analysis
  */
 export const TokenTypeSchema = z.enum([
-  // Keywords
+  // Diagram type keywords
   'FLOWCHART',
   'GRAPH',
+  'SEQUENCEDIAGRAM',
+  'ERDIAGRAM',
+  'STATEDIAGRAM',
+  'GANTT',
+
+  // Flowchart keywords
   'SUBGRAPH',
   'END',
   'CLASSDEF',
   'CLASS',
   'CLICK',
   'STYLE',
+  'STATE',
+  'DIRECTION',
+  'SECTION',
+
+  // Sequence diagram keywords
+  'PARTICIPANT',
+  'ACTOR',
+  'NOTE',
+  'LOOP',
+  'ALT',
+  'ELSE',
+  'OPT',
+  'PAR',
+  'AND',
+  'CRITICAL',
+  'OPTION',
+  'BREAK',
+  'AUTONUMBER',
+  'ACTIVATE',
+  'DEACTIVATE',
+  'LEFT_OF',
+  'RIGHT_OF',
+  'OVER',
+  'AS',
+  'OF',
+  'RECT',
+  'RGB',
+  'RGBA',
+  'LINK',
+  'LINKS',
+  'PROPERTIES',
+  'CREATE',
+  'DESTROY',
+  'BOX',
 
   // Direction keywords
   'TB',
@@ -30,7 +70,7 @@ export const TokenTypeSchema = z.enum([
   'CURLY_CLOSE', // }
   'ASYMMETRIC', // >
 
-  // Edge types
+  // Edge types (flowchart)
   'ARROW', // -->
   'LINE', // ---
   'DOTTED_ARROW', // -.->
@@ -41,17 +81,38 @@ export const TokenTypeSchema = z.enum([
   'CIRCLE_EDGE', // --o or o--
   'CROSS_EDGE', // --x or x--
 
+  // Sequence diagram message types
+  'SEQ_SOLID_ARROW', // ->>
+  'SEQ_DOTTED_ARROW', // -->>
+  'SEQ_SOLID_OPEN', // ->
+  'SEQ_DOTTED_OPEN', // -->
+  'SEQ_SOLID_CROSS', // -x
+  'SEQ_DOTTED_CROSS', // --x
+  'SEQ_SOLID_OPEN_ASYNC', // -)
+  'SEQ_DOTTED_OPEN_ASYNC', // --)
+
+  // ER diagram relationship types
+  'ER_RELATIONSHIP', // ||--o{ etc
+
   // Literals
   'IDENTIFIER', // node IDs
   'STRING', // quoted strings
   'NUMBER', // numbers
+  'TEXT', // free text
 
   // Special
+  'DOT', // .
   'PIPE', // |
+  'ASTERISK', // *
+  'ANGLE_OPEN', // <
+  'ANGLE_CLOSE', // >
   'SEMICOLON', // ;
   'COLON', // :
   'COMMA', // ,
   'AMPERSAND', // &
+  'PLUS', // +
+  'MINUS', // -
+  'SPECIAL_CHAR', // ( ) , etc
   'NEWLINE',
   'WHITESPACE',
   'COMMENT',

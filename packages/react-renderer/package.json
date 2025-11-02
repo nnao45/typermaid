@@ -1,0 +1,54 @@
+{
+  "name": "@lyric-js/react-renderer",
+  "version": "0.1.0",
+  "description": "React components for rendering Mermaid diagrams",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "lint": "biome check src/",
+    "lint:fix": "biome check --write src/"
+  },
+  "keywords": [
+    "mermaid",
+    "diagram",
+    "react",
+    "typescript",
+    "svg",
+    "flowchart"
+  ],
+  "author": "nnao45",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "dependencies": {
+    "@lyric-js/core": "workspace:*",
+    "@lyric-js/parser": "workspace:*",
+    "@lyric-js/renderer-core": "workspace:*",
+    "dagre": "^0.8.5"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/dagre": "^0.7.52",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/jest-dom": "^6.6.3",
+    "jsdom": "^25.0.1",
+    "vitest": "^2.1.5",
+    "typescript": "^5.7.2"
+  }
+}

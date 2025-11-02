@@ -22,13 +22,13 @@ const CHAR_WIDTH_RATIO = 0.6; // Average character width as ratio of font size
 export function measureText(
   text: string,
   fontSize: number,
-  _fontFamily: string = 'Arial, sans-serif',
+  _fontFamily: string = 'Arial, sans-serif'
 ): TextMetrics {
   // Simple approximation
   const avgCharWidth = fontSize * CHAR_WIDTH_RATIO;
   const width = text.length * avgCharWidth;
   const height = fontSize;
-  
+
   return { width, height };
 }
 
@@ -41,13 +41,13 @@ export function calculateTextBox(
   padding: number,
   fontFamily?: string,
   minWidth: number = 0,
-  minHeight: number = 0,
+  minHeight: number = 0
 ): { width: number; height: number } {
   const metrics = measureText(text, fontSize, fontFamily);
-  
+
   const width = Math.max(metrics.width + padding * 2, minWidth);
   const height = Math.max(metrics.height + padding * 2, minHeight);
-  
+
   return { width, height };
 }
 
@@ -58,16 +58,16 @@ export function wrapText(
   text: string,
   maxWidth: number,
   fontSize: number,
-  fontFamily?: string,
+  fontFamily?: string
 ): string[] {
   const words = text.split(' ');
   const lines: string[] = [];
   let currentLine = '';
-  
+
   for (const word of words) {
     const testLine = currentLine ? `${currentLine} ${word}` : word;
     const metrics = measureText(testLine, fontSize, fontFamily);
-    
+
     if (metrics.width > maxWidth && currentLine) {
       lines.push(currentLine);
       currentLine = word;
@@ -75,10 +75,10 @@ export function wrapText(
       currentLine = testLine;
     }
   }
-  
+
   if (currentLine) {
     lines.push(currentLine);
   }
-  
+
   return lines;
 }

@@ -1,7 +1,12 @@
+import {
+  createArrowMarker,
+  createCircleMarker,
+  createCrossMarker,
+  markerToSVG,
+} from './markers.js';
+import { calculateLabelPosition, smoothCurve, straightLine } from './path-utils.js';
 import type { EdgeOptions, EdgePath } from './types.js';
 import { DEFAULT_EDGE_OPTIONS } from './types.js';
-import { createArrowMarker, createCircleMarker, createCrossMarker, markerToSVG } from './markers.js';
-import { straightLine, smoothCurve, calculateLabelPosition } from './path-utils.js';
 
 /**
  * Normal arrow edge: A --> B
@@ -9,17 +14,18 @@ import { straightLine, smoothCurve, calculateLabelPosition } from './path-utils.
 export function arrow(options: EdgeOptions): EdgePath {
   const opts = { ...DEFAULT_EDGE_OPTIONS, ...options };
   const { from, to, points, tension = 0.5, arrowSize = 8, thickness = 2 } = opts;
-  
+
   const pathPoints = points && points.length > 0 ? points : [from, to];
   const firstPoint = pathPoints[0];
   const lastPoint = pathPoints[pathPoints.length - 1];
-  
-  const path = pathPoints.length === 2 && firstPoint && lastPoint
-    ? straightLine(firstPoint, lastPoint)
-    : smoothCurve(pathPoints, tension);
-  
+
+  const path =
+    pathPoints.length === 2 && firstPoint && lastPoint
+      ? straightLine(firstPoint, lastPoint)
+      : smoothCurve(pathPoints, tension);
+
   const marker = createArrowMarker('arrow-end', arrowSize);
-  
+
   return {
     path,
     markerId: marker.id,
@@ -35,17 +41,18 @@ export function arrow(options: EdgeOptions): EdgePath {
 export function open(options: EdgeOptions): EdgePath {
   const opts = { ...DEFAULT_EDGE_OPTIONS, ...options };
   const { from, to, points, tension = 0.5, arrowSize = 8, thickness = 2 } = opts;
-  
+
   const pathPoints = points && points.length > 0 ? points : [from, to];
   const firstPoint = pathPoints[0];
   const lastPoint = pathPoints[pathPoints.length - 1];
-  
-  const path = pathPoints.length === 2 && firstPoint && lastPoint
-    ? straightLine(firstPoint, lastPoint)
-    : smoothCurve(pathPoints, tension);
-  
+
+  const path =
+    pathPoints.length === 2 && firstPoint && lastPoint
+      ? straightLine(firstPoint, lastPoint)
+      : smoothCurve(pathPoints, tension);
+
   const marker = createCircleMarker('circle-end', arrowSize / 2);
-  
+
   return {
     path,
     markerId: marker.id,
@@ -61,17 +68,18 @@ export function open(options: EdgeOptions): EdgePath {
 export function cross(options: EdgeOptions): EdgePath {
   const opts = { ...DEFAULT_EDGE_OPTIONS, ...options };
   const { from, to, points, tension = 0.5, arrowSize = 8, thickness = 2 } = opts;
-  
+
   const pathPoints = points && points.length > 0 ? points : [from, to];
   const firstPoint = pathPoints[0];
   const lastPoint = pathPoints[pathPoints.length - 1];
-  
-  const path = pathPoints.length === 2 && firstPoint && lastPoint
-    ? straightLine(firstPoint, lastPoint)
-    : smoothCurve(pathPoints, tension);
-  
+
+  const path =
+    pathPoints.length === 2 && firstPoint && lastPoint
+      ? straightLine(firstPoint, lastPoint)
+      : smoothCurve(pathPoints, tension);
+
   const marker = createCrossMarker('cross-end', arrowSize);
-  
+
   return {
     path,
     markerId: marker.id,
@@ -144,12 +152,12 @@ export function thick_cross(options: EdgeOptions): EdgePath {
 export function invisible(options: EdgeOptions): EdgePath {
   const opts = { ...DEFAULT_EDGE_OPTIONS, ...options };
   const { from, to, points } = opts;
-  
+
   const pathPoints = points && points.length > 0 ? points : [from, to];
   const firstPoint = pathPoints[0] || from;
   const lastPoint = pathPoints[pathPoints.length - 1] || to;
   const path = straightLine(firstPoint, lastPoint);
-  
+
   return {
     path,
     labelPosition: calculateLabelPosition(pathPoints),
@@ -163,15 +171,16 @@ export function invisible(options: EdgeOptions): EdgePath {
 export function normal(options: EdgeOptions): EdgePath {
   const opts = { ...DEFAULT_EDGE_OPTIONS, ...options };
   const { from, to, points, tension = 0.5, thickness = 2 } = opts;
-  
+
   const pathPoints = points && points.length > 0 ? points : [from, to];
   const firstPoint = pathPoints[0];
   const lastPoint = pathPoints[pathPoints.length - 1];
-  
-  const path = pathPoints.length === 2 && firstPoint && lastPoint
-    ? straightLine(firstPoint, lastPoint)
-    : smoothCurve(pathPoints, tension);
-  
+
+  const path =
+    pathPoints.length === 2 && firstPoint && lastPoint
+      ? straightLine(firstPoint, lastPoint)
+      : smoothCurve(pathPoints, tension);
+
   return {
     path,
     labelPosition: calculateLabelPosition(pathPoints),

@@ -6,7 +6,7 @@ import type { MarkerDefinition, MarkerType } from './types.js';
 export function createArrowMarker(
   id: string,
   size: number = 8,
-  fill: string = 'currentColor',
+  fill: string = 'currentColor'
 ): MarkerDefinition {
   return {
     id,
@@ -25,7 +25,7 @@ export function createArrowMarker(
 export function createCrossMarker(
   id: string,
   size: number = 8,
-  stroke: string = 'currentColor',
+  stroke: string = 'currentColor'
 ): MarkerDefinition {
   const half = size / 2;
   return {
@@ -46,7 +46,7 @@ export function createCircleMarker(
   id: string,
   radius: number = 4,
   fill: string = 'none',
-  stroke: string = 'currentColor',
+  stroke: string = 'currentColor'
 ): MarkerDefinition {
   const size = radius * 2;
   return {
@@ -67,7 +67,7 @@ export function createCircleMarker(
 export function getMarkerDefinition(
   type: MarkerType,
   id: string,
-  size: number = 8,
+  size: number = 8
 ): MarkerDefinition | null {
   switch (type) {
     case 'arrow':
@@ -88,10 +88,10 @@ export function getMarkerDefinition(
  */
 export function markerToSVG(marker: MarkerDefinition): string {
   const { id, path, width, height, refX, refY, fill, stroke } = marker;
-  
+
   const fillAttr = fill ? `fill="${fill}"` : 'fill="none"';
   const strokeAttr = stroke ? `stroke="${stroke}" stroke-width="2"` : '';
-  
+
   return `<marker
     id="${id}"
     markerWidth="${width}"

@@ -8,17 +8,17 @@ export interface ShapePath {
    * SVG path data string
    */
   path: string;
-  
+
   /**
    * Width of the shape
    */
   width: number;
-  
+
   /**
    * Height of the shape
    */
   height: number;
-  
+
   /**
    * Label position (relative to top-left corner)
    */
@@ -26,12 +26,12 @@ export interface ShapePath {
     x: number;
     y: number;
   };
-  
+
   /**
    * Text anchor for the label
    */
   textAnchor: 'start' | 'middle' | 'end';
-  
+
   /**
    * Vertical alignment baseline
    */
@@ -46,27 +46,27 @@ export interface ShapeOptions {
    * Text content (for size calculation)
    */
   text: string;
-  
+
   /**
    * Padding inside the shape
    */
   padding?: number;
-  
+
   /**
    * Font size
    */
   fontSize?: number;
-  
+
   /**
    * Font family
    */
   fontFamily?: string;
-  
+
   /**
    * Minimum width
    */
   minWidth?: number;
-  
+
   /**
    * Minimum height
    */
