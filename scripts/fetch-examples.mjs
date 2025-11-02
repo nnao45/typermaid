@@ -12,51 +12,55 @@ const TEST_URLS = [
 
 async function extractMermaidCode(content) {
   const examples = [];
-  
+
   // Match flowchart/graph code in backticks
   const regex = /`([^`]*(?:flowchart|graph)[^`]*)`/gs;
   let match;
-  
+
   while ((match = regex.exec(content)) !== null) {
     const code = match[1].trim();
     if (code.includes('flowchart') || code.includes('graph')) {
       examples.push(code);
     }
   }
-  
+
   return examples;
 }
 
 async function main() {
   let counter = 0;
-  
+
   console.log('📥 Fetching Mermaid examples from official repository...\n');
-  
+
   for (const url of TEST_URLS) {
     const filename = url.split('/').pop() || 'unknown';
     console.log(`📄 Processing ${filename}...`);
-    
+
     try {
       const response = await fetch(url);
       const content = await response.text();
-      
+
       const examples = await extractMermaidCode(content);
-      
+
       for (const code of examples) {
         counter++;
-        const outputFile = path.join('e2e', 'flowchart', `${String(counter).padStart(3, '0')}_example.mmd`);
+        const outputFile = path.join(
+          'e2e',
+          'flowchart',
+          `${String(counter).padStart(3, '0')}_example.mmd`
+        );
         await fs.writeFile(outputFile, code);
         console.log(`  ✅ Saved: ${outputFile}`);
-        
+
         if (counter >= 100) break;
       }
-      
+
       if (counter >= 100) break;
     } catch (error) {
       console.error(`  ❌ Error: ${error}`);
     }
   }
-  
+
   console.log(`\n🎉 Total examples collected: ${counter}`);
 }
 

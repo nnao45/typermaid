@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant A
+    participant B
+    participant C
+    
+    rect rgb(200, 220, 250)
+        A->>B: First group
+        B->>C: First group continued
+    end
+    
+    rect rgba(200, 250, 200, 0.5)
+        A->>C: Second group
+        Note over A,C: With transparency
+    end

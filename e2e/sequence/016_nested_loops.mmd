@@ -1,0 +1,13 @@
+sequenceDiagram
+    participant A as Alice
+    participant B as Bob
+    participant C as Carol
+    
+    loop Daily check
+        A->>B: Request status
+        loop For each item
+            B->>C: Check item
+            C-->>B: Item status
+        end
+        B-->>A: All status
+    end

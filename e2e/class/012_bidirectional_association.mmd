@@ -1,0 +1,13 @@
+classDiagram
+    class Student {
+        +String name
+        +int studentId
+        +enrollCourse(Course)
+    }
+    class Course {
+        +String title
+        +String code
+        +addStudent(Student)
+    }
+    Student "0..*" --> "0..*" Course : enrolls in
+    Course "0..*" --> "0..*" Student : has enrolled

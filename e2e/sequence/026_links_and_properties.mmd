@@ -1,0 +1,12 @@
+sequenceDiagram
+    actor Alice
+    actor Bob
+    
+    link Alice: Dashboard @ https://dashboard.example.com
+    link Alice: Repository @ https://repo.example.com
+    links Bob: {"Dashboard": "https://dashboard.example.com", "Wiki": "https://wiki.example.com"}
+    
+    properties Alice: {"Age": 25, "Role": "Developer"}
+    
+    Alice->>Bob: Hello with links
+    Bob-->>Alice: Hi there

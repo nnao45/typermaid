@@ -1,0 +1,36 @@
+sequenceDiagram
+    participant Coordinator
+    participant ServiceA
+    participant ServiceB
+    participant ServiceC
+    participant MessageQueue
+    
+    Coordinator->>+ServiceA: Prepare transaction
+    Coordinator->>+ServiceB: Prepare transaction
+    Coordinator->>+ServiceC: Prepare transaction
+    
+    critical Transaction phase 1
+        ServiceA-->>Coordinator: Ready
+        ServiceB-->>Coordinator: Ready
+        ServiceC-->>Coordinator: Ready
+    option Timeout
+        Coordinator->>Coordinator: Abort transaction
+        Coordinator->>ServiceA: Rollback
+        Coordinator->>ServiceB: Rollback
+        Coordinator->>ServiceC: Rollback
+    end
+    
+    alt All services ready
+        Coordinator->>ServiceA: Commit
+        Coordinator->>ServiceB: Commit
+        Coordinator->>ServiceC: Commit
+        ServiceA-->>-Coordinator: Committed
+        ServiceB-->>-Coordinator: Committed
+        ServiceC-->>-Coordinator: Committed
+        Coordinator->>+MessageQueue: Publish success event
+        MessageQueue-->>-Coordinator: Ack
+    else Any service failed
+        Coordinator->>ServiceA: Rollback
+        Coordinator->>ServiceB: Rollback
+        Coordinator->>ServiceC: Rollback
+    end

@@ -1,0 +1,23 @@
+classDiagram
+    namespace com.example.domain {
+        class User {
+            +String username
+            +String email
+        }
+        class Order {
+            +int orderId
+            +Date orderDate
+        }
+    }
+    namespace com.example.service {
+        class UserService {
+            +createUser(User)
+            +findUser(int)
+        }
+        class OrderService {
+            +createOrder(Order)
+            +findOrder(int)
+        }
+    }
+    UserService ..> User : uses
+    OrderService ..> Order : uses

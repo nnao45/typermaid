@@ -1,0 +1,30 @@
+sequenceDiagram
+    actor User
+    participant Gateway as API Gateway
+    participant Auth as Auth Service
+    participant Order as Order Service
+    participant Payment as Payment Service
+    participant Inventory as Inventory Service
+    participant Notification as Notification Service
+    
+    User->>Gateway: Create order
+    Gateway->>Auth: Validate token
+    Auth-->>Gateway: Token valid
+    
+    par Process order
+        Gateway->>Order: Create order
+        Order->>Inventory: Reserve items
+        Inventory-->>Order: Reserved
+    and Process payment
+        Gateway->>Payment: Charge payment
+        Payment-->>Gateway: Payment success
+    end
+    
+    alt All successful
+        Order->>Notification: Send confirmation
+        Notification-->>User: Email sent
+        Gateway-->>User: Order created
+    else Payment failed
+        Order->>Inventory: Release reservation
+        Gateway-->>User: Payment failed
+    end

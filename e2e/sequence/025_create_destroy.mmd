@@ -1,0 +1,13 @@
+sequenceDiagram
+    participant Main
+    participant Worker
+    
+    Main->>+Worker: create Worker instance
+    create participant Helper
+    Worker->>Helper: Create helper
+    
+    Helper->>Worker: Process data
+    Worker-->>-Main: Result
+    
+    destroy Helper
+    Worker->>Helper: Destroy helper

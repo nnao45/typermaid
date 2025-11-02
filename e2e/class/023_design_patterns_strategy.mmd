@@ -1,0 +1,23 @@
+classDiagram
+    class Strategy {
+        <<interface>>
+        +execute(String, String) String
+    }
+    class ConcreteStrategyA {
+        +execute(String, String) String
+    }
+    class ConcreteStrategyB {
+        +execute(String, String) String
+    }
+    class ConcreteStrategyC {
+        +execute(String, String) String
+    }
+    class Context {
+        -Strategy strategy
+        +setStrategy(Strategy)
+        +executeStrategy(String, String) String
+    }
+    Strategy <|.. ConcreteStrategyA
+    Strategy <|.. ConcreteStrategyB
+    Strategy <|.. ConcreteStrategyC
+    Context o-- Strategy : uses

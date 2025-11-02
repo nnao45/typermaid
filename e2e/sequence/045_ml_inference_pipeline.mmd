@@ -1,0 +1,93 @@
+sequenceDiagram
+    participant Client
+    participant APIGateway
+    participant PreProcessor
+    participant ModelServer
+    participant FeatureStore
+    participant Cache
+    participant PostProcessor
+    participant Monitoring
+    
+    Client->>+APIGateway: POST /predict (input_data)
+    APIGateway->>APIGateway: Validate API key
+    APIGateway->>+PreProcessor: Forward request
+    
+    PreProcessor->>PreProcessor: Validate schema
+    PreProcessor->>PreProcessor: Normalize input
+    
+    par Feature engineering
+        PreProcessor->>+FeatureStore: Get user features
+        FeatureStore->>+Cache: Check cache
+        
+        alt Cache hit
+            Cache-->>-FeatureStore: Cached features
+        else Cache miss
+            Cache-->>FeatureStore: Not found
+            FeatureStore->>Database: Query features
+            FeatureStore->>Cache: Update cache
+        end
+        
+        FeatureStore-->>-PreProcessor: Feature vector
+    and
+        PreProcessor->>PreProcessor: Extract text features
+        PreProcessor->>PreProcessor: Compute embeddings
+    end
+    
+    PreProcessor->>PreProcessor: Combine features
+    PreProcessor->>+ModelServer: Inference request
+    
+    ModelServer->>+Cache: Check prediction cache
+    
+    alt Cached prediction
+        Cache-->>-ModelServer: Cached result
+        ModelServer-->>PreProcessor: Prediction
+    else New prediction
+        Cache-->>ModelServer: Not cached
+        
+        critical Model inference
+            ModelServer->>ModelServer: Load model (if needed)
+            ModelServer->>ModelServer: Run inference
+            ModelServer->>ModelServer: Calculate confidence
+            
+        option Model error
+            ModelServer->>ModelServer: Use fallback model
+        option Timeout
+            ModelServer-->>PreProcessor: 503 Service Unavailable
+        end
+        
+        ModelServer->>+Cache: Store prediction
+        Cache-->>-ModelServer: Cached
+        ModelServer-->>-PreProcessor: Prediction + confidence
+    end
+    
+    PreProcessor->>+PostProcessor: Raw prediction
+    PostProcessor->>PostProcessor: Apply business rules
+    
+    alt High confidence (> 0.9)
+        PostProcessor->>PostProcessor: Auto-approve
+    else Medium confidence (0.5-0.9)
+        PostProcessor->>PostProcessor: Flag for review
+    else Low confidence (< 0.5)
+        PostProcessor->>PostProcessor: Use default rule
+    end
+    
+    PostProcessor->>PostProcessor: Format response
+    PostProcessor-->>-PreProcessor: Processed result
+    PreProcessor-->>-APIGateway: Response
+    
+    par Async monitoring
+        APIGateway->>+Monitoring: Log prediction
+        Monitoring->>Monitoring: Track latency
+        Monitoring->>Monitoring: Update metrics
+        Monitoring-->>-APIGateway: Logged
+    and
+        APIGateway-->>-Client: 200 OK + prediction result
+    end
+    
+    opt Model feedback loop
+        Client->>+APIGateway: POST /feedback (prediction_id, actual_value)
+        APIGateway->>+Monitoring: Store feedback
+        Monitoring->>Monitoring: Calculate model drift
+        Monitoring-->>-APIGateway: Acknowledged
+        APIGateway-->>-Client: Feedback received
+    end

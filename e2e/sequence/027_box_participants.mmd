@@ -1,0 +1,26 @@
+sequenceDiagram
+    box Purple Frontend
+        participant U as User
+        participant UI as UI Component
+    end
+    
+    box Blue Backend
+        participant API
+        participant Auth
+    end
+    
+    box Green Database
+        participant DB
+        participant Cache
+    end
+    
+    U->>UI: Click button
+    UI->>API: API call
+    API->>Auth: Verify token
+    Auth->>DB: Check user
+    DB-->>Auth: User valid
+    Auth-->>API: Authorized
+    API->>Cache: Get data
+    Cache-->>API: Data
+    API-->>UI: Response
+    UI-->>U: Display

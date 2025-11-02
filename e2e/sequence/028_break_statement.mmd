@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant C as Client
+    participant S as Server
+    participant DB as Database
+    
+    C->>S: Request with ID
+    
+    alt ID exists
+        S->>DB: Fetch data
+        DB-->>S: Return data
+        S-->>C: Success response
+    else ID not found
+        break ID not in database
+            S-->>C: 404 Not Found
+        end
+        S->>DB: This should not execute
+    end

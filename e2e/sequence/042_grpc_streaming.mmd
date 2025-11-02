@@ -1,0 +1,80 @@
+sequenceDiagram
+    participant Client
+    participant gRPCServer
+    participant DataService
+    participant Cache
+    participant Database
+    
+    Note over Client,gRPCServer: Server-side streaming
+    Client->>+gRPCServer: StreamData(request)
+    gRPCServer->>+DataService: Fetch data stream
+    
+    loop Stream data chunks
+        DataService->>+Database: Query next batch
+        Database-->>-DataService: Data chunk
+        DataService-->>gRPCServer: Data chunk
+        gRPCServer-->>Client: stream message 1
+        gRPCServer-->>Client: stream message 2
+        gRPCServer-->>Client: stream message 3
+    end
+    
+    DataService-->>-gRPCServer: Stream complete
+    gRPCServer-->>-Client: End of stream
+    
+    Note over Client,gRPCServer: Client-side streaming
+    Client->>+gRPCServer: UploadStream()
+    
+    loop Client uploads chunks
+        Client-->>gRPCServer: chunk 1
+        Client-->>gRPCServer: chunk 2
+        Client-->>gRPCServer: chunk 3
+        gRPCServer->>gRPCServer: Process chunk
+    end
+    
+    Client-->>gRPCServer: End of stream
+    gRPCServer->>+DataService: Save aggregated data
+    DataService->>+Database: INSERT data
+    Database-->>-DataService: Saved
+    DataService-->>-gRPCServer: Success
+    gRPCServer-->>-Client: Upload complete (size: 1024 KB)
+    
+    Note over Client,gRPCServer: Bidirectional streaming
+    Client->>+gRPCServer: BidirectionalStream()
+    
+    par Concurrent bidirectional communication
+        loop Client sends
+            Client-->>gRPCServer: request 1
+            Client-->>gRPCServer: request 2
+        end
+    and
+        loop Server responds
+            gRPCServer->>+Cache: Check cache
+            Cache-->>-gRPCServer: Cache miss
+            gRPCServer->>+Database: Query
+            Database-->>-gRPCServer: Result
+            gRPCServer-->>Client: response 1
+            gRPCServer-->>Client: response 2
+        end
+    end
+    
+    Client-->>gRPCServer: Close stream
+    gRPCServer-->>-Client: Stream closed
+    
+    Note over Client,gRPCServer: Error handling
+    Client->>+gRPCServer: StreamWithErrors()
+    
+    loop Processing with errors
+        Client-->>gRPCServer: request
+        gRPCServer->>DataService: Process
+        
+        alt Processing successful
+            DataService-->>gRPCServer: Result
+            gRPCServer-->>Client: response
+        else Processing failed
+            DataService--xgRPCServer: Error
+            gRPCServer-->>Client: error status (INTERNAL)
+            break Fatal error
+                gRPCServer-->>-Client: stream terminated
+            end
+        end
+    end

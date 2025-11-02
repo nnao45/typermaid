@@ -1,0 +1,7 @@
+erDiagram
+    PERSON ||--|{ PASSPORT : has
+    PASSPORT {
+        string passportNumber PK
+        string country
+        date expiryDate
+    }

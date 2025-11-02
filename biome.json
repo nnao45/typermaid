@@ -19,7 +19,10 @@
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noExplicitAny": "error"
+        "noExplicitAny": "warn",
+        "noUnknownAtRules": "off",
+        "noAssignInExpressions": "off",
+        "noArrayIndexKey": "off"
       },
       "style": {
         "useConst": "error",
@@ -27,6 +30,11 @@
       },
       "correctness": {
         "noUnusedVariables": "error"
+      },
+      "a11y": {
+        "noSvgWithoutTitle": "off",
+        "noLabelWithoutControl": "off",
+        "noStaticElementInteractions": "off"
       }
     }
   },

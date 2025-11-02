@@ -1,0 +1,22 @@
+classDiagram
+    class Animal {
+        +String name
+        +int age
+        +makeSound()
+    }
+    class Flyable {
+        <<interface>>
+        +fly()
+        +int maxAltitude
+    }
+    class Swimmable {
+        <<interface>>
+        +swim()
+        +int maxDepth
+    }
+    class Duck {
+        +quack()
+    }
+    Animal <|-- Duck
+    Flyable <|.. Duck
+    Swimmable <|.. Duck

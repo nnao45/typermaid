@@ -1,0 +1,75 @@
+sequenceDiagram
+    participant Producer
+    participant KafkaBroker
+    participant StreamProcessor
+    participant StateStore
+    participant Sink
+    participant Monitoring
+    
+    Producer->>+KafkaBroker: Produce message (topic: raw-events)
+    KafkaBroker->>KafkaBroker: Partition & replicate
+    KafkaBroker-->>-Producer: Ack (offset: 1234)
+    
+    loop Stream processing
+        StreamProcessor->>+KafkaBroker: Poll raw-events
+        KafkaBroker-->>-StreamProcessor: Batch of messages
+        
+        loop For each message
+            StreamProcessor->>StreamProcessor: Deserialize
+            StreamProcessor->>StreamProcessor: Transform
+            
+            alt Stateful operation
+                StreamProcessor->>+StateStore: Get current state (key)
+                StateStore-->>-StreamProcessor: Previous value
+                StreamProcessor->>StreamProcessor: Aggregate
+                StreamProcessor->>+StateStore: Update state
+                StateStore-->>-StreamProcessor: Updated
+            end
+            
+            opt Filtering
+                StreamProcessor->>StreamProcessor: Apply predicate
+                break Message filtered out
+                    StreamProcessor->>StreamProcessor: Skip
+                end
+            end
+            
+            StreamProcessor->>StreamProcessor: Enrich with metadata
+        end
+        
+        par Output to multiple topics
+            StreamProcessor->>+KafkaBroker: Produce to processed-events
+            KafkaBroker-->>-StreamProcessor: Ack
+        and
+            StreamProcessor->>+KafkaBroker: Produce to analytics-events
+            KafkaBroker-->>-StreamProcessor: Ack
+        end
+        
+        StreamProcessor->>+KafkaBroker: Commit offset
+        KafkaBroker-->>-StreamProcessor: Committed
+    end
+    
+    Note over Sink: Consume processed events
+    Sink->>+KafkaBroker: Subscribe to processed-events
+    KafkaBroker-->>-Sink: Messages
+    Sink->>Sink: Write to database
+    
+    critical Error handling
+        StreamProcessor->>StreamProcessor: Process message
+        StreamProcessor->>StreamProcessor: Exception occurred
+        
+        opt Retryable error
+            loop Retry with backoff
+                StreamProcessor->>StreamProcessor: Retry processing
+                break Success
+                    StreamProcessor->>KafkaBroker: Continue
+                end
+            end
+        end
+        
+    option Non-retryable error
+        StreamProcessor->>+KafkaBroker: Send to DLQ (dead-letter-queue)
+        KafkaBroker-->>-StreamProcessor: Stored in DLQ
+    end
+    
+    StreamProcessor->>+Monitoring: Report metrics
+    Monitoring-->>-StreamProcessor: Acknowledged

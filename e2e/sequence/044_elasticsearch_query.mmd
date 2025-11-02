@@ -1,0 +1,92 @@
+sequenceDiagram
+    participant Client
+    participant Coordinator
+    participant Shard1
+    participant Shard2
+    participant Shard3
+    participant Cache
+    
+    Client->>+Coordinator: Search query (GET /products/_search)
+    Coordinator->>Coordinator: Parse query DSL
+    Coordinator->>Coordinator: Determine target shards
+    
+    opt Check query cache
+        Coordinator->>+Cache: Check cache key
+        
+        alt Cache hit
+            Cache-->>-Coordinator: Cached results
+            Coordinator-->>Client: Return cached response
+        else Cache miss
+            Cache-->>Coordinator: Not found
+        end
+    end
+    
+    Note over Coordinator: Scatter phase
+    
+    par Query all shards
+        Coordinator->>+Shard1: Query (from: 0, size: 20)
+        Shard1->>Shard1: Execute query
+        Shard1->>Shard1: Score documents
+        Shard1-->>-Coordinator: Top 20 doc IDs + scores
+    and
+        Coordinator->>+Shard2: Query (from: 0, size: 20)
+        Shard2->>Shard2: Execute query
+        Shard2->>Shard2: Score documents
+        Shard2-->>-Coordinator: Top 20 doc IDs + scores
+    and
+        Coordinator->>+Shard3: Query (from: 0, size: 20)
+        Shard3->>Shard3: Execute query
+        Shard3->>Shard3: Score documents
+        Shard3-->>-Coordinator: Top 20 doc IDs + scores
+    end
+    
+    Note over Coordinator: Gather phase
+    
+    Coordinator->>Coordinator: Merge & sort results
+    Coordinator->>Coordinator: Select top 10 globally
+    
+    Note over Coordinator: Fetch phase
+    
+    par Fetch document sources
+        Coordinator->>+Shard1: Fetch docs [1, 5, 9]
+        Shard1->>Shard1: Retrieve _source
+        Shard1-->>-Coordinator: Documents
+    and
+        Coordinator->>+Shard2: Fetch docs [2, 6, 7]
+        Shard2->>Shard2: Retrieve _source
+        Shard2-->>-Coordinator: Documents
+    and
+        Coordinator->>+Shard3: Fetch docs [3, 4, 8]
+        Shard3->>Shard3: Retrieve _source
+        Shard3-->>-Coordinator: Documents
+    end
+    
+    Coordinator->>Coordinator: Assemble final response
+    
+    opt Update cache
+        Coordinator->>+Cache: Store results (TTL: 5min)
+        Cache-->>-Coordinator: Cached
+    end
+    
+    Coordinator-->>-Client: Search results (10 hits, took: 45ms)
+    
+    Note over Client,Shard3: Aggregation query scenario
+    
+    Client->>+Coordinator: Aggregation query
+    
+    par Shard-level aggregation
+        Coordinator->>+Shard1: Compute aggregations
+        Shard1->>Shard1: Calculate buckets
+        Shard1-->>-Coordinator: Partial aggregation
+    and
+        Coordinator->>+Shard2: Compute aggregations
+        Shard2->>Shard2: Calculate buckets
+        Shard2-->>-Coordinator: Partial aggregation
+    and
+        Coordinator->>+Shard3: Compute aggregations
+        Shard3->>Shard3: Calculate buckets
+        Shard3-->>-Coordinator: Partial aggregation
+    end
+    
+    Coordinator->>Coordinator: Reduce aggregations
+    Coordinator-->>-Client: Aggregated results

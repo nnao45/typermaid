@@ -1,0 +1,51 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant ClientApp
+    participant AuthServer
+    participant ResourceServer
+    
+    User->>ClientApp: Click "Login with OAuth"
+    ClientApp->>ClientApp: Generate state & PKCE challenge
+    ClientApp-->>User: Redirect to authorization URL
+    
+    User->>+AuthServer: GET /authorize?client_id&redirect_uri&state&code_challenge
+    AuthServer-->>-User: Show login page
+    
+    User->>+AuthServer: Submit credentials
+    
+    alt Valid credentials
+        AuthServer->>AuthServer: Validate & generate code
+        AuthServer-->>-User: Redirect to callback with code
+        
+        User->>+ClientApp: GET /callback?code=AUTH_CODE&state=STATE
+        ClientApp->>ClientApp: Validate state
+        ClientApp->>+AuthServer: POST /token (code, code_verifier)
+        
+        critical Token exchange
+            AuthServer->>AuthServer: Validate code & PKCE
+            AuthServer-->>ClientApp: Access token + Refresh token
+        option Invalid code
+            AuthServer-->>ClientApp: 400 Bad Request
+        end
+        
+        ClientApp-->>-User: Set session cookie
+        
+        loop Access protected resources
+            User->>+ClientApp: Request protected resource
+            ClientApp->>+ResourceServer: GET /api/data (Bearer token)
+            
+            alt Token valid
+                ResourceServer-->>-ClientApp: Protected data
+                ClientApp-->>-User: Display data
+            else Token expired
+                ResourceServer-->>ClientApp: 401 Unauthorized
+                ClientApp->>+AuthServer: POST /token (refresh_token)
+                AuthServer-->>-ClientApp: New access token
+                ClientApp->>ResourceServer: Retry with new token
+            end
+        end
+        
+    else Invalid credentials
+        AuthServer-->>User: Show error message
+    end

@@ -1,0 +1,32 @@
+sequenceDiagram
+    participant A
+    participant B
+    participant C
+    
+    loop Main loop
+        A->>B: Start
+        
+        opt Optional path
+            B->>C: Check condition
+            
+            alt Condition 1
+                C-->>B: Response 1
+                
+                critical Critical section
+                    B->>B: Update state
+                option Error
+                    B->>A: Rollback
+                end
+                
+            else Condition 2
+                loop Retry 3 times
+                    C->>C: Process
+                    break Success
+                        C-->>B: Done
+                    end
+                end
+            end
+        end
+        
+        B-->>A: Complete
+    end

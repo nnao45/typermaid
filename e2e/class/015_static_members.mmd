@@ -1,0 +1,17 @@
+classDiagram
+    class MathUtils {
+        <<utility>>
+        +PI$ double
+        +E$ double
+        +sqrt(double)$ double
+        +pow(double, double)$ double
+        +max(double, double)$ double
+        +min(double, double)$ double
+    }
+    class Counter {
+        -count$ int
+        +increment()$
+        +decrement()$
+        +getCount()$ int
+        +reset()$
+    }

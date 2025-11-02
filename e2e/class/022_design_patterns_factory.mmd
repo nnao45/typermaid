@@ -1,0 +1,29 @@
+classDiagram
+    class Product {
+        <<interface>>
+        +operation() String
+    }
+    class ConcreteProductA {
+        +operation() String
+    }
+    class ConcreteProductB {
+        +operation() String
+    }
+    class Creator {
+        <<abstract>>
+        +factoryMethod()* Product
+        +someOperation() String
+    }
+    class ConcreteCreatorA {
+        +factoryMethod() Product
+    }
+    class ConcreteCreatorB {
+        +factoryMethod() Product
+    }
+    Product <|.. ConcreteProductA
+    Product <|.. ConcreteProductB
+    Creator <|-- ConcreteCreatorA
+    Creator <|-- ConcreteCreatorB
+    Creator ..> Product : creates
+    ConcreteCreatorA ..> ConcreteProductA : creates
+    ConcreteCreatorB ..> ConcreteProductB : creates

@@ -1,0 +1,45 @@
+sequenceDiagram
+    participant Orchestrator
+    participant OrderService
+    participant PaymentService
+    participant InventoryService
+    participant ShippingService
+    participant NotificationService
+    
+    Orchestrator->>+OrderService: Create order
+    OrderService-->>-Orchestrator: Order created (ID: 123)
+    
+    Orchestrator->>+PaymentService: Process payment
+    
+    alt Payment successful
+        PaymentService-->>-Orchestrator: Payment confirmed
+        Orchestrator->>+InventoryService: Reserve items
+        
+        alt Items available
+            InventoryService-->>-Orchestrator: Items reserved
+            Orchestrator->>+ShippingService: Create shipment
+            
+            alt Shipment created
+                ShippingService-->>-Orchestrator: Shipment scheduled
+                Orchestrator->>+NotificationService: Send confirmation
+                NotificationService-->>-Orchestrator: Notification sent
+            else Shipment failed
+                ShippingService-->>Orchestrator: Failed
+                Note over Orchestrator: Start compensation
+                Orchestrator->>InventoryService: Release items
+                Orchestrator->>PaymentService: Refund payment
+                Orchestrator->>OrderService: Cancel order
+            end
+            
+        else Out of stock
+            InventoryService-->>Orchestrator: Not available
+            Note over Orchestrator: Compensate payment
+            Orchestrator->>PaymentService: Refund payment
+            Orchestrator->>OrderService: Cancel order
+        end
+        
+    else Payment failed
+        PaymentService-->>Orchestrator: Payment declined
+        Orchestrator->>OrderService: Cancel order
+        Orchestrator->>NotificationService: Send failure notification
+    end

@@ -1,0 +1,55 @@
+sequenceDiagram
+    participant Client
+    participant RateLimiter
+    participant TokenBucket
+    participant SlidingWindow
+    participant Cache
+    participant API
+    
+    Note over RateLimiter: Multiple strategies
+    
+    Client->>+RateLimiter: Request (user_id: 123)
+    
+    par Token Bucket check
+        RateLimiter->>+TokenBucket: Check bucket for user 123
+        TokenBucket->>+Cache: GET bucket:123
+        
+        alt Bucket exists
+            Cache-->>TokenBucket: {tokens: 5, last_refill: timestamp}
+            TokenBucket->>TokenBucket: Calculate refill
+            
+            opt Has available tokens
+                TokenBucket->>TokenBucket: Consume 1 token
+                TokenBucket->>Cache: SET bucket:123 (tokens: 4)
+                TokenBucket-->>-RateLimiter: ALLOW
+            end
+            
+        else Bucket not found
+            Cache-->>TokenBucket: null
+            TokenBucket->>TokenBucket: Initialize bucket
+            TokenBucket->>Cache: SET bucket:123 (tokens: 9)
+            TokenBucket-->>RateLimiter: ALLOW
+        end
+        
+    and Sliding Window check
+        RateLimiter->>+SlidingWindow: Check window for user 123
+        SlidingWindow->>+Cache: ZCOUNT requests:123 (now-60s, now)
+        Cache-->>-SlidingWindow: Count: 45
+        
+        alt Under limit (< 50)
+            SlidingWindow->>+Cache: ZADD requests:123 (timestamp)
+            Cache-->>-SlidingWindow: Added
+            SlidingWindow->>Cache: EXPIRE requests:123 60
+            SlidingWindow-->>-RateLimiter: ALLOW
+        else Over limit
+            SlidingWindow-->>RateLimiter: DENY
+        end
+    end
+    
+    alt All checks pass
+        RateLimiter->>+API: Forward request
+        API-->>-RateLimiter: Response
+        RateLimiter-->>-Client: 200 OK + Rate limit headers
+    else Rate limited
+        RateLimiter-->>Client: 429 Too Many Requests + Retry-After header
+    end

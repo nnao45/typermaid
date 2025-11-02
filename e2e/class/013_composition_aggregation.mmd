@@ -1,0 +1,24 @@
+classDiagram
+    class University {
+        +String name
+        +List~Department~ departments
+    }
+    class Department {
+        +String name
+        +List~Professor~ professors
+    }
+    class Professor {
+        +String name
+        +String subject
+    }
+    class Library {
+        +List~Book~ books
+    }
+    class Book {
+        +String title
+        +String isbn
+    }
+    University *-- Department : contains
+    Department o-- Professor : has
+    University o-- Library : has
+    Library o-- Book : contains

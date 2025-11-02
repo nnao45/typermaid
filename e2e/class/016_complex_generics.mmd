@@ -1,0 +1,23 @@
+classDiagram
+    class List~T~ {
+        +add(T item)
+        +get(int index) T
+        +remove(int index)
+        +size() int
+    }
+    class Map~K, V~ {
+        +put(K key, V value)
+        +get(K key) V
+        +containsKey(K key) boolean
+        +remove(K key)
+    }
+    class Repository~T~ {
+        +save(T entity)
+        +findById(int id) T
+        +delete(T entity)
+        +findAll() List~T~
+    }
+    class UserRepository {
+        +findByEmail(String email) User
+    }
+    Repository~User~ <|-- UserRepository

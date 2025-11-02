@@ -1,0 +1,20 @@
+sequenceDiagram
+    participant User
+    participant System
+    participant DB
+    
+    loop Every 5 minutes
+        User->>System: Health check
+        
+        opt System online
+            System->>DB: Check connection
+            
+            alt DB connected
+                DB-->>System: OK
+                System-->>User: All healthy
+            else DB disconnected
+                System->>System: Try reconnect
+                System-->>User: Degraded
+            end
+        end
+    end

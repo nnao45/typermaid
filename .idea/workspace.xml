@@ -5,7 +5,48 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dccfe7c3-3ffd-4645-b04f-84185615f706" name="変更" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AGENTS.md" beforeDir="false" afterPath="$PROJECT_DIR$/AGENTS.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PLAN.md" beforeDir="false" afterPath="$PROJECT_DIR$/PLAN.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PLAN_RENDERER.md" beforeDir="false" afterPath="$PROJECT_DIR$/PLAN_RENDERER.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/e2e/flowchart.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/e2e/flowchart.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/schemas/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/nodes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/ast/nodes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/error.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/error.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/parser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/parser.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/tests/parser.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/tests/parser.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/edges/generators.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/edges/generators.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/edges/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/edges/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/edges/markers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/edges/markers.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/edges/path-utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/edges/path-utils.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/edges/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/edges/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/layout/dagre-layout.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/layout/dagre-layout.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/shapes/generators.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/shapes/generators.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/shapes/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/shapes/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/shapes/text-measure.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/shapes/text-measure.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/shapes/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/shapes/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/types/layout.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/types/layout.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/utils/ast-converter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/utils/ast-converter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/tests/edges.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/tests/edges.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/tests/layout.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/tests/layout.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/tests/shapes.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/tests/shapes.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/add-manual-examples.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/add-manual-examples.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/add-more-examples.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/add-more-examples.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/add-quality-examples.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/add-quality-examples.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/fetch-examples.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/fetch-examples.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vitest.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vitest.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +68,7 @@
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "last_opened_file_path": "//wsl.localhost/Ubuntu-22.04/home/nnao45/ghq/github.com/nnao45/lyric-js",
@@ -52,11 +94,183 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1761921340844</updated>
-      <workItem from="1761921342231" duration="3228000" />
+      <workItem from="1761921342231" duration="10998000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/packages/parser/src/error.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/error.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/index.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/error.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/parser.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/parser.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/index.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/parser.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/error.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/index.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/parser.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/index.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/markers.js.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/generators.d.ts" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/path-utils.d.ts" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/types.js.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/path-utils.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/index.js" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/markers.js" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/types.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/index.js.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/index.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/markers.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/types.js" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/index.d.ts" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/types.d.ts" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/markers.d.ts" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/generators.js" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/generators.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/path-utils.js.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/generators.js.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/path-utils.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/gantt.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/sequence.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/class.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/gantt.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/gantt.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/sequence.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/state.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/sequence.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/state.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/sequence.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/er.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/er.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/state.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/state.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/er.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/gantt.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/class.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/er.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/class.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/class.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/types/layout.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/types/layout.d.ts" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/types/layout.js.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/types/layout.js" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/layout/dagre-layout.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/layout/dagre-layout.js" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/layout/dagre-layout.js.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/layout/dagre-layout.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/tokens.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/tokens.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/tokens.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/tokens.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/index.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/validator.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/validator.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/index.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schema.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schema.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schema.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/validator.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/index.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schema.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/validator.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/index.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/utils/ast-converter.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/utils/ast-converter.d.ts" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/utils/ast-converter.js" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/utils/ast-converter.js.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/shapes/text-measure.js.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/shapes/generators.d.ts" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/shapes/types.js" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/shapes/types.js.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/shapes/index.d.ts" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/shapes/text-measure.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/shapes/text-measure.d.ts" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/shapes/text-measure.js" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/shapes/index.js" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/shapes/types.d.ts" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/shapes/types.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/shapes/generators.js" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/shapes/generators.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/shapes/index.js.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/shapes/index.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/shapes/generators.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/gantt.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/common.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/sequence.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/flowchart.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/class.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/gantt.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/flowchart.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/index.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/gantt.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/sequence.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/state.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/sequence.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/index.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/state.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/index.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/sequence.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/common.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/index.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/flowchart.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/er.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/er.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/common.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/flowchart.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/state.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/state.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/er.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/gantt.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/class.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/common.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/er.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/class.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/class.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/index.js" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/index.d.ts" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/index.js.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/index.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/generator.js" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/renderer.js" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/renderer.js.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/types.js.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/generator.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/primitives.js.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/index.js" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/generator.js.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/primitives.d.ts" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/renderer.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/types.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/index.js.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/index.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/primitives.js" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/types.js" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/primitives.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/index.d.ts" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/renderer.d.ts" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/types.d.ts" />
+        <option value="$PROJECT_DIR$/packages/renderer-core/src/svg/generator.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/nodes.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/nodes.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/nodes.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/nodes.d.ts" />
+      </list>
+    </option>
   </component>
 </project>

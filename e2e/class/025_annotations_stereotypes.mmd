@@ -1,0 +1,38 @@
+classDiagram
+    class UserController {
+        <<controller>>
+        <<RestController>>
+        -UserService userService
+        +getUser(int) User
+        +createUser(User) User
+        +updateUser(int, User) User
+        +deleteUser(int) void
+    }
+    class UserService {
+        <<service>>
+        <<Transactional>>
+        -UserRepository repository
+        +findById(int) User
+        +save(User) User
+        +delete(int) void
+    }
+    class UserRepository {
+        <<repository>>
+        <<Component>>
+        +findById(int) User
+        +save(User) User
+        +deleteById(int) void
+        +findAll() List~User~
+    }
+    class User {
+        <<entity>>
+        <<Table(name="users")>>
+        -int id
+        -String username
+        -String email
+        +getId() int
+        +setId(int)
+    }
+    UserController ..> UserService : uses
+    UserService ..> UserRepository : uses
+    UserRepository ..> User : manages

@@ -1,0 +1,47 @@
+classDiagram
+    class Vehicle {
+        <<abstract>>
+        #String brand
+        #int year
+        +start()* void
+        +stop()* void
+    }
+    class LandVehicle {
+        <<abstract>>
+        #int wheels
+        +drive() void
+    }
+    class WaterVehicle {
+        <<abstract>>
+        #double displacement
+        +sail() void
+    }
+    class Car {
+        -String model
+        -int doors
+        +start() void
+        +stop() void
+    }
+    class Motorcycle {
+        -boolean hasSidecar
+        +start() void
+        +stop() void
+    }
+    class Boat {
+        -String hullType
+        +start() void
+        +stop() void
+    }
+    class AmphibiousVehicle {
+        -String mode
+        +switchMode(String)
+        +start() void
+        +stop() void
+    }
+    Vehicle <|-- LandVehicle
+    Vehicle <|-- WaterVehicle
+    LandVehicle <|-- Car
+    LandVehicle <|-- Motorcycle
+    WaterVehicle <|-- Boat
+    LandVehicle <|-- AmphibiousVehicle
+    WaterVehicle <|-- AmphibiousVehicle

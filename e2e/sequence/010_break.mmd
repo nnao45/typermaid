@@ -1,0 +1,5 @@
+sequenceDiagram
+    Consumer->>API: Book something
+    break when the booking process fails
+        API->>Consumer: return failure
+    end

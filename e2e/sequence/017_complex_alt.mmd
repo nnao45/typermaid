@@ -1,0 +1,20 @@
+sequenceDiagram
+    participant U as User
+    participant S as Server
+    participant DB as Database
+    
+    U->>S: Login request
+    alt is authenticated
+        S->>DB: Query user
+        DB-->>S: User data
+        S-->>U: Success
+    else is not authenticated
+        S->>DB: Log attempt
+        alt is locked
+            S-->>U: Account locked
+        else max retries
+            S-->>U: Invalid credentials
+        else normal
+            S-->>U: Try again
+        end
+    end

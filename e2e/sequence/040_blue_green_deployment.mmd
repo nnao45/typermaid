@@ -1,0 +1,69 @@
+sequenceDiagram
+    participant CICD
+    participant LoadBalancer
+    participant BlueEnv
+    participant GreenEnv
+    participant Database
+    participant HealthCheck
+    participant Monitoring
+    
+    Note over BlueEnv: Current production (v1.0)
+    Note over GreenEnv: Idle
+    
+    CICD->>+GreenEnv: Deploy v2.0
+    GreenEnv->>GreenEnv: Pull new Docker images
+    GreenEnv->>+Database: Run migrations (if needed)
+    Database-->>-GreenEnv: Migrations complete
+    GreenEnv->>GreenEnv: Start services
+    GreenEnv-->>-CICD: Deployment complete
+    
+    CICD->>+HealthCheck: Verify GreenEnv
+    
+    loop Health checks
+        HealthCheck->>+GreenEnv: GET /health
+        GreenEnv->>Database: Test DB connection
+        GreenEnv-->>-HealthCheck: 200 OK
+        
+        HealthCheck->>+GreenEnv: Smoke tests
+        GreenEnv-->>-HealthCheck: All passed
+        
+        break Health check failed
+            HealthCheck-->>CICD: Deployment failed
+            CICD->>GreenEnv: Rollback & cleanup
+        end
+    end
+    
+    HealthCheck-->>-CICD: All checks passed
+    
+    critical Traffic cutover
+        CICD->>+LoadBalancer: Switch traffic to GreenEnv
+        LoadBalancer->>LoadBalancer: Update routing rules
+        LoadBalancer-->>-CICD: Traffic switched
+        
+        Note over LoadBalancer,GreenEnv: 100% traffic to Green
+        
+    option Cutover failed
+        CICD->>LoadBalancer: Emergency rollback to BlueEnv
+    end
+    
+    CICD->>+Monitoring: Monitor GreenEnv metrics
+    
+    loop Observation period (30 min)
+        Monitoring->>+GreenEnv: Collect metrics
+        GreenEnv-->>-Monitoring: Metrics data
+        
+        alt Metrics healthy
+            Monitoring-->>CICD: All good
+        else Anomaly detected
+            Monitoring-->>-CICD: Alert! High error rate
+            CICD->>+LoadBalancer: Rollback to BlueEnv
+            LoadBalancer-->>-CICD: Rolled back
+            break Rollback executed
+                CICD->>GreenEnv: Stop services
+            end
+        end
+    end
+    
+    Note over CICD: Deployment successful
+    CICD->>BlueEnv: Decommission old version
+    Note over BlueEnv: Now idle (ready for next deployment)

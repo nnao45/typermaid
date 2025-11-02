@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant API
+    participant Cache
+    participant DB
+    participant Queue
+    
+    API->>Cache: Check cache
+    
+    par Parallel processing
+        Cache->>DB: Query if miss
+    and
+        API->>Queue: Log request
+    end
+    
+    critical Atomic operation
+        DB->>DB: Begin transaction
+        DB->>DB: Update record
+        DB->>DB: Commit
+    option Transaction failed
+        DB->>DB: Rollback
+    end
+    
+    DB-->>API: Result

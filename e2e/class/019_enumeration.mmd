@@ -1,0 +1,25 @@
+classDiagram
+    class Order {
+        +int orderId
+        +OrderStatus status
+        +PaymentMethod payment
+        +updateStatus(OrderStatus)
+    }
+    class OrderStatus {
+        <<enumeration>>
+        PENDING
+        PROCESSING
+        SHIPPED
+        DELIVERED
+        CANCELLED
+    }
+    class PaymentMethod {
+        <<enumeration>>
+        CREDIT_CARD
+        DEBIT_CARD
+        PAYPAL
+        BANK_TRANSFER
+        CASH
+    }
+    Order --> OrderStatus
+    Order --> PaymentMethod

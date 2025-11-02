@@ -1,0 +1,13 @@
+sequenceDiagram
+    participant C as Client
+    participant S as Server
+    participant DB as Database
+    
+    C->>+S: Request data
+    S->>+DB: Query
+    activate S
+    DB-->>-S: Result set 1
+    S->>+DB: Another query
+    DB-->>-S: Result set 2
+    deactivate S
+    S-->>-C: Combined result

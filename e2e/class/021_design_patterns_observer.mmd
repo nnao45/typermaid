@@ -1,0 +1,28 @@
+classDiagram
+    class Subject {
+        <<interface>>
+        +attach(Observer)
+        +detach(Observer)
+        +notify()
+    }
+    class Observer {
+        <<interface>>
+        +update(Subject)
+    }
+    class ConcreteSubject {
+        -List~Observer~ observers
+        -Object state
+        +attach(Observer)
+        +detach(Observer)
+        +notify()
+        +getState() Object
+        +setState(Object)
+    }
+    class ConcreteObserver {
+        -ConcreteSubject subject
+        +update(Subject)
+    }
+    Subject <|.. ConcreteSubject
+    Observer <|.. ConcreteObserver
+    ConcreteSubject o-- Observer : notifies
+    ConcreteObserver --> ConcreteSubject : observes

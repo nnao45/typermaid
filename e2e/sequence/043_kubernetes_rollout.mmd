@@ -1,0 +1,71 @@
+sequenceDiagram
+    participant Developer
+    participant GitRepo
+    participant CI
+    participant Registry
+    participant K8sAPI
+    participant Deployment
+    participant ReplicaSet
+    participant Pods
+    participant Service
+    
+    Developer->>+GitRepo: git push (new code)
+    GitRepo->>+CI: Trigger webhook
+    
+    CI->>CI: Run tests
+    CI->>CI: Build Docker image
+    CI->>+Registry: Push image (v2.0)
+    Registry-->>-CI: Image pushed
+    
+    CI->>+K8sAPI: kubectl apply deployment.yaml
+    K8sAPI->>K8sAPI: Validate manifest
+    K8sAPI->>+Deployment: Update deployment spec
+    Deployment->>Deployment: Create new ReplicaSet
+    Deployment->>+ReplicaSet: Create ReplicaSet v2
+    
+    Note over Deployment: Rolling update strategy
+    
+    loop Rolling update
+        ReplicaSet->>+Pods: Create new Pod (v2.0)
+        Pods->>Pods: Pull image from registry
+        Pods->>Pods: Start container
+        
+        opt Health checks
+            K8sAPI->>+Pods: Liveness probe
+            Pods-->>-K8sAPI: Healthy
+            K8sAPI->>+Pods: Readiness probe
+            Pods-->>-K8sAPI: Ready
+        end
+        
+        alt Pod ready
+            Pods-->>-ReplicaSet: Pod running
+            ReplicaSet->>+Service: Add endpoint
+            Service-->>-ReplicaSet: Endpoint added
+            
+            ReplicaSet->>OldPods: Terminate old Pod (v1.0)
+            OldPods->>OldPods: Graceful shutdown (30s)
+            
+        else Pod failed
+            ReplicaSet->>Pods: Terminate failed Pod
+            
+            critical Rollout failure
+                Deployment->>Deployment: Check failure threshold
+            option Max failures reached
+                Deployment->>ReplicaSet: Stop rollout
+                Deployment->>K8sAPI: Rollout failed
+                K8sAPI-->>CI: Deployment failed
+                break Rollback initiated
+                    Developer->>K8sAPI: kubectl rollout undo
+                    K8sAPI->>Deployment: Revert to v1.0
+                end
+            end
+        end
+    end
+    
+    ReplicaSet-->>-Deployment: All replicas updated
+    Deployment-->>-K8sAPI: Rollout complete
+    K8sAPI-->>-CI: Deployment successful
+    CI-->>-GitRepo: Update deployment status
+    GitRepo-->>-Developer: Notification: Deployed v2.0
+    
+    Note over K8sAPI,Service: Final state:<br/>- Deployment: v2.0<br/>- ReplicaSet v2: 3 replicas<br/>- ReplicaSet v1: 0 replicas<br/>- All traffic to v2.0

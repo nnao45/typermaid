@@ -1,0 +1,22 @@
+classDiagram
+    class EventListener {
+        <<interface>>
+        +onEvent(Event)
+    }
+    class Button {
+        -List~EventListener~ listeners
+        +addListener(EventListener)
+        +removeListener(EventListener)
+        +click()
+    }
+    class Event {
+        +String type
+        +Object source
+        +long timestamp
+    }
+    class ClickHandler {
+        +onEvent(Event)
+    }
+    EventListener <|.. ClickHandler
+    Button ..> EventListener : depends on
+    Button ..> Event : creates

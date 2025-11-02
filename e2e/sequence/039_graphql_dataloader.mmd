@@ -1,0 +1,57 @@
+sequenceDiagram
+    participant Client
+    participant GraphQLServer
+    participant DataLoader
+    participant UserService
+    participant PostService
+    participant Database
+    
+    Client->>+GraphQLServer: Query { users { posts { author } } }
+    GraphQLServer->>GraphQLServer: Parse & validate query
+    
+    Note over GraphQLServer,DataLoader: Execute query with DataLoader batching
+    
+    GraphQLServer->>+DataLoader: Load users (batch)
+    DataLoader->>DataLoader: Collect requests
+    
+    loop Batch window (10ms)
+        GraphQLServer->>DataLoader: Request user 1
+        GraphQLServer->>DataLoader: Request user 2
+        GraphQLServer->>DataLoader: Request user 3
+    end
+    
+    DataLoader->>+UserService: Batch fetch [1, 2, 3]
+    UserService->>+Database: SELECT * FROM users WHERE id IN (1,2,3)
+    Database-->>-UserService: Users data
+    UserService-->>-DataLoader: [User1, User2, User3]
+    DataLoader->>DataLoader: Cache results
+    DataLoader-->>-GraphQLServer: Users
+    
+    Note over GraphQLServer,PostService: Resolve posts for each user
+    
+    loop For each user
+        GraphQLServer->>+DataLoader: Load posts for user
+        DataLoader->>DataLoader: Collect requests
+    end
+    
+    DataLoader->>+PostService: Batch fetch posts for users [1,2,3]
+    PostService->>+Database: SELECT * FROM posts WHERE user_id IN (1,2,3)
+    Database-->>-PostService: Posts data
+    PostService-->>-DataLoader: Posts grouped by user_id
+    DataLoader-->>-GraphQLServer: Posts
+    
+    Note over GraphQLServer: Resolve authors (N+1 avoided by cache)
+    
+    loop For each post
+        GraphQLServer->>+DataLoader: Load author
+        
+        opt Cache hit
+            DataLoader->>DataLoader: Return from cache
+            DataLoader-->>-GraphQLServer: Cached author
+        end
+    end
+    
+    GraphQLServer->>GraphQLServer: Assemble response
+    GraphQLServer-->>-Client: { data: { users: [...] } }
+    
+    Note right of DataLoader: Summary:<br/>- 1 DB query for users<br/>- 1 DB query for posts<br/>- 0 additional queries for authors

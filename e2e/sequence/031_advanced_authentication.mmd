@@ -1,0 +1,30 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant Client
+    participant AuthServer
+    participant ResourceServer
+    participant Database
+    
+    User->>+Client: Login request
+    Client->>+AuthServer: POST /auth/login
+    AuthServer->>+Database: Validate credentials
+    Database-->>-AuthServer: User data
+    
+    alt Valid credentials
+        AuthServer->>AuthServer: Generate JWT
+        AuthServer-->>Client: 200 OK + JWT token
+        Client->>+ResourceServer: GET /api/data (JWT)
+        ResourceServer->>+AuthServer: Validate token
+        AuthServer-->>-ResourceServer: Token valid
+        ResourceServer->>+Database: Fetch data
+        Database-->>-ResourceServer: Data
+        ResourceServer-->>-Client: 200 OK + Data
+        Client-->>-User: Display data
+    else Invalid credentials
+        AuthServer-->>-Client: 401 Unauthorized
+        Client-->>User: Show error
+    else Rate limited
+        AuthServer-->>Client: 429 Too Many Requests
+        Client-->>User: Try again later
+    end

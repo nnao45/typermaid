@@ -1,0 +1,50 @@
+sequenceDiagram
+    participant CommandAPI
+    participant CommandHandler
+    participant EventStore
+    participant EventBus
+    participant ReadModelUpdater
+    participant QueryDB
+    participant QueryAPI
+    
+    CommandAPI->>+CommandHandler: CreateUserCommand
+    CommandHandler->>CommandHandler: Validate command
+    
+    alt Command valid
+        CommandHandler->>CommandHandler: Apply business logic
+        CommandHandler->>+EventStore: Append UserCreatedEvent
+        EventStore-->>-CommandHandler: Event stored (version 1)
+        CommandHandler-->>-CommandAPI: Success
+        
+        EventStore->>+EventBus: Publish UserCreatedEvent
+        
+        par Event handlers
+            EventBus->>+ReadModelUpdater: UserCreatedEvent
+            ReadModelUpdater->>ReadModelUpdater: Build read model
+            ReadModelUpdater->>+QueryDB: INSERT user projection
+            QueryDB-->>-ReadModelUpdater: Saved
+            ReadModelUpdater-->>-EventBus: Handled
+        and
+            EventBus->>NotificationService: UserCreatedEvent
+            NotificationService->>EmailService: Send welcome email
+        end
+        
+        EventBus-->>-EventStore: Events processed
+        
+    else Command invalid
+        CommandHandler-->>CommandAPI: Validation error
+    end
+    
+    Note over QueryAPI,QueryDB: Query side
+    QueryAPI->>+QueryDB: SELECT * FROM user_projections
+    QueryDB-->>-QueryAPI: User data
+    
+    Note over CommandAPI,EventStore: Update scenario
+    CommandAPI->>+CommandHandler: UpdateUserCommand
+    CommandHandler->>+EventStore: Get events for aggregate
+    EventStore-->>-CommandHandler: Event stream (v1-v5)
+    CommandHandler->>CommandHandler: Rebuild aggregate state
+    CommandHandler->>CommandHandler: Apply update
+    CommandHandler->>+EventStore: Append UserUpdatedEvent
+    EventStore-->>-CommandHandler: Event stored (version 6)
+    CommandHandler-->>-CommandAPI: Success

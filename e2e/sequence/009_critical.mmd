@@ -1,0 +1,6 @@
+sequenceDiagram
+    critical Establish a connection
+        Service->>DB: connect
+    option Network timeout
+        Service->>Service: Log error
+    end

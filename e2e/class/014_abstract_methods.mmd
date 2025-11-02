@@ -1,0 +1,22 @@
+classDiagram
+    class Shape {
+        <<abstract>>
+        #String color
+        #int borderWidth
+        +getArea()* double
+        +getPerimeter()* double
+        +setColor(String)
+    }
+    class Circle {
+        -double radius
+        +getArea() double
+        +getPerimeter() double
+    }
+    class Rectangle {
+        -double width
+        -double height
+        +getArea() double
+        +getPerimeter() double
+    }
+    Shape <|-- Circle
+    Shape <|-- Rectangle

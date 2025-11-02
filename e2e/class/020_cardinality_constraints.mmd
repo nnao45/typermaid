@@ -1,0 +1,24 @@
+classDiagram
+    class Company {
+        +String name
+        +String address
+    }
+    class Employee {
+        +String name
+        +int employeeId
+        +String position
+    }
+    class Department {
+        +String name
+        +String code
+    }
+    class Project {
+        +String name
+        +Date startDate
+        +Date endDate
+    }
+    Company "1" *-- "1..*" Department : has
+    Department "1" o-- "0..*" Employee : employs
+    Employee "1" --> "0..1" Employee : reports to
+    Employee "1..*" --> "0..*" Project : works on
+    Project "1..*" --> "1" Department : belongs to

@@ -1,0 +1,44 @@
+sequenceDiagram
+    participant Client
+    participant CircuitBreaker
+    participant ExternalService
+    participant FallbackService
+    participant MetricsCollector
+    
+    Note over CircuitBreaker: State: CLOSED
+    
+    loop Normal operation
+        Client->>+CircuitBreaker: Request
+        CircuitBreaker->>+ExternalService: Forward request
+        ExternalService-->>-CircuitBreaker: Response
+        CircuitBreaker-->>-Client: Response
+        CircuitBreaker->>MetricsCollector: Record success
+    end
+    
+    loop Failures accumulating
+        Client->>+CircuitBreaker: Request
+        CircuitBreaker->>+ExternalService: Forward request
+        ExternalService--xCircuitBreaker: Timeout
+        CircuitBreaker->>MetricsCollector: Record failure
+        CircuitBreaker-->>-Client: Error response
+        
+        opt Threshold reached
+            CircuitBreaker->>CircuitBreaker: Trip circuit
+            Note over CircuitBreaker: State: OPEN
+        end
+    end
+    
+    Note over CircuitBreaker: Circuit is OPEN
+    Client->>+CircuitBreaker: Request
+    CircuitBreaker->>+FallbackService: Use fallback
+    FallbackService-->>-CircuitBreaker: Cached response
+    CircuitBreaker-->>-Client: Fallback response
+    
+    Note over CircuitBreaker: After timeout, try HALF_OPEN
+    Client->>+CircuitBreaker: Request
+    Note over CircuitBreaker: State: HALF_OPEN
+    CircuitBreaker->>+ExternalService: Test request
+    ExternalService-->>-CircuitBreaker: Success
+    CircuitBreaker->>CircuitBreaker: Reset circuit
+    Note over CircuitBreaker: State: CLOSED
+    CircuitBreaker-->>-Client: Response

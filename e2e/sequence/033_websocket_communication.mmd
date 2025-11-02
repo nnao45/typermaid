@@ -1,0 +1,36 @@
+sequenceDiagram
+    participant Browser
+    participant LoadBalancer
+    participant WebSocketServer
+    participant Redis
+    participant NotificationService
+    
+    Browser->>+LoadBalancer: HTTP Upgrade request
+    LoadBalancer->>+WebSocketServer: Forward upgrade
+    WebSocketServer-->>-LoadBalancer: 101 Switching Protocols
+    LoadBalancer-->>-Browser: WebSocket connection established
+    
+    loop Heartbeat every 30s
+        Browser->>WebSocketServer: Ping
+        WebSocketServer-->>Browser: Pong
+    end
+    
+    par Parallel subscriptions
+        Browser->>+WebSocketServer: Subscribe to channel A
+        WebSocketServer->>+Redis: SUBSCRIBE channel_a
+        Redis-->>-WebSocketServer: Subscribed
+        WebSocketServer-->>-Browser: Subscription confirmed
+    and
+        Browser->>+WebSocketServer: Subscribe to channel B
+        WebSocketServer->>+Redis: SUBSCRIBE channel_b
+        Redis-->>-WebSocketServer: Subscribed
+        WebSocketServer-->>-Browser: Subscription confirmed
+    end
+    
+    NotificationService->>+Redis: PUBLISH channel_a "New message"
+    Redis->>WebSocketServer: Message event
+    WebSocketServer-->>-Browser: Push notification
+    
+    Browser->>WebSocketServer: Close connection
+    WebSocketServer->>Redis: UNSUBSCRIBE all
+    WebSocketServer-->>Browser: Connection closed

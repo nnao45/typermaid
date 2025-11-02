@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant A as Alice
+    participant B as Bob
+    participant C as Carol
+    
+    Note left of A: Note on left
+    Note right of A: Note on right
+    Note over A: Note over one
+    Note over A,B: Note over two
+    Note over A,B,C: Note spanning all
+    
+    A->>B: Message
+    Note left of B: Response coming
+    B-->>A: Response
