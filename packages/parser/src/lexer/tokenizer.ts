@@ -139,7 +139,7 @@ export class Tokenizer {
         break;
 
       case '>':
-        this.tokens.push(this.createToken('ANGLE_CLOSE', '>'));
+        this.tokens.push(this.createToken('ASYMMETRIC', '>'));
         break;
 
       case '<':

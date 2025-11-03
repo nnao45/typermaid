@@ -1,5 +1,6 @@
 import type { ERAttribute, ERDiagram, EREntity, ERRelationship } from '@lyric-js/core';
 import type React from 'react';
+import { measureText } from '@lyric-js/renderer-core';
 import type { Theme } from '../themes/types';
 
 interface ERRendererProps {
@@ -40,12 +41,32 @@ export const ERRenderer: React.FC<ERRendererProps> = ({
 
   const entities = Array.from(entityMap.values());
 
-  const entityWidth = 180;
+  // Dynamic sizing based on text measurement
+  const headerFontSize = 14;
+  const attributeFontSize = 11;
+  const padding = 20;
   const entityHeaderHeight = 35;
   const attributeHeight = 22;
   const spacing = 120;
   const leftMargin = 50;
   const topMargin = 50;
+
+  // Measure each entity's required width
+  const entityWidths = entities.map((entity) => {
+    const headerMetrics = measureText(entity.name, headerFontSize, 'sans-serif', 'bold');
+
+    const attributes = entity.attributes || [];
+    const attrWidths = attributes.map((attr) => {
+      const attrText = `${attr.key ? '🔑 ' : ''}${attr.name} ${attr.type ? `(${attr.type})` : ''}`;
+      const metrics = measureText(attrText, attributeFontSize, 'sans-serif', 'normal');
+      return metrics.width;
+    });
+
+    const maxAttrWidth = attrWidths.length > 0 ? Math.max(...attrWidths) : 0;
+    return Math.max(headerMetrics.width, maxAttrWidth) + padding * 2;
+  });
+
+  const entityWidth = Math.max(...entityWidths, 180); // Min width: 180px
 
   return (
     <svg

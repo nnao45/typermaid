@@ -1,5 +1,6 @@
 import type { GanttDiagram, GanttTask } from '@lyric-js/core';
 import type React from 'react';
+import { measureText } from '@lyric-js/renderer-core';
 import type { Theme } from '../themes/types';
 
 interface GanttRendererProps {
@@ -22,11 +23,22 @@ export const GanttRenderer: React.FC<GanttRendererProps> = ({
   // Flatten all tasks from sections
   const tasks: GanttTask[] = sections.flatMap((section) => section.tasks || []);
 
+  // Dynamic sizing based on text measurement
+  const taskNameFontSize = 12;
+  const padding = 20;
   const taskHeight = 30;
   const taskSpacing = 10;
-  const leftMargin = 200;
   const topMargin = 50;
   const rowHeight = taskHeight + taskSpacing;
+
+  // Measure task names to determine left margin
+  const taskNameWidths = tasks.map((task) => {
+    const taskName = task.name || task.id || '';
+    const metrics = measureText(taskName, taskNameFontSize, 'sans-serif', 'normal');
+    return metrics.width;
+  });
+
+  const leftMargin = taskNameWidths.length > 0 ? Math.max(...taskNameWidths, 100) + padding * 2 : 200;
 
   return (
     <svg

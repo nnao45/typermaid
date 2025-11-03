@@ -1,5 +1,6 @@
 import type { State, StateDiagram, StateTransition } from '@lyric-js/core';
 import type React from 'react';
+import { measureText } from '@lyric-js/renderer-core';
 import type { Theme } from '../themes/types';
 import { ContentRenderer } from './ContentRenderer';
 
@@ -20,11 +21,33 @@ export const StateRenderer: React.FC<StateRendererProps> = ({
   const states = diagram.states || [];
   const transitions = diagram.transitions || [];
 
-  const stateWidth = 140;
-  const stateHeight = 60;
+  // Dynamic sizing based on text measurement
+  const labelFontSize = 14;
+  const descFontSize = 10;
+  const padding = 20;
   const spacing = 150;
   const leftMargin = 80;
   const topMargin = 80;
+
+  // Measure each state's required size (excluding START/END states)
+  const stateSizes = states
+    .filter((s) => s.type !== 'START' && s.type !== 'END')
+    .map((state) => {
+      const label = state.label || state.id;
+      const labelText = typeof label === 'string' ? label : ''; // HTML content uses fixed size
+      const descText = typeof state.description === 'string' ? state.description : '';
+
+      const labelMetrics = labelText ? measureText(labelText, labelFontSize, 'sans-serif', 'bold') : { width: 0, height: 0 };
+      const descMetrics = descText ? measureText(descText, descFontSize, 'sans-serif', 'normal') : { width: 0, height: 0 };
+
+      const width = Math.max(labelMetrics.width, descMetrics.width) + padding * 2;
+      const height = labelMetrics.height + descMetrics.height + padding * 2;
+
+      return { width, height };
+    });
+
+  const stateWidth = stateSizes.length > 0 ? Math.max(...stateSizes.map((s) => s.width), 140) : 140;
+  const stateHeight = stateSizes.length > 0 ? Math.max(...stateSizes.map((s) => s.height), 60) : 60;
 
   return (
     <svg

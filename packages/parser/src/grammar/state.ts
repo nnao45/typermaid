@@ -379,7 +379,7 @@ export class StateParser {
     // Parse <<type>> - skip angle brackets
     while (
       (this.check('ANGLE_OPEN') ||
-        this.check('ANGLE_CLOSE') ||
+        this.check('ASYMMETRIC') ||
         this.peek().value === '<' ||
         this.peek().value === '>') &&
       !this.isAtEnd()
@@ -397,7 +397,7 @@ export class StateParser {
 
     // Skip closing >>
     this.skipWhitespace();
-    while ((this.check('ANGLE_CLOSE') || this.peek().value === '>') && !this.isAtEnd()) {
+    while ((this.check('ASYMMETRIC') || this.peek().value === '>') && !this.isAtEnd()) {
       this.advance();
     }
 

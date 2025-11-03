@@ -6,32 +6,33 @@
   <component name="ChangeListManager">
     <list default="true" id="dccfe7c3-3ffd-4645-b04f-84185615f706" name="変更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AGENTS.md" beforeDir="false" afterPath="$PROJECT_DIR$/AGENTS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PLAN.md" beforeDir="false" afterPath="$PROJECT_DIR$/PLAN.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/schemas/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/schemas/state.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/demo/src/examples/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/demo/src/examples/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/nodes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/ast/nodes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/class.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/class.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/er.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/er.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/sequence.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/sequence.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DEMO_FIX_LOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DEMO_FIX_SUMMARY.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DEMO_HTML_COMPLETE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DEMO_STATUS.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/E2E_COMPLETE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/E2E_STATUS.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/E2E_SUMMARY.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README_E2E.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RENDERER_FIX_SUMMARY.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RENDERER_STATUS.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/STATE_DIAGRAM_FIX_SUMMARY.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/STATE_DIAGRAM_HTML_FIX.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/state.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/tests/tokenizer.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/tests/tokenizer.test.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/parser/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-renderer/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/ClassRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/ClassRenderer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/ERRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/ERRenderer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/GanttRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/GanttRenderer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/MermaidDiagram.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/MermaidDiagram.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/SequenceRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/SequenceRenderer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/StateRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/StateRenderer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/react-renderer/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/utils/ast-converter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/utils/ast-converter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/shapes/generators.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/shapes/generators.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/shapes/text-measure.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/shapes/text-measure.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/renderer-core/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,30 +42,30 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="34prQsC0TzS52agC4Pt6sfdLnfG" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "//wsl.localhost/Ubuntu-22.04/home/nnao45/ghq/github.com/nnao45/lyric-js",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "pnpm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;//wsl.localhost/Ubuntu-22.04/home/nnao45/ghq/github.com/nnao45/lyric-js&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -80,6 +81,7 @@
       <option name="presentableId" value="Default" />
       <updated>1761921340844</updated>
       <workItem from="1761921342231" duration="14980000" />
+      <workItem from="1762172302176" duration="1331000" />
     </task>
     <servers />
   </component>

@@ -1,5 +1,6 @@
 import type { ClassDefinition, ClassDiagram, ClassMember, ClassRelation } from '@lyric-js/core';
 import type React from 'react';
+import { measureText } from '@lyric-js/renderer-core';
 import type { Theme } from '../themes/types';
 
 interface ClassRendererProps {
@@ -19,12 +20,33 @@ export const ClassRenderer: React.FC<ClassRendererProps> = ({
   const classes = diagram.classes || [];
   const relationships = diagram.relations || [];
 
-  const classWidth = 200;
+  // Dynamic sizing based on text measurement
+  const headerFontSize = 16;
+  const memberFontSize = 12;
+  const padding = 20;
   const classHeaderHeight = 40;
   const itemHeight = 25;
   const spacing = 100;
   const leftMargin = 50;
   const topMargin = 50;
+
+  // Measure each class's required width
+  const classWidths = classes.map((cls) => {
+    const className = cls.name || cls.id;
+    const headerMetrics = measureText(className, headerFontSize, 'sans-serif', 'bold');
+
+    const members = cls.members || [];
+    const memberWidths = members.map((member) => {
+      const memberText = `${member.visibility || '+'} ${member.name}: ${member.returnType || 'any'}`;
+      const metrics = measureText(memberText, memberFontSize, 'sans-serif', 'normal');
+      return metrics.width;
+    });
+
+    const maxMemberWidth = memberWidths.length > 0 ? Math.max(...memberWidths) : 0;
+    return Math.max(headerMetrics.width, maxMemberWidth) + padding * 2;
+  });
+
+  const classWidth = Math.max(...classWidths, 200); // Min width: 200px
 
   return (
     <svg

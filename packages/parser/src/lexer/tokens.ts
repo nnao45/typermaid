@@ -105,7 +105,6 @@ export const TokenTypeSchema = z.enum([
   'PIPE', // |
   'ASTERISK', // *
   'ANGLE_OPEN', // <
-  'ANGLE_CLOSE', // >
   'SEMICOLON', // ;
   'COLON', // :
   'COMMA', // ,

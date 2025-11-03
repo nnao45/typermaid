@@ -13,6 +13,7 @@ export const square: ShapeGenerator = (options: ShapeOptions): ShapePath => {
     opts.fontSize,
     opts.padding,
     opts.fontFamily,
+    'normal',
     opts.minWidth,
     opts.minHeight
   );
@@ -44,6 +45,7 @@ export const round: ShapeGenerator = (options: ShapeOptions): ShapePath => {
     opts.fontSize,
     opts.padding,
     opts.fontFamily,
+    'normal',
     opts.minWidth,
     opts.minHeight
   );
@@ -90,6 +92,7 @@ export const stadium: ShapeGenerator = (options: ShapeOptions): ShapePath => {
     opts.fontSize,
     opts.padding * 1.5, // More padding for curved ends
     opts.fontFamily,
+    'normal',
     opts.minWidth,
     opts.minHeight
   );
@@ -132,6 +135,7 @@ export const subroutine: ShapeGenerator = (options: ShapeOptions): ShapePath => 
     opts.fontSize,
     opts.padding * 1.5, // More padding for inner lines
     opts.fontFamily,
+    'normal',
     opts.minWidth,
     opts.minHeight
   );
@@ -171,6 +175,7 @@ export const cylindrical: ShapeGenerator = (options: ShapeOptions): ShapePath =>
     opts.fontSize,
     opts.padding,
     opts.fontFamily,
+    'normal',
     opts.minWidth,
     opts.minHeight
   );
@@ -209,7 +214,7 @@ export const cylindrical: ShapeGenerator = (options: ShapeOptions): ShapePath =>
  */
 export const circle: ShapeGenerator = (options: ShapeOptions): ShapePath => {
   const opts = { ...DEFAULT_SHAPE_OPTIONS, ...options };
-  const textMetrics = calculateTextBox(opts.text, opts.fontSize, opts.padding, opts.fontFamily);
+  const textMetrics = calculateTextBox(opts.text, opts.fontSize, opts.padding, opts.fontFamily, 'normal');
 
   // Circle diameter is the larger of width/height
   const diameter = Math.max(textMetrics.width, textMetrics.height, opts.minWidth, opts.minHeight);
@@ -248,6 +253,7 @@ export const rhombus: ShapeGenerator = (options: ShapeOptions): ShapePath => {
     opts.fontSize,
     opts.padding * 2, // More padding for angled sides
     opts.fontFamily,
+    'normal',
     opts.minWidth,
     opts.minHeight
   );
@@ -290,6 +296,7 @@ export const hexagon: ShapeGenerator = (options: ShapeOptions): ShapePath => {
     opts.fontSize,
     opts.padding,
     opts.fontFamily,
+    'normal',
     opts.minWidth,
     opts.minHeight
   );
@@ -334,6 +341,7 @@ export const parallelogram: ShapeGenerator = (options: ShapeOptions): ShapePath 
     opts.fontSize,
     opts.padding,
     opts.fontFamily,
+    'normal',
     opts.minWidth,
     opts.minHeight
   );
@@ -376,6 +384,7 @@ export const parallelogram_alt: ShapeGenerator = (options: ShapeOptions): ShapeP
     opts.fontSize,
     opts.padding,
     opts.fontFamily,
+    'normal',
     opts.minWidth,
     opts.minHeight
   );
@@ -418,6 +427,7 @@ export const trapezoid: ShapeGenerator = (options: ShapeOptions): ShapePath => {
     opts.fontSize,
     opts.padding,
     opts.fontFamily,
+    'normal',
     opts.minWidth,
     opts.minHeight
   );
@@ -459,6 +469,7 @@ export const trapezoid_alt: ShapeGenerator = (options: ShapeOptions): ShapePath 
     opts.fontSize,
     opts.padding,
     opts.fontFamily,
+    'normal',
     opts.minWidth,
     opts.minHeight
   );
@@ -499,7 +510,8 @@ export const double_circle: ShapeGenerator = (options: ShapeOptions): ShapePath 
     opts.text,
     opts.fontSize,
     opts.padding * 1.5, // More padding for double circle
-    opts.fontFamily
+    opts.fontFamily,
+    'normal'
   );
 
   const diameter = Math.max(textMetrics.width, textMetrics.height, opts.minWidth, opts.minHeight);
@@ -542,6 +554,7 @@ export const asymmetric: ShapeGenerator = (options: ShapeOptions): ShapePath => 
     opts.fontSize,
     opts.padding,
     opts.fontFamily,
+    'normal',
     opts.minWidth,
     opts.minHeight
   );
