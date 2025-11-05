@@ -1,5 +1,6 @@
 import type { FlowchartDiagram, FlowchartNode } from '@lyric-js/core';
 import dagre from 'dagre';
+import { measureTextCanvas } from '../shapes/canvas-text-measure.js';
 import type {
   Dimensions,
   Layout,
@@ -11,41 +12,54 @@ import type {
 import { DEFAULT_LAYOUT_OPTIONS } from '../types/layout.js';
 
 /**
+ * Default font settings for text measurement
+ */
+const DEFAULT_FONT_SIZE = 14;
+const DEFAULT_FONT_FAMILY = 'Arial, sans-serif';
+const DEFAULT_FONT_WEIGHT = 'normal';
+const DEFAULT_PADDING = 20;
+
+/**
  * Calculate node dimensions based on label and shape
+ * Now using accurate Canvas-based text measurement
  */
 function calculateNodeDimensions(label: string, shape: FlowchartNode['shape']): Dimensions {
-  // Base dimensions - will be improved with actual text measurement
-  const baseWidth = 100;
-  const baseHeight = 40;
+  // Measure text accurately using Canvas API
+  const textMetrics = measureTextCanvas(
+    label,
+    DEFAULT_FONT_SIZE,
+    DEFAULT_FONT_FAMILY,
+    DEFAULT_FONT_WEIGHT
+  );
 
-  // Rough estimate based on label length
-  const labelWidth = Math.max(label.length * 8, baseWidth);
-  const labelHeight = baseHeight;
+  // Add padding
+  const baseWidth = Math.max(textMetrics.width + DEFAULT_PADDING * 2, 80);
+  const baseHeight = Math.max(textMetrics.height + DEFAULT_PADDING, 40);
 
   // Adjust for shape
   switch (shape) {
     case 'circle':
     case 'double_circle': {
       // Circular shapes need more space
-      const diameter = Math.max(labelWidth, labelHeight) * 1.2;
+      const diameter = Math.max(baseWidth, baseHeight) * 1.2;
       return { width: diameter, height: diameter };
     }
 
     case 'rhombus':
       // Diamond shapes are wider
       return {
-        width: labelWidth * 1.5,
-        height: labelHeight * 1.5,
+        width: baseWidth * 1.5,
+        height: baseHeight * 1.5,
       };
 
     case 'hexagon':
       return {
-        width: labelWidth * 1.3,
-        height: labelHeight * 1.2,
+        width: baseWidth * 1.3,
+        height: baseHeight * 1.2,
       };
 
     default:
-      return { width: labelWidth, height: labelHeight };
+      return { width: baseWidth, height: baseHeight };
   }
 }
 

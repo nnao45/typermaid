@@ -35,8 +35,19 @@ export function generateShapePath(shape: NodeShape, options: ShapeOptions): Shap
   return generator(options);
 }
 
-export { calculateTextBox, measureText, wrapText } from './text-measure.js';
 // Re-export types
+export type { EnhancedTextMetrics } from './canvas-text-measure.js';
+export {
+  calculateMultilineTextBoxCanvas,
+  calculateTextBoxCanvas,
+  clearMeasurementCache,
+  getCacheSize,
+  measureMultilineTextCanvas,
+  measureTextCanvas,
+  wrapTextCanvas,
+} from './canvas-text-measure.js';
+export type { TextMeasureOptions, TextMetrics } from './text-measure.js';
+export { calculateTextBox, measureText, wrapText } from './text-measure.js';
 export type {
   ShapeGenerator,
   ShapeGenerators,

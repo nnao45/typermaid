@@ -1,6 +1,6 @@
 import type { Participant, SequenceDiagram, SequenceStatement } from '@lyric-js/core';
+import { measureTextCanvas } from '@lyric-js/renderer-core';
 import type React from 'react';
-import { measureText } from '@lyric-js/renderer-core';
 import type { Theme } from '../themes/types';
 
 interface SequenceRendererProps {
@@ -80,7 +80,7 @@ export const SequenceRenderer: React.FC<SequenceRendererProps> = ({
   // Measure each participant's text width
   const participantWidths = participants.map((p) => {
     const text = p.alias || p.id;
-    const metrics = measureText(text, fontSize, 'sans-serif', 'normal');
+    const metrics = measureTextCanvas(text, fontSize, 'sans-serif', 'normal');
     return Math.max(metrics.width + padding * 2, 100);
   });
 
@@ -110,30 +110,61 @@ export const SequenceRenderer: React.FC<SequenceRendererProps> = ({
         const x2 = getParticipantX(stmt.to);
         const y = localY + messageSpacing;
 
-        elements.push(
-          <g key={`msg-${elementKey++}`}>
-            <line
-              x1={x1}
-              y1={y}
-              x2={x2}
-              y2={y}
-              stroke={theme.colors.edge.stroke}
-              strokeWidth={2}
-              markerEnd="url(#arrowhead)"
-            />
-            <text
-              x={(x1 + x2) / 2}
-              y={y - 5}
-              fill={theme.colors.text}
-              fontSize={12}
-              textAnchor="middle"
-            >
-              {stmt.text || ''}
-            </text>
-          </g>
-        );
+        // Check if this is a self-message (same participant)
+        if (stmt.from === stmt.to) {
+          // Draw loopback arrow for self-message
+          const loopWidth = 60;
+          const loopHeight = 40;
 
-        localY = y;
+          elements.push(
+            <g key={`msg-${elementKey++}`}>
+              <path
+                d={`M ${x1} ${y} L ${x1 + loopWidth} ${y} L ${x1 + loopWidth} ${y + loopHeight} L ${x1} ${y + loopHeight}`}
+                fill="none"
+                stroke={theme.colors.edge.stroke}
+                strokeWidth={2}
+                markerEnd="url(#arrowhead)"
+              />
+              <text
+                x={x1 + loopWidth + 10}
+                y={y + loopHeight / 2}
+                fill={theme.colors.text}
+                fontSize={12}
+                textAnchor="start"
+              >
+                {stmt.text || ''}
+              </text>
+            </g>
+          );
+
+          localY = y + loopHeight;
+        } else {
+          // Draw regular arrow between different participants
+          elements.push(
+            <g key={`msg-${elementKey++}`}>
+              <line
+                x1={x1}
+                y1={y}
+                x2={x2}
+                y2={y}
+                stroke={theme.colors.edge.stroke}
+                strokeWidth={2}
+                markerEnd="url(#arrowhead)"
+              />
+              <text
+                x={(x1 + x2) / 2}
+                y={y - 5}
+                fill={theme.colors.text}
+                fontSize={12}
+                textAnchor="middle"
+              >
+                {stmt.text || ''}
+              </text>
+            </g>
+          );
+
+          localY = y;
+        }
       } else if (stmt.type === 'note') {
         // Render note
         const noteWidth = 150;
@@ -149,7 +180,8 @@ export const SequenceRenderer: React.FC<SequenceRendererProps> = ({
 
           if (stmt.position === 'left') {
             const actorIndex = actorIndices[0] ?? 0;
-            noteX = leftMargin + actorIndex * (participantWidth + participantSpacing) - noteWidth - 20;
+            noteX =
+              leftMargin + actorIndex * (participantWidth + participantSpacing) - noteWidth - 20;
           } else if (stmt.position === 'right') {
             const actorIndex = actorIndices[0] ?? 0;
             noteX =
@@ -202,23 +234,18 @@ export const SequenceRenderer: React.FC<SequenceRendererProps> = ({
         // Save current Y for fragment start
         const fragmentY = fragmentStartY;
 
-        // Render inner statements
-        currentY = fragmentStartY + fragmentHeaderHeight;
-        const innerStatements = 'statements' in stmt ? stmt.statements : [];
-        const innerEndY = renderStatements(innerStatements, depth + 1);
-
-        // Calculate fragment height
-        const fragmentHeight = innerEndY - fragmentStartY + fragmentPadding * 2;
+        // Calculate fragment dimensions first
         const fragmentWidth = totalWidth - leftMargin * 2;
+        const fragmentBoxKey = elementKey++;
 
-        // Render fragment rectangle
-        elements.push(
-          <g key={`fragment-${elementKey++}`}>
+        // Render fragment rectangle BEFORE inner content
+        const fragmentRectangle = (height: number) => (
+          <g key={`fragment-${fragmentBoxKey}`}>
             <rect
               x={leftMargin}
               y={fragmentY}
               width={fragmentWidth}
-              height={fragmentHeight}
+              height={height}
               fill="none"
               stroke={theme.colors.node.stroke}
               strokeWidth={2}
@@ -246,6 +273,20 @@ export const SequenceRenderer: React.FC<SequenceRendererProps> = ({
             </text>
           </g>
         );
+
+        // Temporarily store current elements count
+        const beforeInnerElements = elements.length;
+
+        // Render inner statements
+        currentY = fragmentStartY + fragmentHeaderHeight;
+        const innerStatements = 'statements' in stmt ? stmt.statements : [];
+        const innerEndY = renderStatements(innerStatements, depth + 1);
+
+        // Calculate fragment height
+        const fragmentHeight = innerEndY - fragmentStartY + fragmentPadding * 2;
+
+        // Insert fragment rectangle BEFORE the inner elements
+        elements.splice(beforeInnerElements, 0, fragmentRectangle(fragmentHeight));
 
         localY = innerEndY + fragmentPadding;
       } else if (stmt.type === 'alt') {
@@ -553,6 +594,12 @@ export const SequenceRenderer: React.FC<SequenceRendererProps> = ({
       height={totalHeight}
       style={{ border: `1px solid ${theme.colors.border}`, background: theme.colors.background }}
     >
+      <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+          <polygon points="0 0, 10 3, 0 6" fill={theme.colors.edge.stroke} />
+        </marker>
+      </defs>
+
       {/* Render participants */}
       {participants.map((participant: Participant, index: number) => {
         const x = leftMargin + index * (participantWidth + participantSpacing);
@@ -595,12 +642,6 @@ export const SequenceRenderer: React.FC<SequenceRendererProps> = ({
 
       {/* Render all collected elements */}
       {elements}
-
-      <defs>
-        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-          <polygon points="0 0, 10 3, 0 6" fill={theme.colors.edge.stroke} />
-        </marker>
-      </defs>
     </svg>
   );
 };

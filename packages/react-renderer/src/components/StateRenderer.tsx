@@ -1,6 +1,12 @@
-import type { State, StateDiagram, StateTransition } from '@lyric-js/core';
+import type { StateDiagram } from '@lyric-js/core';
+import {
+  computeUnifiedDagreLayout,
+  measureTextCanvas,
+  type UnifiedLayoutEdge,
+  type UnifiedLayoutNode,
+} from '@lyric-js/renderer-core';
 import type React from 'react';
-import { measureText } from '@lyric-js/renderer-core';
+import { useMemo } from 'react';
 import type { Theme } from '../themes/types';
 import { ContentRenderer } from './ContentRenderer';
 
@@ -21,43 +27,102 @@ export const StateRenderer: React.FC<StateRendererProps> = ({
   const states = diagram.states || [];
   const transitions = diagram.transitions || [];
 
-  // Dynamic sizing based on text measurement
+  // Font settings
   const labelFontSize = 14;
   const descFontSize = 10;
   const padding = 20;
-  const spacing = 150;
-  const leftMargin = 80;
-  const topMargin = 80;
 
-  // Measure each state's required size (excluding START/END states)
-  const stateSizes = states
-    .filter((s) => s.type !== 'START' && s.type !== 'END')
-    .map((state) => {
+  // Calculate state dimensions dynamically
+  const stateData = useMemo(() => {
+    return states.map((state) => {
+      // Special sizes for START/END states (circles)
+      if (state.type === 'START' || state.type === 'END') {
+        return {
+          state,
+          width: 30,
+          height: 30,
+        };
+      }
+
       const label = state.label || state.id;
       const labelText = typeof label === 'string' ? label : ''; // HTML content uses fixed size
       const descText = typeof state.description === 'string' ? state.description : '';
 
-      const labelMetrics = labelText ? measureText(labelText, labelFontSize, 'sans-serif', 'bold') : { width: 0, height: 0 };
-      const descMetrics = descText ? measureText(descText, descFontSize, 'sans-serif', 'normal') : { width: 0, height: 0 };
+      const labelMetrics = labelText
+        ? measureTextCanvas(labelText, labelFontSize, 'sans-serif', 'bold')
+        : { width: 0, height: 0 };
+      const descMetrics = descText
+        ? measureTextCanvas(descText, descFontSize, 'sans-serif', 'normal')
+        : { width: 0, height: 0 };
 
-      const width = Math.max(labelMetrics.width, descMetrics.width) + padding * 2;
-      const height = labelMetrics.height + descMetrics.height + padding * 2;
+      const stateWidth = Math.max(labelMetrics.width, descMetrics.width) + padding * 2;
+      const stateHeight = labelMetrics.height + descMetrics.height + padding * 2;
 
-      return { width, height };
+      return {
+        state,
+        width: Math.max(stateWidth, 140),
+        height: Math.max(stateHeight, 60),
+      };
     });
+  }, [states]);
 
-  const stateWidth = stateSizes.length > 0 ? Math.max(...stateSizes.map((s) => s.width), 140) : 140;
-  const stateHeight = stateSizes.length > 0 ? Math.max(...stateSizes.map((s) => s.height), 60) : 60;
+  // Prepare nodes and edges for Dagre layout
+  const layout = useMemo(() => {
+    const nodes: UnifiedLayoutNode[] = stateData.map(({ state, width, height }) => ({
+      id: state.id,
+      label: (typeof state.label === 'string' ? state.label : state.id) || state.id,
+      width,
+      height,
+    }));
+
+    const edges: UnifiedLayoutEdge[] = transitions
+      .map((trans): UnifiedLayoutEdge | null => {
+        const label = typeof trans.label === 'string' ? trans.label : undefined;
+        if (label === undefined) {
+          return {
+            from: trans.from,
+            to: trans.to,
+          };
+        }
+        return {
+          from: trans.from,
+          to: trans.to,
+          label,
+        };
+      })
+      .filter((edge): edge is UnifiedLayoutEdge => edge !== null);
+
+    return computeUnifiedDagreLayout(nodes, edges, {
+      rankdir: 'LR', // State machines typically flow left-to-right
+      ranksep: 80,
+      nodesep: 60,
+      marginx: 80,
+      marginy: 80,
+    });
+  }, [stateData, transitions]);
+
+  // Generate path from points (polyline routing)
+  const generatePath = (points: Array<{ x: number; y: number }>) => {
+    if (points.length === 0) return '';
+    const [first, ...rest] = points;
+    if (!first) return '';
+    const pathParts = [`M ${first.x} ${first.y}`];
+    for (const point of rest) {
+      pathParts.push(`L ${point.x} ${point.y}`);
+    }
+    return pathParts.join(' ');
+  };
 
   return (
     <svg
-      width={width}
-      height={height}
+      width={Math.max(width, layout.width)}
+      height={Math.max(height, layout.height)}
       style={{ border: `1px solid ${theme.colors.border}`, background: theme.colors.background }}
     >
-      {states.map((state: State, index: number) => {
-        const x = leftMargin + (index % 4) * spacing;
-        const y = topMargin + Math.floor(index / 4) * spacing;
+      {/* Render states with Dagre positions */}
+      {stateData.map(({ state, width: stateWidth, height: stateHeight }) => {
+        const position = layout.nodes.find((n) => n.id === state.id);
+        if (!position) return null;
 
         const isStart = state.type === 'START';
         const isEnd = state.type === 'END';
@@ -65,9 +130,9 @@ export const StateRenderer: React.FC<StateRendererProps> = ({
         if (isStart || isEnd) {
           return (
             <circle
-              key={state.id || index}
-              cx={x + stateWidth / 2}
-              cy={y + stateHeight / 2}
+              key={state.id}
+              cx={position.x}
+              cy={position.y}
               r={15}
               fill={isStart ? theme.colors.node.stroke : theme.colors.node.fill}
               stroke={theme.colors.node.stroke}
@@ -76,8 +141,11 @@ export const StateRenderer: React.FC<StateRendererProps> = ({
           );
         }
 
+        const x = position.x - stateWidth / 2;
+        const y = position.y - stateHeight / 2;
+
         return (
-          <g key={state.id || index}>
+          <g key={state.id}>
             <rect
               x={x}
               y={y}
@@ -91,8 +159,8 @@ export const StateRenderer: React.FC<StateRendererProps> = ({
             {state.label ? (
               typeof state.label === 'string' ? (
                 <text
-                  x={x + stateWidth / 2}
-                  y={y + stateHeight / 2}
+                  x={position.x}
+                  y={position.y}
                   fill={theme.colors.text}
                   fontSize={14}
                   fontWeight="bold"
@@ -104,16 +172,16 @@ export const StateRenderer: React.FC<StateRendererProps> = ({
               ) : (
                 <ContentRenderer
                   content={state.label}
-                  x={x + stateWidth / 2}
-                  y={y + stateHeight / 2}
+                  x={position.x}
+                  y={position.y}
                   width={stateWidth - 10}
                   height={30}
                 />
               )
             ) : (
               <text
-                x={x + stateWidth / 2}
-                y={y + stateHeight / 2}
+                x={position.x}
+                y={position.y}
                 fill={theme.colors.text}
                 fontSize={14}
                 fontWeight="bold"
@@ -126,8 +194,8 @@ export const StateRenderer: React.FC<StateRendererProps> = ({
             {state.description &&
               (typeof state.description === 'string' ? (
                 <text
-                  x={x + stateWidth / 2}
-                  y={y + stateHeight / 2 + 15}
+                  x={position.x}
+                  y={position.y + 15}
                   fill={theme.colors.text}
                   fontSize={10}
                   textAnchor="middle"
@@ -137,8 +205,8 @@ export const StateRenderer: React.FC<StateRendererProps> = ({
               ) : (
                 <ContentRenderer
                   content={state.description}
-                  x={x + stateWidth / 2}
-                  y={y + stateHeight / 2 + 15}
+                  x={position.x}
+                  y={position.y + 15}
                   width={stateWidth - 10}
                   height={20}
                 />
@@ -147,27 +215,20 @@ export const StateRenderer: React.FC<StateRendererProps> = ({
         );
       })}
 
-      {transitions.map((transition: StateTransition, index: number) => {
-        const fromState = states.find((s: State) => s.id === transition.from);
-        const toState = states.find((s: State) => s.id === transition.to);
+      {/* Render transitions with Dagre-routed edges */}
+      {layout.edges.map((edge, index) => {
+        const transition = transitions.find((t) => t.from === edge.from && t.to === edge.to);
+        if (!transition) return null;
 
-        if (!fromState || !toState) return null;
-
-        const fromIndex = states.indexOf(fromState);
-        const toIndex = states.indexOf(toState);
-
-        const x1 = leftMargin + (fromIndex % 4) * spacing + stateWidth / 2;
-        const y1 = topMargin + Math.floor(fromIndex / 4) * spacing + stateHeight / 2;
-        const x2 = leftMargin + (toIndex % 4) * spacing + stateWidth / 2;
-        const y2 = topMargin + Math.floor(toIndex / 4) * spacing + stateHeight / 2;
+        const pathData = generatePath(edge.points);
+        const midPoint = edge.points[Math.floor(edge.points.length / 2)];
+        if (!midPoint) return null;
 
         return (
-          <g key={index}>
-            <line
-              x1={x1}
-              y1={y1}
-              x2={x2}
-              y2={y2}
+          <g key={`${edge.from}-${edge.to}-${index}`}>
+            <path
+              d={pathData}
+              fill="none"
               stroke={theme.colors.edge.stroke}
               strokeWidth={2}
               markerEnd="url(#arrowhead-state)"
@@ -175,8 +236,8 @@ export const StateRenderer: React.FC<StateRendererProps> = ({
             {transition.label &&
               (typeof transition.label === 'string' ? (
                 <text
-                  x={(x1 + x2) / 2}
-                  y={(y1 + y2) / 2 - 5}
+                  x={midPoint.x}
+                  y={midPoint.y - 5}
                   fill={theme.colors.text}
                   fontSize={11}
                   textAnchor="middle"
@@ -186,8 +247,8 @@ export const StateRenderer: React.FC<StateRendererProps> = ({
               ) : (
                 <ContentRenderer
                   content={transition.label}
-                  x={(x1 + x2) / 2}
-                  y={(y1 + y2) / 2 - 5}
+                  x={midPoint.x}
+                  y={midPoint.y - 5}
                   width={120}
                   height={25}
                 />

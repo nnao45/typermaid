@@ -1,3 +1,26 @@
+// Branded Types
+export type {
+  ClassID,
+  EntityID,
+  NodeID,
+  ParticipantID,
+  StateID,
+  TaskID,
+} from './branded.js';
+export {
+  classId,
+  entityId,
+  nodeId,
+  participantId,
+  stateId,
+  taskId,
+  validateClassId,
+  validateEntityId,
+  validateNodeId,
+  validateParticipantId,
+  validateStateId,
+  validateTaskId,
+} from './branded.js';
 export type {
   ClassAnnotation,
   ClassDefinition,
@@ -46,6 +69,23 @@ export {
   ThemeSchema,
   VerticalAlignSchema,
 } from './common.js';
+// Content Types
+export type {
+  Content,
+  HTMLContent,
+  MarkdownContent,
+  PlainContent,
+} from './content.js';
+export {
+  ContentSchema,
+  extractText,
+  HTMLContentSchema,
+  isHTMLContent,
+  isMarkdownContent,
+  isPlainContent,
+  MarkdownContentSchema,
+  PlainContentSchema,
+} from './content.js';
 export type {
   ERAttribute,
   ERAttributeKey,
@@ -134,8 +174,6 @@ export {
 } from './sequence.js';
 export type {
   ConcurrencyRegion,
-  Content,
-  HTMLContent,
   State,
   StateDiagram,
   StateDirection,
@@ -145,8 +183,6 @@ export type {
 } from './state.js';
 export {
   ConcurrencyRegionSchema,
-  ContentSchema,
-  HTMLContentSchema,
   StateDiagramSchema,
   StateDirection as StateDirectionSchema,
   StateNoteSchema,

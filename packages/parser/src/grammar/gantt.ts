@@ -123,18 +123,15 @@ export class GanttParser {
     this.advance(); // skip ':'
     this.skipWhitespace();
 
-    const parts: string[] = [];
-    while (!this.isAtEnd() && this.peek().type !== 'NEWLINE') {
-      const token = this.peek();
-      if (token.type === 'COMMA') {
-        this.advance();
-        this.skipWhitespace();
-      } else {
-        parts.push(token.value);
-        this.advance();
-        this.skipWhitespace();
-      }
-    }
+    // Collect the rest of the line and split by comma
+    const restOfLine = this.consumeRestOfLine();
+    const parts = restOfLine
+      .split(',')
+      .map((p) => p.trim())
+      .filter((p) => p.length > 0);
+
+    // Debug: log parsing
+    // console.log(`Task: ${taskName}, restOfLine: '${restOfLine}', parts: ${JSON.stringify(parts)}`);
 
     let id: string | undefined;
     let status: GanttTaskStatus | undefined;
@@ -162,6 +159,7 @@ export class GanttParser {
       // Check if first part is an identifier (task id)
       else if (
         firstPart &&
+        !firstPart.startsWith('after ') &&
         !firstPart.includes('-') &&
         !firstPart.includes(':') &&
         !firstPart.match(/^\d/)
@@ -171,15 +169,22 @@ export class GanttParser {
       }
     }
 
-    // Next part is start date or "after id"
+    // Next part is start date, "after id", or duration-only
+    const dependencies: string[] = [];
     if (partIndex < parts.length) {
       const startPart = parts[partIndex];
-      if (startPart === 'after' && partIndex + 1 < parts.length) {
-        const afterId = parts[partIndex + 1];
+      if (startPart?.startsWith('after ')) {
+        // Extract the dependency id from "after id"
+        const afterId = startPart.slice(6).trim();
         if (afterId) {
           startDate = `after ${afterId}`;
+          dependencies.push(afterId);
         }
-        partIndex += 2;
+        partIndex++;
+      } else if (startPart && /^\d+[hdwm]$/i.test(startPart)) {
+        // If it looks like a duration (e.g., "30d", "2w"), treat it as duration
+        duration = startPart;
+        partIndex++;
       } else if (startPart) {
         startDate = startPart;
         partIndex++;
@@ -200,6 +205,7 @@ export class GanttParser {
       status,
       startDate,
       duration,
+      dependencies: dependencies.length > 0 ? dependencies : undefined,
     };
   }
 

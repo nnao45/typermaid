@@ -1,21 +1,5 @@
 import { z } from 'zod';
-
-// HTML content type for embedded HTML in labels, notes, descriptions
-export const HTMLContentSchema = z.object({
-  type: z.literal('html'),
-  raw: z.string(), // Raw HTML string
-  sanitized: z.string().optional(), // Sanitized HTML (processed by renderer)
-});
-
-export type HTMLContent = z.infer<typeof HTMLContentSchema>;
-
-// Text or HTML content (Union type)
-export const ContentSchema = z.union([
-  z.string(), // Plain text
-  HTMLContentSchema, // HTML content
-]);
-
-export type Content = z.infer<typeof ContentSchema>;
+import { type Content, ContentSchema } from './content.js';
 
 // State types
 export const StateType = z.enum([

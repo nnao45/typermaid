@@ -1,4 +1,5 @@
 import type {
+  Actor,
   Alt,
   ArrowType,
   Break,
@@ -47,7 +48,7 @@ export class SequenceParser {
       if (token.type === 'PARTICIPANT') {
         statements.push(this.parseParticipant());
       } else if (token.type === 'ACTOR') {
-        this.parseActor();
+        statements.push(this.parseActor());
       } else if (token.type === 'NOTE') {
         statements.push(this.parseNote());
       } else if (token.type === 'AUTONUMBER') {
@@ -113,13 +114,21 @@ export class SequenceParser {
     };
   }
 
-  private parseActor(): void {
+  private parseActor(): Actor {
     this.consume('ACTOR');
-    this.consume('IDENTIFIER');
+    const id = this.consume('IDENTIFIER').value;
+
+    let alias: string | undefined;
     if (this.match('AS')) {
       this.advance();
-      this.readUntilNewline();
+      alias = this.readUntilNewline();
     }
+
+    return {
+      type: 'actor',
+      id,
+      alias,
+    };
   }
 
   private parseNote(): Note {
@@ -207,8 +216,8 @@ export class SequenceParser {
       SEQ_DOTTED_OPEN: 'dotted_open',
       SEQ_SOLID_CROSS: 'solid_cross',
       SEQ_DOTTED_CROSS: 'dotted_cross',
-      SEQ_SOLID_OPEN_ASYNC: 'solid',
-      SEQ_DOTTED_OPEN_ASYNC: 'dotted',
+      SEQ_SOLID_ARROW_SIMPLE: 'solid',
+      SEQ_DOTTED_ARROW_SIMPLE: 'dotted',
     };
 
     return map[tokenType] || 'solid_arrow';
@@ -263,7 +272,8 @@ export class SequenceParser {
     this.skipNewlines();
 
     const statements: SequenceStatement[] = [];
-    const elseBlocks: Array<{ condition?: string | undefined; statements: SequenceStatement[] }> = [];
+    const elseBlocks: Array<{ condition?: string | undefined; statements: SequenceStatement[] }> =
+      [];
 
     // Parse statements until ELSE or END
     while (!this.isAtEnd() && !this.match('ELSE') && !this.match('END')) {
@@ -325,7 +335,8 @@ export class SequenceParser {
     this.skipNewlines();
 
     const statements: SequenceStatement[] = [];
-    const andBlocks: Array<{ condition?: string | undefined; statements: SequenceStatement[] }> = [];
+    const andBlocks: Array<{ condition?: string | undefined; statements: SequenceStatement[] }> =
+      [];
 
     // Parse statements until AND or END
     while (!this.isAtEnd() && !this.match('AND') && !this.match('END')) {
@@ -373,7 +384,8 @@ export class SequenceParser {
     this.skipNewlines();
 
     const statements: SequenceStatement[] = [];
-    const optionBlocks: Array<{ condition?: string | undefined; statements: SequenceStatement[] }> = [];
+    const optionBlocks: Array<{ condition?: string | undefined; statements: SequenceStatement[] }> =
+      [];
 
     // Parse statements until OPTION or END
     while (!this.isAtEnd() && !this.match('OPTION') && !this.match('END')) {

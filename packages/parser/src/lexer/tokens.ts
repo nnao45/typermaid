@@ -84,12 +84,12 @@ export const TokenTypeSchema = z.enum([
   // Sequence diagram message types
   'SEQ_SOLID_ARROW', // ->>
   'SEQ_DOTTED_ARROW', // -->>
-  'SEQ_SOLID_OPEN', // ->
-  'SEQ_DOTTED_OPEN', // -->
+  'SEQ_SOLID_OPEN', // -)
+  'SEQ_DOTTED_OPEN', // --)
   'SEQ_SOLID_CROSS', // -x
   'SEQ_DOTTED_CROSS', // --x
-  'SEQ_SOLID_OPEN_ASYNC', // -)
-  'SEQ_DOTTED_OPEN_ASYNC', // --)
+  'SEQ_SOLID_ARROW_SIMPLE', // ->
+  'SEQ_DOTTED_ARROW_SIMPLE', // -->
 
   // ER diagram relationship types
   'ER_RELATIONSHIP', // ||--o{ etc
@@ -111,6 +111,9 @@ export const TokenTypeSchema = z.enum([
   'AMPERSAND', // &
   'PLUS', // +
   'MINUS', // -
+  'HASH', // #
+  'SLASH', // /
+  'COLOR', // #RGB or #RRGGBB
   'SPECIAL_CHAR', // ( ) , etc
   'NEWLINE',
   'WHITESPACE',

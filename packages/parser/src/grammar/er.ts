@@ -37,27 +37,27 @@ export class ERParser {
       if (this.isAtEnd()) break;
 
       // Try to parse entity with attributes
-      if (this.checkNext('CURLY_OPEN')) {
+      if (this.lookAheadForEntity()) {
         const entity = this.parseEntity();
         entities.push(entity);
+        continue;
       }
       // Try to parse relationship
-      else if (this.lookAheadForRelationship()) {
+      if (this.lookAheadForRelationship()) {
         const relationship = this.parseRelationship();
         relationships.push(relationship);
 
         // Auto-create entities from relationships if they don't exist
-        if (!entities.find(e => e.name === relationship.from)) {
+        if (!entities.find((e) => e.name === relationship.from)) {
           entities.push({ name: relationship.from, attributes: [] });
         }
-        if (!entities.find(e => e.name === relationship.to)) {
+        if (!entities.find((e) => e.name === relationship.to)) {
           entities.push({ name: relationship.to, attributes: [] });
         }
+        continue;
       }
       // Skip unknown tokens
-      else {
-        this.advance();
-      }
+      this.advance();
     }
 
     return {
@@ -69,6 +69,7 @@ export class ERParser {
 
   private parseEntity(): EREntity {
     const name = this.consume('IDENTIFIER', 'Expected entity name').value;
+    this.skipWhitespace(); // Skip whitespace before CURLY_OPEN
     this.consume('CURLY_OPEN', 'Expected {');
     this.skipWhitespaceAndNewlines();
 
@@ -94,12 +95,14 @@ export class ERParser {
   private parseAttribute(): ERAttribute {
     // Format: type name [key] ["comment"]
     const type = this.consume('IDENTIFIER', 'Expected attribute type').value;
+    this.skipWhitespace(); // Skip whitespace between type and name
     const name = this.consume('IDENTIFIER', 'Expected attribute name').value;
 
     let key: ERAttributeKey | undefined;
     let comment: string | undefined;
 
     // Check for key (PK, FK, UK)
+    this.skipWhitespace(); // Skip whitespace before key
     if (this.check('IDENTIFIER')) {
       const keyValue = this.peek().value;
       if (keyValue === 'PK' || keyValue === 'FK' || keyValue === 'UK') {
@@ -109,6 +112,7 @@ export class ERParser {
     }
 
     // Check for comment
+    this.skipWhitespace(); // Skip whitespace before comment
     if (this.check('STRING')) {
       comment = this.advance().value;
     }
@@ -182,7 +186,7 @@ export class ERParser {
       }
 
       // Handle special token types that lexer might create
-      // DOTTED_LINE is "-.->", but we need just the dots
+      // DOTTED_LINE is "-.->", but we need just the dots for ER notation
       if (token.type === 'DOTTED_LINE') {
         // Extract just the dots for ER notation
         notation += '..';
@@ -191,7 +195,26 @@ export class ERParser {
         continue;
       }
 
-      // Collect all non-whitespace tokens (including PIPE, MINUS, SPECIAL_CHAR, etc.)
+      // Handle LINE token (---) for ER relationships
+      if (token.type === 'LINE') {
+        // ER uses -- for non-identifying relationships
+        notation += '--';
+        this.advance();
+        tokenCount++;
+        continue;
+      }
+
+      // Handle CIRCLE_EDGE and CROSS_EDGE tokens (e.g., 'o--', 'o-')
+      // These are flowchart tokens that appear in ER relationships
+      if (token.type === 'CIRCLE_EDGE' || token.type === 'CROSS_EDGE') {
+        // Just use the value as-is since it contains the ER notation
+        notation += token.value;
+        this.advance();
+        tokenCount++;
+        continue;
+      }
+
+      // Collect all non-whitespace tokens (including PIPE, MINUS, SPECIAL_CHAR, CURLY_CLOSE, etc.)
       notation += token.value;
       this.advance();
       tokenCount++;
@@ -272,6 +295,25 @@ export class ERParser {
     );
   }
 
+  private lookAheadForEntity(): boolean {
+    // Look ahead to see if this looks like an entity declaration
+    // Format: IDENTIFIER { ... }
+    const saved = this.current;
+    let result = false;
+
+    if (this.check('IDENTIFIER')) {
+      this.advance();
+      this.skipWhitespace();
+      // Check if next token is CURLY_OPEN
+      if (this.check('CURLY_OPEN')) {
+        result = true;
+      }
+    }
+
+    this.current = saved;
+    return result;
+  }
+
   private lookAheadForRelationship(): boolean {
     // Look ahead to see if this looks like a relationship line
     // Format: IDENTIFIER (cardinality)(identification)(cardinality) IDENTIFIER
@@ -281,9 +323,25 @@ export class ERParser {
     if (this.check('IDENTIFIER')) {
       this.advance();
       this.skipWhitespace();
-      // Check for cardinality markers
-      const char = this.peek().value;
-      if ('|{}o'.includes(char)) {
+      
+      const token = this.peek();
+      
+      // Check for cardinality markers (excluding { which is entity declaration)
+      const char = token.value;
+      if ('|o'.includes(char)) {
+        result = true;
+      }
+      // Special case: }| or }o for reverse cardinality
+      if (char === '}') {
+        const nextToken = this.peekNext();
+        const nextChar = nextToken?.value || '';
+        // Check if next token starts with | or o
+        if (nextChar.length > 0 && '|o'.includes(nextChar[0] || '')) {
+          result = true;
+        }
+      }
+      // Handle CIRCLE_EDGE tokens (e.g., 'o-' or 'o--') which appear in ER relationships
+      if (token.type === 'CIRCLE_EDGE' || token.type === 'CROSS_EDGE') {
         result = true;
       }
     }
@@ -295,12 +353,6 @@ export class ERParser {
   private check(type: Token['type']): boolean {
     if (this.isAtEnd()) return false;
     return this.peek().type === type;
-  }
-
-  private checkNext(type: Token['type']): boolean {
-    const next = this.peekNext();
-    if (!next) return false;
-    return next.type === type;
   }
 
   private peek(): Token {

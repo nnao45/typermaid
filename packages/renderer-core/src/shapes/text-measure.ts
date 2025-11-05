@@ -22,24 +22,24 @@ export interface TextMeasureOptions {
  * These are approximations based on common web fonts
  */
 const FONT_WIDTH_RATIOS: Record<string, number> = {
-  'monospace': 0.6,
-  'courier': 0.6,
-  'arial': 0.55,
-  'helvetica': 0.55,
-  'verdana': 0.6,
-  'times': 0.5,
-  'georgia': 0.52,
+  monospace: 0.6,
+  courier: 0.6,
+  arial: 0.55,
+  helvetica: 0.55,
+  verdana: 0.6,
+  times: 0.5,
+  georgia: 0.52,
   'sans-serif': 0.55,
-  'serif': 0.5,
-  'default': 0.55,
+  serif: 0.5,
+  default: 0.55,
 };
 
 /**
  * Font weight multipliers
  */
 const FONT_WEIGHT_MULTIPLIERS: Record<string, number> = {
-  'normal': 1.0,
-  'bold': 1.15,
+  normal: 1.0,
+  bold: 1.15,
   '400': 1.0,
   '700': 1.15,
   '300': 0.95,
@@ -140,10 +140,7 @@ export function wrapText(
 /**
  * Measure multiline text with line height
  */
-export function measureMultilineText(
-  text: string,
-  options: TextMeasureOptions
-): TextMetrics {
+export function measureMultilineText(text: string, options: TextMeasureOptions): TextMetrics {
   const {
     fontSize,
     fontFamily = 'sans-serif',
@@ -159,9 +156,7 @@ export function measureMultilineText(
     lines = text.split('\n');
   }
 
-  const widths = lines.map((line) =>
-    measureText(line, fontSize, fontFamily, fontWeight).width
-  );
+  const widths = lines.map((line) => measureText(line, fontSize, fontFamily, fontWeight).width);
   const maxLineWidth = Math.max(...widths, 0);
 
   const totalHeight = lines.length * lineHeight;

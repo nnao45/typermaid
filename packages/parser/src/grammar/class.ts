@@ -70,10 +70,10 @@ export class ClassParser {
         diagram.relations.push(relation);
 
         // Auto-create classes from relations if they don't exist
-        if (!diagram.classes.find(c => c.id === relation.from)) {
+        if (!diagram.classes.find((c) => c.id === relation.from)) {
           diagram.classes.push({ id: relation.from, name: relation.from, members: [] });
         }
-        if (!diagram.classes.find(c => c.id === relation.to)) {
+        if (!diagram.classes.find((c) => c.id === relation.to)) {
           diagram.classes.push({ id: relation.to, name: relation.to, members: [] });
         }
 
@@ -89,7 +89,7 @@ export class ClassParser {
 
         if (className && memberDef) {
           // Find or create class
-          let classData = diagram.classes.find(c => c.id === className);
+          let classData = diagram.classes.find((c) => c.id === className);
           if (!classData) {
             classData = { id: className, name: className, members: [] };
             diagram.classes.push(classData);

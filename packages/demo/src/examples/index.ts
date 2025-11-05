@@ -136,6 +136,22 @@ export const EXAMPLE_GANTT = [
     Task in sec :2014-01-12, 12d
     another task :24d`,
   },
+  {
+    id: 'gantt-dependencies',
+    title: 'Gantt with Dependencies',
+    code: `gantt
+    title Project Timeline
+    dateFormat YYYY-MM-DD
+    section Design
+    Design UI :des, 2024-01-01, 5d
+    Design DB :db, 2024-01-01, 3d
+    section Development
+    Implement Backend :impl, after db, 7d
+    Implement Frontend :front, after des, 6d
+    section Testing
+    Integration Test :test, after impl, 3d
+    UI Test :uitest, after front, 2d`,
+  },
 ];
 
 export const ALL_EXAMPLES = [

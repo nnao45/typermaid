@@ -105,7 +105,7 @@ export class Tokenizer {
       case ' ':
       case '\t':
       case '\r':
-        this.skipWhitespace();
+        this.scanWhitespace();
         break;
 
       case '%':
@@ -208,6 +208,16 @@ export class Tokenizer {
         this.scanString(char);
         break;
 
+      case '#':
+        // Scan hex color or hash identifier
+        this.scanHash();
+        break;
+
+      case '/':
+        // Allow slash for dates (e.g., 2024/01/01)
+        this.tokens.push(this.createToken('SLASH', '/'));
+        break;
+
       default:
         if (this.isDigit(char)) {
           this.scanNumber(char);
@@ -220,10 +230,12 @@ export class Tokenizer {
     }
   }
 
-  private skipWhitespace(): void {
+  private scanWhitespace(): void {
+    let whitespace = this.input[this.position - 1] ?? '';
     while (this.peek() === ' ' || this.peek() === '\t' || this.peek() === '\r') {
-      this.advance();
+      whitespace += this.advance();
     }
+    this.tokens.push(this.createToken('WHITESPACE', whitespace));
   }
 
   private scanComment(): void {
@@ -412,8 +424,39 @@ export class Tokenizer {
     return char >= '0' && char <= '9';
   }
 
+  private isHexDigit(char: string): boolean {
+    return (
+      (char >= '0' && char <= '9') || (char >= 'a' && char <= 'f') || (char >= 'A' && char <= 'F')
+    );
+  }
+
   private isAlpha(char: string): boolean {
     return (char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z') || char === '_';
+  }
+
+  private scanHash(): void {
+    // Scan hex color (#RGB or #RRGGBB) or just hash
+    let value = '#';
+    let hexCount = 0;
+
+    while (this.isHexDigit(this.peek()) && hexCount < 6) {
+      value += this.advance();
+      hexCount++;
+    }
+
+    // Valid hex color: #RGB (3 digits) or #RRGGBB (6 digits)
+    if (hexCount === 3 || hexCount === 6) {
+      this.tokens.push(this.createToken('COLOR', value));
+    } else if (hexCount === 0) {
+      // Just a hash character (could be part of identifier)
+      this.tokens.push(this.createToken('HASH', value));
+    } else {
+      // Invalid hex color, treat as identifier
+      while (this.isAlphaNumeric(this.peek())) {
+        value += this.advance();
+      }
+      this.tokens.push(this.createToken('IDENTIFIER', value));
+    }
   }
 
   private isAlphaNumeric(char: string): boolean {
@@ -425,7 +468,8 @@ export class Tokenizer {
     // Note: / and \ are now allowed for parallelogram/trapezoid shapes
     // & is used for multi-edge syntax but also allowed in labels
     // : is excluded as it's used as a separator in state descriptions
-    const allowed = '?!;,.\'"@#$%^&*+-=<>~`/\\';
+    // , is excluded as it's used as a separator in gantt tasks
+    const allowed = '?!;.\'"@#$%^&*+-=<>~`/\\';
     return allowed.includes(char);
   }
 }

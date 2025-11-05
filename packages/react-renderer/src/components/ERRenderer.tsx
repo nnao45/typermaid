@@ -1,6 +1,12 @@
-import type { ERAttribute, ERDiagram, EREntity, ERRelationship } from '@lyric-js/core';
+import type { ERAttribute, ERDiagram, EREntity } from '@lyric-js/core';
+import {
+  computeUnifiedDagreLayout,
+  measureTextCanvas,
+  type UnifiedLayoutEdge,
+  type UnifiedLayoutNode,
+} from '@lyric-js/renderer-core';
 import type React from 'react';
-import { measureText } from '@lyric-js/renderer-core';
+import { useMemo } from 'react';
 import type { Theme } from '../themes/types';
 
 interface ERRendererProps {
@@ -22,72 +28,126 @@ export const ERRenderer: React.FC<ERRendererProps> = ({
   const relationships = diagram.relationships || [];
 
   // Create entities from relationships if not explicitly defined
-  const entityMap = new Map<string, EREntity>();
+  const entities = useMemo(() => {
+    const entityMap = new Map<string, EREntity>();
 
-  // Add explicit entities
-  for (const entity of explicitEntities) {
-    entityMap.set(entity.name, entity);
-  }
-
-  // Add implicit entities from relationships
-  for (const rel of relationships) {
-    if (!entityMap.has(rel.from)) {
-      entityMap.set(rel.from, { name: rel.from, attributes: [] });
+    // Add explicit entities
+    for (const entity of explicitEntities) {
+      entityMap.set(entity.name, entity);
     }
-    if (!entityMap.has(rel.to)) {
-      entityMap.set(rel.to, { name: rel.to, attributes: [] });
+
+    // Add implicit entities from relationships
+    for (const rel of relationships) {
+      if (!entityMap.has(rel.from)) {
+        entityMap.set(rel.from, { name: rel.from, attributes: [] });
+      }
+      if (!entityMap.has(rel.to)) {
+        entityMap.set(rel.to, { name: rel.to, attributes: [] });
+      }
     }
-  }
 
-  const entities = Array.from(entityMap.values());
+    return Array.from(entityMap.values());
+  }, [explicitEntities, relationships]);
 
-  // Dynamic sizing based on text measurement
+  // Font settings
   const headerFontSize = 14;
   const attributeFontSize = 11;
   const padding = 20;
   const entityHeaderHeight = 35;
   const attributeHeight = 22;
-  const spacing = 120;
-  const leftMargin = 50;
-  const topMargin = 50;
 
-  // Measure each entity's required width
-  const entityWidths = entities.map((entity) => {
-    const headerMetrics = measureText(entity.name, headerFontSize, 'sans-serif', 'bold');
+  // Calculate entity dimensions dynamically
+  const entityData = useMemo(() => {
+    return entities.map((entity) => {
+      const headerMetrics = measureTextCanvas(entity.name, headerFontSize, 'sans-serif', 'bold');
 
-    const attributes = entity.attributes || [];
-    const attrWidths = attributes.map((attr) => {
-      const attrText = `${attr.key ? '🔑 ' : ''}${attr.name} ${attr.type ? `(${attr.type})` : ''}`;
-      const metrics = measureText(attrText, attributeFontSize, 'sans-serif', 'normal');
-      return metrics.width;
+      const attributes = entity.attributes || [];
+      const attrWidths = attributes.map((attr) => {
+        const attrText = `${attr.key ? '🔑 ' : ''}${attr.name} ${attr.type ? `(${attr.type})` : ''}`;
+        const metrics = measureTextCanvas(attrText, attributeFontSize, 'sans-serif', 'normal');
+        return metrics.width;
+      });
+
+      const maxAttrWidth = attrWidths.length > 0 ? Math.max(...attrWidths) : 0;
+      const entityWidth = Math.max(headerMetrics.width, maxAttrWidth) + padding * 2;
+      const entityHeight = entityHeaderHeight + attributes.length * attributeHeight + 10;
+
+      return {
+        entity,
+        width: Math.max(entityWidth, 180),
+        height: entityHeight,
+      };
     });
+  }, [entities]);
 
-    const maxAttrWidth = attrWidths.length > 0 ? Math.max(...attrWidths) : 0;
-    return Math.max(headerMetrics.width, maxAttrWidth) + padding * 2;
-  });
+  // Prepare nodes and edges for Dagre layout
+  const layout = useMemo(() => {
+    const nodes: UnifiedLayoutNode[] = entityData.map(({ entity, width, height }) => ({
+      id: entity.name,
+      label: entity.name,
+      width,
+      height,
+    }));
 
-  const entityWidth = Math.max(...entityWidths, 180); // Min width: 180px
+    const edges: UnifiedLayoutEdge[] = relationships
+      .map((rel): UnifiedLayoutEdge | null => {
+        if (rel.label === undefined) {
+          return {
+            from: rel.from,
+            to: rel.to,
+          };
+        }
+        return {
+          from: rel.from,
+          to: rel.to,
+          label: rel.label,
+        };
+      })
+      .filter((edge): edge is UnifiedLayoutEdge => edge !== null);
+
+    return computeUnifiedDagreLayout(nodes, edges, {
+      rankdir: 'LR', // ER diagrams typically flow left-to-right
+      ranksep: 120,
+      nodesep: 100,
+      marginx: 50,
+      marginy: 50,
+    });
+  }, [entityData, relationships]);
+
+  // Generate path from points (polyline routing)
+  const generatePath = (points: Array<{ x: number; y: number }>) => {
+    if (points.length === 0) return '';
+    const [first, ...rest] = points;
+    if (!first) return '';
+    const pathParts = [`M ${first.x} ${first.y}`];
+    for (const point of rest) {
+      pathParts.push(`L ${point.x} ${point.y}`);
+    }
+    return pathParts.join(' ');
+  };
 
   return (
     <svg
-      width={width}
-      height={height}
+      width={Math.max(width, layout.width)}
+      height={Math.max(height, layout.height)}
       style={{ border: `1px solid ${theme.colors.border}`, background: theme.colors.background }}
     >
-      {entities.map((entity: EREntity, index: number) => {
-        const x = leftMargin + (index % 3) * (entityWidth + spacing);
-        const y = topMargin + Math.floor(index / 3) * 250;
+      {/* Render entities with Dagre positions */}
+      {entityData.map(({ entity, width: entityWidth, height: entityHeight }) => {
+        const position = layout.nodes.find((n) => n.id === entity.name);
+        if (!position) return null;
 
+        const x = position.x - entityWidth / 2;
+        const y = position.y - entityHeight / 2;
         const attributes = entity.attributes || [];
-        const totalHeight = entityHeaderHeight + attributes.length * attributeHeight + 10;
 
         return (
-          <g key={entity.name || index}>
+          <g key={entity.name}>
             <rect
               x={x}
               y={y}
               width={entityWidth}
-              height={totalHeight}
+              height={entityHeight}
               fill={theme.colors.node.fill}
               stroke={theme.colors.node.stroke}
               strokeWidth={2}
@@ -103,7 +163,7 @@ export const ERRenderer: React.FC<ERRendererProps> = ({
               rx={5}
             />
             <text
-              x={x + entityWidth / 2}
+              x={position.x}
               y={y + entityHeaderHeight / 2}
               fill={theme.colors.text}
               fontSize={14}
@@ -115,55 +175,44 @@ export const ERRenderer: React.FC<ERRendererProps> = ({
             </text>
 
             {attributes.map((attr: ERAttribute, i: number) => (
-              <g key={`${entity.name}-attr-${i}`}>
-                <text
-                  x={x + 10}
-                  y={y + entityHeaderHeight + (i + 1) * attributeHeight}
-                  fill={theme.colors.text}
-                  fontSize={11}
-                >
-                  {attr.key ? '🔑 ' : ''}
-                  {attr.name} {attr.type ? `(${attr.type})` : ''}
-                </text>
-              </g>
+              <text
+                key={`${entity.name}-attr-${i}`}
+                x={x + 10}
+                y={y + entityHeaderHeight + (i + 1) * attributeHeight}
+                fill={theme.colors.text}
+                fontSize={11}
+              >
+                {attr.key ? '🔑 ' : ''}
+                {attr.name} {attr.type ? `(${attr.type})` : ''}
+              </text>
             ))}
           </g>
         );
       })}
 
-      {relationships.map((rel: ERRelationship, index: number) => {
-        const fromEntity = entities.find((e: EREntity) => e.name === rel.from);
-        const toEntity = entities.find((e: EREntity) => e.name === rel.to);
+      {/* Render relationships with Dagre-routed edges */}
+      {layout.edges.map((edge, index) => {
+        const rel = relationships.find((r) => r.from === edge.from && r.to === edge.to);
+        if (!rel) return null;
 
-        if (!fromEntity || !toEntity) return null;
-
-        const fromIndex = entities.indexOf(fromEntity);
-        const toIndex = entities.indexOf(toEntity);
-
-        const x1 = leftMargin + (fromIndex % 3) * (entityWidth + spacing) + entityWidth / 2;
-        const y1 = topMargin + Math.floor(fromIndex / 3) * 250 + entityHeaderHeight;
-        const x2 = leftMargin + (toIndex % 3) * (entityWidth + spacing) + entityWidth / 2;
-        const y2 = topMargin + Math.floor(toIndex / 3) * 250 + entityHeaderHeight;
+        const pathData = generatePath(edge.points);
+        const midPoint = edge.points[Math.floor(edge.points.length / 2)];
+        if (!midPoint) return null;
 
         return (
-          <g key={index}>
-            <line
-              x1={x1}
-              y1={y1}
-              x2={x2}
-              y2={y2}
-              stroke={theme.colors.edge.stroke}
-              strokeWidth={2}
-            />
-            <text
-              x={(x1 + x2) / 2}
-              y={(y1 + y2) / 2 - 5}
-              fill={theme.colors.text}
-              fontSize={11}
-              textAnchor="middle"
-            >
-              {rel.label}
-            </text>
+          <g key={`${edge.from}-${edge.to}-${index}`}>
+            <path d={pathData} fill="none" stroke={theme.colors.edge.stroke} strokeWidth={2} />
+            {edge.label && (
+              <text
+                x={midPoint.x}
+                y={midPoint.y - 5}
+                fill={theme.colors.text}
+                fontSize={11}
+                textAnchor="middle"
+              >
+                {edge.label}
+              </text>
+            )}
           </g>
         );
       })}

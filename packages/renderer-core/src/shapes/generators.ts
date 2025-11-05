@@ -214,7 +214,13 @@ export const cylindrical: ShapeGenerator = (options: ShapeOptions): ShapePath =>
  */
 export const circle: ShapeGenerator = (options: ShapeOptions): ShapePath => {
   const opts = { ...DEFAULT_SHAPE_OPTIONS, ...options };
-  const textMetrics = calculateTextBox(opts.text, opts.fontSize, opts.padding, opts.fontFamily, 'normal');
+  const textMetrics = calculateTextBox(
+    opts.text,
+    opts.fontSize,
+    opts.padding,
+    opts.fontFamily,
+    'normal'
+  );
 
   // Circle diameter is the larger of width/height
   const diameter = Math.max(textMetrics.width, textMetrics.height, opts.minWidth, opts.minHeight);

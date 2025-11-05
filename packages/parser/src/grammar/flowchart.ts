@@ -18,7 +18,9 @@ export class FlowchartParser {
   private current = 0;
 
   constructor(tokens: Token[]) {
-    this.tokens = tokens.filter((t) => t.type !== 'COMMENT' && t.type !== 'NEWLINE');
+    this.tokens = tokens.filter(
+      (t) => t.type !== 'COMMENT' && t.type !== 'NEWLINE' && t.type !== 'WHITESPACE'
+    );
   }
 
   /**
@@ -54,12 +56,18 @@ export class FlowchartParser {
       direction = dirToken.value as Direction;
     }
 
-    // Parse body (nodes, edges, subgraphs)
+    // Parse body (nodes, edges, subgraphs, classDefs, class assignments)
     const body: (FlowchartNodeAST | EdgeAST | SubgraphAST)[] = [];
 
     while (!this.isAtEnd() && !this.check('FLOWCHART') && !this.check('GRAPH')) {
       if (this.check('SUBGRAPH')) {
         body.push(this.parseSubgraph());
+      } else if (this.check('CLASSDEF')) {
+        // Skip classDef for now (not in AST structure yet)
+        this.parseClassDef();
+      } else if (this.check('CLASS')) {
+        // Skip class assignment for now (not in AST structure yet)
+        this.parseClassAssignment();
       } else if (this.check('IDENTIFIER')) {
         const stmts = this.parseStatement();
         if (stmts) {
@@ -377,6 +385,48 @@ export class FlowchartParser {
       while (this.check('CURLY_CLOSE')) {
         this.advance();
       }
+    }
+  }
+
+  /**
+   * Parse classDef statement
+   * Example: classDef myClass fill:#f9f,stroke:#333,stroke-width:2px
+   */
+  private parseClassDef(): void {
+    this.consume('CLASSDEF', 'Expected classDef keyword');
+
+    // Class name
+    this.consume('IDENTIFIER', 'Expected class name');
+
+    // Parse style properties (just skip for now, as we don't store in AST yet)
+    while (!this.isAtEnd() && !this.check('NEWLINE')) {
+      this.advance();
+    }
+
+    // Note: classDef is not stored in AST yet, will be added in future enhancement
+  }
+
+  /**
+   * Parse class assignment statement
+   * Example: class A,B,C myClass
+   */
+  private parseClassAssignment(): void {
+    this.consume('CLASS', 'Expected class keyword');
+
+    // Parse node IDs (comma-separated)
+    do {
+      if (this.check('COMMA')) {
+        this.advance();
+      }
+      if (this.check('IDENTIFIER')) {
+        this.advance();
+      }
+    } while (this.check('COMMA'));
+
+    // Class name
+    if (this.check('IDENTIFIER')) {
+      this.advance();
+      // Note: class assignment is not stored in AST yet, will be added in future enhancement
     }
   }
 }

@@ -153,28 +153,28 @@ export class SequenceTokenizer {
 
     // -)
     if (this.current() === '-' && this.peek(1) === ')') {
-      this.addToken('SEQ_SOLID_OPEN_ASYNC', '-)');
+      this.addToken('SEQ_SOLID_OPEN', '-)');
       this.advance(2);
       return true;
     }
 
     // --)
     if (this.current() === '-' && this.peek(1) === '-' && this.peek(2) === ')') {
-      this.addToken('SEQ_DOTTED_OPEN_ASYNC', '--)');
+      this.addToken('SEQ_DOTTED_OPEN', '--)');
       this.advance(3);
       return true;
     }
 
     // ->
     if (this.current() === '-' && this.peek(1) === '>') {
-      this.addToken('SEQ_SOLID_OPEN', '->');
+      this.addToken('SEQ_SOLID_ARROW_SIMPLE', '->');
       this.advance(2);
       return true;
     }
 
     // -->
     if (this.current() === '-' && this.peek(1) === '-' && this.peek(2) === '>') {
-      this.addToken('SEQ_DOTTED_OPEN', '-->');
+      this.addToken('SEQ_DOTTED_ARROW_SIMPLE', '-->');
       this.advance(3);
       return true;
     }

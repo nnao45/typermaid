@@ -5,24 +5,134 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dccfe7c3-3ffd-4645-b04f-84185615f706" name="変更" comment="">
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/class-builder.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/class-builder.d.ts.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/class-builder.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/class-builder.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/er-builder.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/er-builder.d.ts.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/er-builder.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/er-builder.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/flowchart-builder.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/flowchart-builder.d.ts.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/flowchart-builder.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/flowchart-builder.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/gantt-builder.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/gantt-builder.d.ts.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/gantt-builder.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/gantt-builder.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/index.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/index.d.ts.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/index.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/sequence-builder.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/sequence-builder.d.ts.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/sequence-builder.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/sequence-builder.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/state-builder.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/state-builder.d.ts.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/state-builder.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/state-builder.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/types.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/types.d.ts.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/types.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/types.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/validators/graph-validator.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/validators/graph-validator.d.ts.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/validators/graph-validator.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/validators/graph-validator.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/validators/reserved-words.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/validators/reserved-words.d.ts.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/validators/reserved-words.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/dist/validators/reserved-words.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/results.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/src/class-builder.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/src/er-builder.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/src/flowchart-builder.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/src/gantt-builder.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/src/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/src/sequence-builder.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/src/state-builder.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/src/types.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/src/validators/graph-validator.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/src/validators/reserved-words.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/tests/class-builder.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/tests/er-builder.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/tests/flowchart-builder.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/tests/gantt-builder.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/tests/sequence-builder.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/tests/state-builder.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/builders/tsconfig.tsbuildinfo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DEMO_FIX_LOG.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DEMO_FIX_SUMMARY.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DEMO_HTML_COMPLETE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DEMO_STATUS.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/E2E_COMPLETE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/E2E_STATUS.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/E2E_SUMMARY.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README_E2E.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RENDERER_FIX_SUMMARY.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RENDERER_STATUS.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/STATE_DIAGRAM_FIX_SUMMARY.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/STATE_DIAGRAM_HTML_FIX.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/state.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PLAN.md" beforeDir="false" afterPath="$PROJECT_DIR$/PLAN.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/schemas/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/schemas/state.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/core/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/demo/src/examples/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/demo/src/examples/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/demo/vite.config.ts.timestamp-1762095429300-6c00f57541c28.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/packages/demo/vite.config.ts.timestamp-1762095429300-6c00f57541c28.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/nodes.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/ast/nodes.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/nodes.d.ts.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/ast/nodes.d.ts.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/nodes.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/ast/nodes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/nodes.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/ast/nodes.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/error.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/error.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/error.d.ts.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/error.d.ts.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/error.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/error.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/error.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/error.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/class.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/class.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/class.d.ts.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/class.d.ts.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/class.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/class.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/class.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/class.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/class.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/class.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/er.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/er.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/er.d.ts.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/er.d.ts.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/er.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/er.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/er.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/er.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/er.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/er.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.d.ts.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.d.ts.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/gantt.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/gantt.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/gantt.d.ts.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/gantt.d.ts.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/gantt.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/gantt.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/gantt.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/gantt.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/gantt.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/gantt.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/sequence.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/sequence.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/sequence.d.ts.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/sequence.d.ts.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/sequence.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/sequence.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/sequence.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/sequence.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/sequence.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/sequence.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/state.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/state.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/state.d.ts.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/state.d.ts.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/state.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/state.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/state.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/state.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/index.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/index.d.ts.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/index.d.ts.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/index.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/index.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.d.ts.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.d.ts.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.d.ts.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.d.ts.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.d.ts.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.d.ts.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/tests/tokenizer.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/tests/tokenizer.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/parser.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/parser.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/parser.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/parser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/test-debug.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/test-debug.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/parser/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/tsconfig.tsbuildinfo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/ClassRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/ClassRenderer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/ERRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/ERRenderer.tsx" afterDir="false" />
@@ -30,9 +140,13 @@
       <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/SequenceRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/SequenceRenderer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/StateRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/StateRenderer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/react-renderer/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/layout/dagre-layout.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/layout/dagre-layout.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/shapes/generators.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/shapes/generators.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/shapes/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/shapes/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/shapes/text-measure.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/shapes/text-measure.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/renderer-core/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +195,7 @@
       <option name="presentableId" value="Default" />
       <updated>1761921340844</updated>
       <workItem from="1761921342231" duration="14980000" />
-      <workItem from="1762172302176" duration="1331000" />
+      <workItem from="1762172302176" duration="10111000" />
     </task>
     <servers />
   </component>
@@ -257,6 +371,110 @@
         <option value="$PROJECT_DIR$/packages/parser/src/ast/nodes.js.map" />
         <option value="$PROJECT_DIR$/packages/parser/src/ast/nodes.js" />
         <option value="$PROJECT_DIR$/packages/parser/src/ast/nodes.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/tokens.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/tokens.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/tokens.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/tokens.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/index.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/validator.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/validator.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/index.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schema.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schema.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schema.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/validator.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/index.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schema.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/validator.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/index.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/gantt.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/flowchart.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/class.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/gantt.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/flowchart.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/branded.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/gantt.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/sequence.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/sequence.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/content.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/branded.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/state.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/index.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/index.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/flowchart.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/flowchart.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/state.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/er.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/class.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/common.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/content.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/sequence.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/index.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/content.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/state.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/index.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/content.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/sequence.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/common.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/er.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/branded.js" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/er.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/common.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/branded.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/state.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/gantt.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/common.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/er.d.ts" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/class.js.map" />
+        <option value="$PROJECT_DIR$/packages/core/src/schemas/class.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/error.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/error.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/index.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/error.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/parser.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/parser.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/index.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/parser.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/error.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/index.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/parser.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/index.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/nodes.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/nodes.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/nodes.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/nodes.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/gantt.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/sequence.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/class.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/gantt.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/gantt.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/sequence.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/state.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/sequence.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/state.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/sequence.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/er.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/er.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/state.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/state.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/er.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/gantt.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/class.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/er.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/class.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/grammar/class.d.ts.map" />
       </list>
     </option>
   </component>
