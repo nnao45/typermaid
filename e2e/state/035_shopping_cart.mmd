@@ -1,0 +1,9 @@
+stateDiagram-v2
+    [*] --> Empty
+    Empty --> HasItems : add
+    HasItems --> Empty : clear
+    HasItems --> Checkout : proceed
+    Checkout --> Payment
+    Payment --> Completed : success
+    Payment --> Checkout : retry
+    Completed --> [*]

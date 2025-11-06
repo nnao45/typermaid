@@ -1,0 +1,8 @@
+stateDiagram-v2
+    [*] --> Pending
+    Pending --> Processing
+    Processing --> Shipped
+    Shipped --> Delivered
+    Delivered --> [*]
+    Processing --> Cancelled
+    Cancelled --> [*]

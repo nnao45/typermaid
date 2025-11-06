@@ -1,0 +1,20 @@
+erDiagram
+    USER {
+        int id PK
+        string name
+    }
+    ORDER {
+        int id PK
+        int user_id FK
+        decimal amount
+    }
+    AUDIT_LOG {
+        int id PK
+        string table_name
+        int record_id
+        string action
+        datetime timestamp
+    }
+    USER ||--o{ ORDER : places
+    USER ||--o{ AUDIT_LOG : tracked
+    ORDER ||--o{ AUDIT_LOG : tracked

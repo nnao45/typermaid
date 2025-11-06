@@ -1,0 +1,8 @@
+stateDiagram-v2
+    [*] --> Draft
+    Draft --> ManagerReview
+    ManagerReview --> DirectorReview : approved
+    ManagerReview --> Draft : rejected
+    DirectorReview --> Approved : approved
+    DirectorReview --> Draft : rejected
+    Approved --> [*]

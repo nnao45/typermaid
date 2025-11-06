@@ -1,0 +1,11 @@
+gantt
+    title Task Dependencies
+    dateFormat YYYY-MM-DD
+    section Phase 1
+    Design           :d1, 2024-01-01, 5d
+    Review           :d2, after d1, 3d
+    section Phase 2
+    Implementation   :i1, after d2, 10d
+    Testing          :t1, after i1, 5d
+    section Phase 3
+    Deployment       :dep, after t1, 2d

@@ -1,0 +1,7 @@
+stateDiagram-v2
+    [*] --> Closed
+    Closed --> Opening : push
+    Opening --> Open
+    Open --> Closing : release
+    Closing --> Closed
+    Open --> [*]

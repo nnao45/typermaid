@@ -1,0 +1,7 @@
+stateDiagram-v2
+    [*] --> CheckStatus
+    CheckStatus --> choice_state
+    choice_state --> Active : if healthy
+    choice_state --> Inactive : if unhealthy
+    Active --> [*]
+    Inactive --> [*]

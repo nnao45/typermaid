@@ -1,0 +1,7 @@
+erDiagram
+    SELLER ||--o{ LISTING : creates
+    BUYER ||--o{ ORDER : places
+    LISTING ||--o{ ORDER : sold
+    ORDER ||--|| PAYMENT : paid
+    ORDER ||--o| SHIPMENT : shipped
+    SHIPMENT ||--o{ TRACKING : tracked

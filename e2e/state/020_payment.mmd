@@ -1,0 +1,9 @@
+stateDiagram-v2
+    [*] --> Created
+    Created --> Authorized
+    Authorized --> Captured
+    Captured --> Completed
+    Authorized --> Voided
+    Created --> Cancelled
+    Completed --> Refunded
+    Completed --> [*]

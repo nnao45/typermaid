@@ -1,0 +1,9 @@
+stateDiagram-v2
+    [*] --> Pending
+    Pending --> Building
+    Building --> Testing : success
+    Building --> Failed : error
+    Testing --> Success : pass
+    Testing --> Failed : fail
+    Failed --> [*]
+    Success --> [*]

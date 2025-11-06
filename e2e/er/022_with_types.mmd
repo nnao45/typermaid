@@ -1,0 +1,13 @@
+erDiagram
+    PRODUCT {
+        uuid id PK
+        string name
+        decimal price
+        int stock
+        datetime created_at
+    }
+    CATEGORY {
+        uuid id PK
+        string name
+    }
+    CATEGORY ||--o{ PRODUCT : contains

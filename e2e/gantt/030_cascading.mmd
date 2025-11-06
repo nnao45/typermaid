@@ -1,0 +1,10 @@
+gantt
+    title Cascading Tasks
+    dateFormat YYYY-MM-DD
+    section Sequence
+    Step 1           :s1, 2024-01-01, 3d
+    Step 2           :s2, after s1, 3d
+    Step 3           :s3, after s2, 3d
+    Step 4           :s4, after s3, 3d
+    Step 5           :s5, after s4, 3d
+    Completion       :milestone, after s5, 0d

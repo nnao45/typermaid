@@ -1,0 +1,23 @@
+stateDiagram-v2
+    [*] --> System
+    
+    state System {
+        [*] --> SubSystem1
+        
+        state SubSystem1 {
+            [*] --> Component1
+            Component1 --> Component2
+            Component2 --> [*]
+        }
+        
+        SubSystem1 --> SubSystem2
+        
+        state SubSystem2 {
+            [*] --> Component3
+            Component3 --> [*]
+        }
+        
+        SubSystem2 --> [*]
+    }
+    
+    System --> [*]

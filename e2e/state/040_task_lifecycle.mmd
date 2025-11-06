@@ -1,0 +1,9 @@
+stateDiagram-v2
+    [*] --> Todo
+    Todo --> InProgress : start
+    InProgress --> InReview : complete
+    InReview --> Done : approve
+    InReview --> InProgress : revise
+    InProgress --> Blocked : obstacle
+    Blocked --> InProgress : resolved
+    Done --> [*]

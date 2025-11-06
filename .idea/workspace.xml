@@ -65,28 +65,6 @@
       <change afterPath="$PROJECT_DIR$/packages/builders/tests/state-builder.test.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/packages/builders/tsconfig.json" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/packages/builders/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e2e/class.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/e2e/class.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e2e/er.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/e2e/er.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e2e/flowchart.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/e2e/flowchart.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e2e/gantt.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/e2e/gantt.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e2e/sequence.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/e2e/sequence.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e2e/state.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/e2e/state.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/nodes.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/ast/nodes.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/nodes.d.ts.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/ast/nodes.d.ts.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/index.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/index.d.ts.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/index.d.ts.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/parser.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/parser.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/parser.d.ts.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/parser.d.ts.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/parser.js" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/parser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/parser.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/parser.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/parser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/parser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-renderers.mjs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vitest.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vitest.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +113,7 @@
       <option name="presentableId" value="Default" />
       <updated>1761921340844</updated>
       <workItem from="1761921342231" duration="14980000" />
-      <workItem from="1762172302176" duration="15282000" />
+      <workItem from="1762172302176" duration="15910000" />
     </task>
     <servers />
   </component>

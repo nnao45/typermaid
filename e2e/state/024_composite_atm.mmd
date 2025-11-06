@@ -1,0 +1,14 @@
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> Active : card_inserted
+    
+    state Active {
+        [*] --> EnterPIN
+        EnterPIN --> ValidPIN : correct
+        EnterPIN --> InvalidPIN : incorrect
+        InvalidPIN --> EnterPIN : retry
+        ValidPIN --> SelectOperation
+        SelectOperation --> [*]
+    }
+    
+    Active --> Idle : card_removed

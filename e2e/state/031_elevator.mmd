@@ -1,0 +1,13 @@
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> Moving : request
+    
+    state Moving {
+        [*] --> GoingUp
+        GoingUp --> GoingDown
+        GoingDown --> Arrived
+        Arrived --> [*]
+    }
+    
+    Moving --> Idle : stopped
+    Idle --> [*]

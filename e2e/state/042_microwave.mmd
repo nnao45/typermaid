@@ -1,0 +1,8 @@
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> DoorOpen : open
+    DoorOpen --> Idle : close
+    Idle --> Cooking : start
+    Cooking --> Idle : done
+    Cooking --> Paused : open
+    Paused --> Cooking : close

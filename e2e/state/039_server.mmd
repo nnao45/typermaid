@@ -1,0 +1,8 @@
+stateDiagram-v2
+    [*] --> Stopped
+    Stopped --> Starting : start
+    Starting --> Running : ready
+    Starting --> Error : failed
+    Running --> Stopping : stop
+    Stopping --> Stopped : shutdown
+    Error --> Stopped : reset

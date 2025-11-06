@@ -1,0 +1,17 @@
+erDiagram
+    COMMENT {
+        int id PK
+        int commentable_id
+        string commentable_type
+        text content
+    }
+    POST {
+        int id PK
+        string title
+    }
+    VIDEO {
+        int id PK
+        string title
+    }
+    POST ||--o{ COMMENT : receives
+    VIDEO ||--o{ COMMENT : receives

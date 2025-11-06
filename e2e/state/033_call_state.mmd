@@ -1,0 +1,9 @@
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> Dialing : dial
+    Dialing --> Ringing : calling
+    Ringing --> Connected : answer
+    Ringing --> Idle : hangup
+    Connected --> Idle : disconnect
+    Connected --> OnHold : hold
+    OnHold --> Connected : resume

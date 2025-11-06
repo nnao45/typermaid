@@ -1,0 +1,16 @@
+erDiagram
+    EMPLOYEE {
+        bigint employee_id PK
+        varchar name
+        char gender
+        date hire_date
+        decimal salary
+        boolean active
+    }
+    DEPARTMENT {
+        int dept_id PK
+        varchar dept_name
+        bigint manager_id FK
+    }
+    DEPARTMENT ||--o{ EMPLOYEE : employs
+    EMPLOYEE ||--|| DEPARTMENT : manages

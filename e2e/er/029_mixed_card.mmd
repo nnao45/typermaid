@@ -1,0 +1,5 @@
+erDiagram
+    COMPANY ||--o{ EMPLOYEE : employs
+    EMPLOYEE ||--|| DEPARTMENT : belongsTo
+    DEPARTMENT ||--o| MANAGER : managedBy
+    EMPLOYEE }o--o{ PROJECT : worksOn

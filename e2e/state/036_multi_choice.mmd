@@ -1,0 +1,9 @@
+stateDiagram-v2
+    [*] --> Evaluate
+    Evaluate --> choice1
+    choice1 --> Low : score < 50
+    choice1 --> Medium : score < 80
+    choice1 --> High : score >= 80
+    Low --> [*]
+    Medium --> [*]
+    High --> [*]

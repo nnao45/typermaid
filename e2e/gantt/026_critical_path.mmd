@@ -1,0 +1,10 @@
+gantt
+    title Critical Path
+    dateFormat YYYY-MM-DD
+    section Critical
+    Task 1           :crit, c1, 2024-01-01, 5d
+    Task 2           :crit, c2, after c1, 5d
+    Task 3           :crit, c3, after c2, 5d
+    section Non-Critical
+    Task A           :a1, 2024-01-01, 10d
+    Task B           :a2, 2024-01-05, 8d

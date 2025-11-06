@@ -1,0 +1,8 @@
+stateDiagram-v2
+    [*] --> Ready
+    Ready --> Printing : print
+    Printing --> Ready : done
+    Ready --> Error : jam
+    Printing --> Error : jam
+    Error --> Ready : clear
+    Ready --> [*]

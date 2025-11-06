@@ -1,0 +1,10 @@
+stateDiagram-v2
+    [*] --> Active
+    
+    state Active {
+        [*] --> Process1
+        --
+        [*] --> Process2
+    }
+    
+    Active --> [*]

@@ -1,0 +1,6 @@
+erDiagram
+    STUDENT ||--o{ ENROLLMENT : enrolls
+    COURSE ||--o{ ENROLLMENT : offered
+    TEACHER ||--o{ TEACHING : teaches
+    COURSE ||--o{ TEACHING : taughtIn
+    ENROLLMENT }o--|| TEACHING : under

@@ -1,0 +1,5 @@
+erDiagram
+    USER ||--o{ SUBSCRIPTION : subscribes
+    PLAN ||--o{ SUBSCRIPTION : offers
+    SUBSCRIPTION ||--o{ PAYMENT : generates
+    PAYMENT ||--|| INVOICE : documented

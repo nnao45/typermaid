@@ -1,0 +1,7 @@
+stateDiagram-v2
+    [*] --> LoggedOut
+    LoggedOut --> LoggingIn : login
+    LoggingIn --> LoggedIn : success
+    LoggingIn --> LoggedOut : failure
+    LoggedIn --> LoggedOut : logout
+    LoggedIn --> [*]

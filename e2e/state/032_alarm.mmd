@@ -1,0 +1,8 @@
+stateDiagram-v2
+    [*] --> Disarmed
+    Disarmed --> Armed : arm
+    Armed --> Triggered : detect
+    Triggered --> Alarm : timeout
+    Alarm --> Disarmed : disarm
+    Armed --> Disarmed : disarm
+    Triggered --> Disarmed : cancel

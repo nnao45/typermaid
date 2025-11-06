@@ -1,0 +1,47 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "SequenceDiagram",
+      "diagram": {
+        "type": "sequence",
+        "statements": [
+          {
+            "type": "message",
+            "from": "Alice",
+            "to": "John",
+            "arrowType": "solid_arrow",
+            "text": "Hello John, how are you?"
+          },
+          {
+            "type": "message",
+            "from": "John",
+            "to": "Alice",
+            "arrowType": "dotted_arrow",
+            "text": "Great!"
+          }
+        ]
+      },
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 84
+        }
+      }
+    }
+  ],
+  "loc": {
+    "start": {
+      "line": 1,
+      "column": 0
+    },
+    "end": {
+      "line": 1,
+      "column": 84
+    }
+  }
+}

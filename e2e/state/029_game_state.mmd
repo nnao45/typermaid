@@ -1,0 +1,8 @@
+stateDiagram-v2
+    [*] --> Menu
+    Menu --> Playing : start
+    Playing --> Paused : pause
+    Paused --> Playing : resume
+    Playing --> GameOver : die
+    GameOver --> Menu : restart
+    Menu --> [*] : quit

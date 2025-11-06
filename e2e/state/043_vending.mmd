@@ -1,0 +1,7 @@
+stateDiagram-v2
+    [*] --> WaitingForMoney
+    WaitingForMoney --> HasMoney : insert
+    HasMoney --> Dispensing : select
+    Dispensing --> WaitingForMoney : complete
+    HasMoney --> Refunding : cancel
+    Refunding --> WaitingForMoney : done

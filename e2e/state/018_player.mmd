@@ -1,0 +1,8 @@
+stateDiagram-v2
+    [*] --> Stopped
+    Stopped --> Playing : play
+    Playing --> Paused : pause
+    Paused --> Playing : resume
+    Playing --> Stopped : stop
+    Paused --> Stopped : stop
+    Stopped --> [*]

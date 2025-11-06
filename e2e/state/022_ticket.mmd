@@ -1,0 +1,8 @@
+stateDiagram-v2
+    [*] --> Open
+    Open --> InProgress
+    InProgress --> Resolved
+    Resolved --> Closed
+    InProgress --> Open
+    Resolved --> Open : reopen
+    Closed --> [*]

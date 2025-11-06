@@ -1,0 +1,8 @@
+stateDiagram-v2
+    [*] --> Submit
+    Submit --> Review1
+    Review1 --> Review2 : approve
+    Review1 --> Submit : reject
+    Review2 --> Final : approve
+    Review2 --> Submit : reject
+    Final --> [*]

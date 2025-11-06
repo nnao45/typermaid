@@ -1,0 +1,7 @@
+stateDiagram-v2
+    [*] --> Disconnected
+    Disconnected --> Connecting : connect
+    Connecting --> Connected : success
+    Connecting --> Disconnected : timeout
+    Connected --> Disconnected : disconnect
+    Connected --> [*]

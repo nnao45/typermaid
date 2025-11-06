@@ -1,0 +1,9 @@
+stateDiagram-v2
+    [*] --> Init
+    Init --> fork_state
+    fork_state --> State1
+    fork_state --> State2
+    State1 --> join_state
+    State2 --> join_state
+    join_state --> Final
+    Final --> [*]

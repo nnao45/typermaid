@@ -1,0 +1,10 @@
+stateDiagram-v2
+    [*] --> Idle
+    note right of Idle
+        System is ready
+    end note
+    Idle --> Active : start
+    Active --> Idle : stop
+    note left of Active
+        Processing...
+    end note
