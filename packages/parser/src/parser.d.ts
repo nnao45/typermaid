@@ -25,6 +25,7 @@ export declare function parseState(input: string): ProgramAST;
 export declare function parseGantt(input: string): ProgramAST;
 /**
  * Main parse function - auto-detects diagram type
+ * Supports multiple diagrams separated by blank lines
  */
 export declare function parse(input: string): ProgramAST;
 //# sourceMappingURL=parser.d.ts.map

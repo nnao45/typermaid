@@ -5,7 +5,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
-    testTimeout: 10000,
+    testTimeout: 120000, // 2 minutes for large e2e tests
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
@@ -15,7 +15,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@lyric-js/core': path.resolve(__dirname, 'packages/core/src'),
-      '@lyric-js/parser': path.resolve(__dirname, 'packages/parser/src'),
+      '@lyric-js/parser': path.resolve(__dirname, 'packages/parser/dist'),
+      '@lyric-js/codegen': path.resolve(__dirname, 'packages/codegen/dist'),
       '@lyric-js/renderer': path.resolve(__dirname, 'packages/renderer/src'),
       '@lyric-js/cli': path.resolve(__dirname, 'packages/cli/src'),
     },

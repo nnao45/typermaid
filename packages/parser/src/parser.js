@@ -141,26 +141,101 @@ export function parseGantt(input) {
     };
 }
 /**
+ * Split input into multiple diagrams (separated by blank lines)
+ */
+function splitDiagrams(input) {
+    // Split by double newline (blank line)
+    const parts = input.split(/\n\s*\n/);
+    return parts.filter(p => p.trim().length > 0);
+}
+/**
+ * Detect diagram type from input
+ */
+function detectDiagramType(input) {
+    const trimmed = input.trim().toLowerCase();
+    if (trimmed.startsWith('sequencediagram'))
+        return 'sequence';
+    if (trimmed.startsWith('classdiagram'))
+        return 'class';
+    if (trimmed.startsWith('erdiagram'))
+        return 'er';
+    if (trimmed.startsWith('statediagram'))
+        return 'state';
+    if (trimmed.startsWith('gantt'))
+        return 'gantt';
+    if (trimmed.startsWith('flowchart'))
+        return 'flowchart';
+    if (trimmed.startsWith('graph'))
+        return 'flowchart';
+    return 'flowchart'; // default
+}
+/**
+ * Parse single diagram by type
+ */
+function parseSingleDiagram(input, type) {
+    switch (type) {
+        case 'sequence':
+            return parseSequence(input);
+        case 'class':
+            return parseClass(input);
+        case 'er':
+            return parseER(input);
+        case 'state':
+            return parseState(input);
+        case 'gantt':
+            return parseGantt(input);
+        case 'flowchart':
+        default:
+            return parseFlowchart(input);
+    }
+}
+/**
  * Main parse function - auto-detects diagram type
+ * Supports multiple diagrams separated by blank lines
  */
 export function parse(input) {
-    const trimmed = input.trim().toLowerCase();
-    if (trimmed.startsWith('sequencediagram')) {
-        return parseSequence(input);
+    const diagrams = splitDiagrams(input);
+    // Empty input
+    if (diagrams.length === 0) {
+        return {
+            type: 'Program',
+            body: [],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 0 },
+            },
+        };
     }
-    if (trimmed.startsWith('classdiagram')) {
-        return parseClass(input);
+    // Single diagram case
+    if (diagrams.length === 1) {
+        const diagram = diagrams[0];
+        if (!diagram) {
+            return {
+                type: 'Program',
+                body: [],
+                loc: {
+                    start: { line: 1, column: 0 },
+                    end: { line: 1, column: 0 },
+                },
+            };
+        }
+        const type = detectDiagramType(diagram);
+        return parseSingleDiagram(diagram, type);
     }
-    if (trimmed.startsWith('erdiagram')) {
-        return parseER(input);
+    // Multiple diagrams case
+    const allDiagrams = [];
+    for (const diagramInput of diagrams) {
+        const type = detectDiagramType(diagramInput);
+        const ast = parseSingleDiagram(diagramInput, type);
+        allDiagrams.push(...ast.body);
     }
-    if (trimmed.startsWith('statediagram')) {
-        return parseState(input);
-    }
-    if (trimmed.startsWith('gantt')) {
-        return parseGantt(input);
-    }
-    // Default to flowchart
-    return parseFlowchart(input);
+    return {
+        type: 'Program',
+        body: allDiagrams,
+        loc: {
+            start: { line: 1, column: 0 },
+            end: { line: 1, column: input.length },
+        },
+    };
 }
 //# sourceMappingURL=parser.js.map

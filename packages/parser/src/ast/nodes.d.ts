@@ -237,10 +237,10 @@ export declare const SequenceDiagramASTSchema: z.ZodObject<{
             from: z.ZodString;
             to: z.ZodString;
             arrowType: z.ZodEnum<{
-                dotted_arrow: "dotted_arrow";
                 solid: "solid";
                 dotted: "dotted";
                 solid_arrow: "solid_arrow";
+                dotted_arrow: "dotted_arrow";
                 solid_cross: "solid_cross";
                 dotted_cross: "dotted_cross";
                 solid_open: "solid_open";
@@ -642,10 +642,10 @@ export declare const StateDiagramASTSchema: z.ZodObject<{
         }>>;
         direction: z.ZodOptional<z.ZodEnum<{
             TB: "TB";
+            TD: "TD";
             BT: "BT";
             LR: "LR";
             RL: "RL";
-            TD: "TD";
         }>>;
         states: z.ZodArray<z.ZodType<import("@lyric-js/core").State, unknown, z.core.$ZodTypeInternals<import("@lyric-js/core").State, unknown>>>;
         transitions: z.ZodArray<z.ZodObject<{
@@ -861,10 +861,10 @@ export declare const ProgramASTSchema: z.ZodObject<{
                 from: z.ZodString;
                 to: z.ZodString;
                 arrowType: z.ZodEnum<{
-                    dotted_arrow: "dotted_arrow";
                     solid: "solid";
                     dotted: "dotted";
                     solid_arrow: "solid_arrow";
+                    dotted_arrow: "dotted_arrow";
                     solid_cross: "solid_cross";
                     dotted_cross: "dotted_cross";
                     solid_open: "solid_open";
@@ -1254,10 +1254,10 @@ export declare const ProgramASTSchema: z.ZodObject<{
             }>>;
             direction: z.ZodOptional<z.ZodEnum<{
                 TB: "TB";
+                TD: "TD";
                 BT: "BT";
                 LR: "LR";
                 RL: "RL";
-                TD: "TD";
             }>>;
             states: z.ZodArray<z.ZodType<import("@lyric-js/core").State, unknown, z.core.$ZodTypeInternals<import("@lyric-js/core").State, unknown>>>;
             transitions: z.ZodArray<z.ZodObject<{
