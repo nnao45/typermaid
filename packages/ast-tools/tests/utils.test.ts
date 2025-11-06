@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { parse } from "@lyric-js/parser";
+import { parse } from "@typermaid/parser";
 import type {
 	FlowchartDiagramAST,
 	SequenceDiagramAST,
 	StateDiagramAST,
-} from "@lyric-js/parser";
+} from "@typermaid/parser";
 import {
 	cloneAST,
 	mergeDiagrams,

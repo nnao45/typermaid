@@ -1,4 +1,4 @@
-import type { NodeShape } from '@lyric-js/core';
+import type { NodeShape } from '@typermaid/core';
 import type { ShapeGenerators, ShapeOptions, ShapePath } from './types.js';
 /**
  * Map of all shape generators

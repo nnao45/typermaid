@@ -1,4 +1,4 @@
-import type { GanttConfig, GanttSection, GanttTask, GanttTaskStatus } from '@lyric-js/core';
+import type { GanttConfig, GanttSection, GanttTask, GanttTaskStatus } from '@typermaid/core';
 import type { Token } from '../lexer/tokens.js';
 
 export interface GanttDiagramAST {

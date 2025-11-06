@@ -1,5 +1,5 @@
 {
-  "name": "@lyric-js/react-renderer",
+  "name": "@typermaid/react-renderer",
   "version": "0.1.0",
   "description": "React components for rendering Mermaid diagrams",
   "type": "module",
@@ -34,9 +34,9 @@
     "react-dom": "^18.0.0"
   },
   "dependencies": {
-    "@lyric-js/core": "workspace:*",
-    "@lyric-js/parser": "workspace:*",
-    "@lyric-js/renderer-core": "workspace:*",
+    "@typermaid/core": "workspace:*",
+    "@typermaid/parser": "workspace:*",
+    "@typermaid/renderer-core": "workspace:*",
     "dagre": "^0.8.5",
     "isomorphic-dompurify": "^2.30.1"
   },

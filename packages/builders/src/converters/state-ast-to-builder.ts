@@ -1,6 +1,6 @@
-import type { State, StateDiagram, StateTransition } from '@lyric-js/core';
-import { extractText } from '@lyric-js/core';
-import type { StateDiagramAST } from '@lyric-js/parser';
+import type { State, StateDiagram, StateTransition } from '@typermaid/core';
+import { extractText } from '@typermaid/core';
+import type { StateDiagramAST } from '@typermaid/parser';
 import { StateDiagramBuilder } from '../state-builder.js';
 import type { StateID } from '../types.js';
 
@@ -12,8 +12,8 @@ import type { StateID } from '../types.js';
  *
  * @example
  * ```typescript
- * import { parse } from '@lyric-js/parser';
- * import { stateASTToBuilder } from '@lyric-js/builders/converters';
+ * import { parse } from '@typermaid/parser';
+ * import { stateASTToBuilder } from '@typermaid/builders/converters';
  *
  * const code = `
  *   stateDiagram-v2

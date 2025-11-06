@@ -1,5 +1,5 @@
-import type { FlowchartDiagram, FlowchartEdge, FlowchartNode } from '@lyric-js/core';
-import type { EdgeAST, FlowchartDiagramAST, ProgramAST } from '@lyric-js/parser';
+import type { FlowchartDiagram, FlowchartEdge, FlowchartNode } from '@typermaid/core';
+import type { EdgeAST, FlowchartDiagramAST, ProgramAST } from '@typermaid/parser';
 
 /**
  * Convert Parser AST to Schema-compatible format

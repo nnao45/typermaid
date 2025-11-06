@@ -11,7 +11,7 @@ import type {
 	Critical,
 	Break,
 	Rect,
-} from "@lyric-js/parser";
+} from "@typermaid/parser";
 
 /**
  * Generate Mermaid code from Sequence Diagram AST

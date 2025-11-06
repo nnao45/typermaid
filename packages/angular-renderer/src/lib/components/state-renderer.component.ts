@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, Input } from '@angular/core';
-import type { StateDiagramAST } from '@lyric-js/parser';
-import { computeUnifiedDagreLayout } from '@lyric-js/renderer-core';
+import type { StateDiagramAST } from '@typermaid/parser';
+import { computeUnifiedDagreLayout } from '@typermaid/renderer-core';
 import type { Theme } from '../services/theme.service';
 
 @Component({

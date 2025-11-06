@@ -1,5 +1,5 @@
-import type { ERDiagram, EREntity, ERRelationship } from '@lyric-js/core';
-import type { ERDiagramAST } from '@lyric-js/parser';
+import type { ERDiagram, EREntity, ERRelationship } from '@typermaid/core';
+import type { ERDiagramAST } from '@typermaid/parser';
 import { ERDiagramBuilder } from '../er-builder.js';
 import type { EntityID } from '../types.js';
 
@@ -11,8 +11,8 @@ import type { EntityID } from '../types.js';
  *
  * @example
  * ```typescript
- * import { parse } from '@lyric-js/parser';
- * import { erASTToBuilder } from '@lyric-js/builders/converters';
+ * import { parse } from '@typermaid/parser';
+ * import { erASTToBuilder } from '@typermaid/builders/converters';
  *
  * const code = `
  *   erDiagram

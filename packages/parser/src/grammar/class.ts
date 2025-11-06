@@ -6,7 +6,7 @@ import type {
   ClassNamespace,
   ClassRelation,
   ClassVisibility,
-} from '@lyric-js/core';
+} from '@typermaid/core';
 
 export class ClassParser {
   private lines: string[];

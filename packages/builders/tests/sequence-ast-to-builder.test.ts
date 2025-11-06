@@ -1,4 +1,4 @@
-import { parse, type SequenceDiagramAST } from '@lyric-js/parser';
+import { parse, type SequenceDiagramAST } from '@typermaid/parser';
 import { describe, expect, it } from 'vitest';
 import { sequenceASTToBuilder } from '../src/converters/sequence-ast-to-builder.js';
 import { brandID } from '../src/types.js';

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { parse } from '@lyric-js/parser';
-import { generateCode } from '@lyric-js/codegen';
+import { parse } from '@typermaid/parser';
+import { generateCode } from '@typermaid/codegen';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 

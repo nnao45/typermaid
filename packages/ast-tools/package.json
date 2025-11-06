@@ -1,5 +1,5 @@
 {
-  "name": "@lyric-js/ast-tools",
+  "name": "@typermaid/ast-tools",
   "version": "0.1.0",
   "description": "AST manipulation and transformation tools for Lyric.js",
   "type": "module",
@@ -18,7 +18,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@lyric-js/parser": "workspace:*"
+    "@typermaid/parser": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",

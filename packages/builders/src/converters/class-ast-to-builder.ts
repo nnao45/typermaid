@@ -1,5 +1,5 @@
-import type { ClassDefinition, ClassDiagram, ClassRelation } from '@lyric-js/core';
-import type { ClassDiagramAST } from '@lyric-js/parser';
+import type { ClassDefinition, ClassDiagram, ClassRelation } from '@typermaid/core';
+import type { ClassDiagramAST } from '@typermaid/parser';
 import { ClassDiagramBuilder } from '../class-builder.js';
 import type { ClassID } from '../types.js';
 
@@ -11,8 +11,8 @@ import type { ClassID } from '../types.js';
  *
  * @example
  * ```typescript
- * import { parse } from '@lyric-js/parser';
- * import { classASTToBuilder } from '@lyric-js/builders/converters';
+ * import { parse } from '@typermaid/parser';
+ * import { classASTToBuilder } from '@typermaid/builders/converters';
  *
  * const code = `
  *   classDiagram

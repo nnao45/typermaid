@@ -1,4 +1,4 @@
-import { parse } from '@lyric-js/parser';
+import { parse } from '@typermaid/parser';
 import { describe, expect, it } from 'vitest';
 import { astToSchema, createLayout } from '../src/index.js';
 

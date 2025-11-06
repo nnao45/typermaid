@@ -5,7 +5,7 @@ import type {
   EREntity,
   ERIdentification,
   ERRelationship,
-} from '@lyric-js/core';
+} from '@typermaid/core';
 import {
   brandID,
   type EntityID,

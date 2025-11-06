@@ -6,7 +6,7 @@ import type {
   Participant,
   SequenceDiagram,
   SequenceStatement,
-} from '@lyric-js/core';
+} from '@typermaid/core';
 import {
   brandID,
   isValidIDFormat,

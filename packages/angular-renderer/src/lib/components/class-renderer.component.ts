@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, Input } from '@angular/core';
-import type { ClassDiagram, ClassRelation } from '@lyric-js/core';
-import type { ClassDiagramAST } from '@lyric-js/parser';
-import { computeUnifiedDagreLayout } from '@lyric-js/renderer-core';
+import type { ClassDiagram, ClassRelation } from '@typermaid/core';
+import type { ClassDiagramAST } from '@typermaid/parser';
+import { computeUnifiedDagreLayout } from '@typermaid/renderer-core';
 import type { Theme } from '../services/theme.service';
 
 @Component({

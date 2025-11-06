@@ -1,12 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { parse } from "@lyric-js/parser";
+import { parse } from "@typermaid/parser";
 import type {
 	FlowchartNodeAST,
 	EdgeAST,
 	ParticipantAST,
 	MessageAST,
 	StateAST,
-} from "@lyric-js/parser";
+} from "@typermaid/parser";
 import { ASTTransformer, type ASTVisitor } from "../src/visitor.js";
 
 describe("ASTTransformer", () => {

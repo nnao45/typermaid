@@ -28,7 +28,7 @@ import type {
 	GanttDiagramAST,
 	GanttTask,
 	GanttSection,
-} from "@lyric-js/parser";
+} from "@typermaid/parser";
 
 /**
  * Base visitor interface for AST traversal

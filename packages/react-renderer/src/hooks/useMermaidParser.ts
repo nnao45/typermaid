@@ -1,5 +1,5 @@
-import type { ProgramAST } from '@lyric-js/parser';
-import { parse } from '@lyric-js/parser';
+import type { ProgramAST } from '@typermaid/parser';
+import { parse } from '@typermaid/parser';
 import { useMemo } from 'react';
 
 export function useMermaidParser(code: string): ProgramAST | null {

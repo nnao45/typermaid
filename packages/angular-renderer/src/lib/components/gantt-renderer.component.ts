@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, Input } from '@angular/core';
-import type { GanttDiagramAST } from '@lyric-js/parser';
+import type { GanttDiagramAST } from '@typermaid/parser';
 import {
   calculateTimelineRange,
   calculateTimelineTasks,
   generateTimelineAxis,
   type TimelineConfig,
   type TimelineTask,
-} from '@lyric-js/renderer-core';
+} from '@typermaid/renderer-core';
 import type { Theme } from '../services/theme.service';
 
 @Component({

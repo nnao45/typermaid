@@ -1,4 +1,4 @@
-import { type FlowchartDiagramAST, parse } from '@lyric-js/parser';
+import { type FlowchartDiagramAST, parse } from '@typermaid/parser';
 import { describe, expect, it } from 'vitest';
 import { flowchartASTToBuilder } from '../src/converters/flowchart-ast-to-builder.js';
 import { brandID } from '../src/types.js';

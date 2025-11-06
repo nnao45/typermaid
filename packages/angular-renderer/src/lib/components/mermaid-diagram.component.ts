@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, EventEmitter, Input, inject, Output, signal } from '@angular/core';
-import type { ProgramAST } from '@lyric-js/parser';
+import type { ProgramAST } from '@typermaid/parser';
 import { ParserService } from '../services/parser.service';
 import { darkTheme, lightTheme, type Theme, ThemeService } from '../services/theme.service';
 import { ClassRendererComponent } from './class-renderer.component';

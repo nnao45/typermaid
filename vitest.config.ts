@@ -14,11 +14,11 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@lyric-js/core': path.resolve(__dirname, 'packages/core/src'),
-      '@lyric-js/parser': path.resolve(__dirname, 'packages/parser/dist'),
-      '@lyric-js/codegen': path.resolve(__dirname, 'packages/codegen/dist'),
-      '@lyric-js/renderer': path.resolve(__dirname, 'packages/renderer/src'),
-      '@lyric-js/cli': path.resolve(__dirname, 'packages/cli/src'),
+      '@typermaid/core': path.resolve(__dirname, 'packages/core/src'),
+      '@typermaid/parser': path.resolve(__dirname, 'packages/parser/dist'),
+      '@typermaid/codegen': path.resolve(__dirname, 'packages/codegen/dist'),
+      '@typermaid/renderer': path.resolve(__dirname, 'packages/renderer/src'),
+      '@typermaid/cli': path.resolve(__dirname, 'packages/cli/src'),
     },
   },
 });

@@ -8,7 +8,7 @@
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
-      "@lyric-js/*": ["packages/*/src"]
+      "@typermaid/*": ["packages/*/src"]
     },
 
     "strict": true,

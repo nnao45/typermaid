@@ -3,7 +3,7 @@ import type {
 	Entity,
 	Attribute,
 	ERRelationship,
-} from "@lyric-js/parser";
+} from "@typermaid/parser";
 
 /**
  * Generate Mermaid code from ER Diagram AST

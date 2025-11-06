@@ -3,7 +3,7 @@ import type {
 	FlowchartNodeAST,
 	EdgeAST,
 	SubgraphAST,
-} from "@lyric-js/parser";
+} from "@typermaid/parser";
 
 /**
  * Check if label needs quotes (contains special characters)

@@ -1258,7 +1258,7 @@ export function computeDagreLayout(
 **修正ファイル**: `packages/react-renderer/src/components/ClassRenderer.tsx`
 
 ```typescript
-import { computeDagreLayout } from '@lyric-js/renderer-core/layout/unified-dagre-layout';
+import { computeDagreLayout } from '@typermaid/renderer-core/layout/unified-dagre-layout';
 
 export const ClassRenderer: React.FC<ClassRendererProps> = ({ diagram }) => {
   // Dagreレイアウト計算
@@ -2671,7 +2671,7 @@ packages/builders/  # 🆕 新規パッケージ
 
 **対策**:
 - ✅ Tree Shaking対応（ESM形式）
-- ✅ 別パッケージ化（`@lyric-js/builders`）
+- ✅ 別パッケージ化（`@typermaid/builders`）
 - ✅ 目標: +5KB以内
 
 ### 🚀 次のステップ
@@ -2762,7 +2762,7 @@ Builder システムを段階的に完成させていくわよ💪
 ```typescript
 // packages/builders/src/converters/ast-to-builder.ts
 
-import type { FlowchartDiagram } from '@lyric-js/core';
+import type { FlowchartDiagram } from '@typermaid/core';
 import { FlowchartDiagramBuilder } from '../flowchart-builder.js';
 
 /**
@@ -2805,8 +2805,8 @@ export function flowchartASTToBuilder(ast: FlowchartDiagram): FlowchartDiagramBu
 
 **使用例**:
 ```typescript
-import { parse } from '@lyric-js/parser';
-import { flowchartASTToBuilder } from '@lyric-js/builders';
+import { parse } from '@typermaid/parser';
+import { flowchartASTToBuilder } from '@typermaid/builders';
 
 // 1. Parse existing Mermaid code
 const code = `
@@ -2867,7 +2867,7 @@ Builder Patternはメソッドチェーンでわかりやすいけど、**大規
 ```typescript
 // packages/ast-manipulation/src/traversal.ts
 
-import type { FlowchartDiagram, FlowchartNode } from '@lyric-js/core';
+import type { FlowchartDiagram, FlowchartNode } from '@typermaid/core';
 
 /**
  * Visitor pattern for AST traversal
@@ -2949,8 +2949,8 @@ export function removeNode(
 
 **使用例**:
 ```typescript
-import { parse } from '@lyric-js/parser';
-import { traverse, findNodes, replaceNode } from '@lyric-js/ast-manipulation';
+import { parse } from '@typermaid/parser';
+import { traverse, findNodes, replaceNode } from '@typermaid/ast-manipulation';
 
 const ast = parse('flowchart TB\n A --> B --> C');
 
@@ -3046,7 +3046,7 @@ traverse(ast, {
 3. ✅ Convertersパッケージセットアップ
    - `packages/builders/src/converters/` ディレクトリ作成
    - index.tsでexport
-   - `@lyric-js/parser` 依存関係追加
+   - `@typermaid/parser` 依存関係追加
 
 **残課題**:
 - 🐛 Sequence Converterのvitestエラー解決（`diagram.statements is not iterable`）
@@ -3067,10 +3067,10 @@ traverse(ast, {
 ### 🏗️ アーキテクチャ
 
 ```
-@lyric-js/renderer-core (Framework-agnostic)
+@typermaid/renderer-core (Framework-agnostic)
     │
-    ├─→ @lyric-js/react-renderer (React 18+)
-    └─→ @lyric-js/angular-renderer (Angular 18+) 🆕
+    ├─→ @typermaid/react-renderer (React 18+)
+    └─→ @typermaid/angular-renderer (Angular 18+) 🆕
 ```
 
 ### 📦 パッケージ構造
@@ -3108,7 +3108,7 @@ packages/angular-renderer/
 ```typescript
 // app.component.ts
 import { Component } from '@angular/core';
-import { MermaidDiagramComponent } from '@lyric-js/angular-renderer';
+import { MermaidDiagramComponent } from '@typermaid/angular-renderer';
 
 @Component({
   selector: 'app-root',
@@ -3161,11 +3161,11 @@ export class AppComponent {
 **タスク**:
 - [x] `packages/angular-renderer`ディレクトリ作成
 - [x] Angular 18+ ライブラリ初期化（ng generate library）
-- [x] TypeScript設定（strict mode、`@lyric-js/*`パス設定）
+- [x] TypeScript設定（strict mode、`@typermaid/*`パス設定）
 - [x] 依存関係追加：
-  - `@lyric-js/core`
-  - `@lyric-js/parser`
-  - `@lyric-js/renderer-core`
+  - `@typermaid/core`
+  - `@typermaid/parser`
+  - `@typermaid/renderer-core`
 - [x] ビルド設定（ng-packagr）
 - [x] pnpm workspace統合
 
@@ -3179,7 +3179,7 @@ export class AppComponent {
 **5.2.1 ParserService**
 ```typescript
 import { Injectable } from '@angular/core';
-import { parse } from '@lyric-js/parser';
+import { parse } from '@typermaid/parser';
 
 @Injectable({ providedIn: 'root' })
 export class ParserService {
@@ -3192,7 +3192,7 @@ export class ParserService {
 **5.2.2 ThemeService (Signals)**
 ```typescript
 import { Injectable, signal, computed } from '@angular/core';
-import { Theme, lightTheme, darkTheme } from '@lyric-js/renderer-core';
+import { Theme, lightTheme, darkTheme } from '@typermaid/renderer-core';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
@@ -3357,8 +3357,8 @@ export class MermaidDiagramComponent {
 ```typescript
 import { Component, Input, Output, EventEmitter, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { computeDagreLayout } from '@lyric-js/renderer-core';
-import type { FlowchartDiagram, Theme } from '@lyric-js/core';
+import { computeDagreLayout } from '@typermaid/renderer-core';
+import type { FlowchartDiagram, Theme } from '@typermaid/core';
 
 @Component({
   selector: 'lyric-flowchart-renderer',
@@ -3903,8 +3903,8 @@ export const SubgraphASTSchema: z.ZodType<SubgraphAST> = BaseASTNodeSchema.exten
 1. **FlowchartBuilder完成**
 ```typescript
 // packages/builders/src/flowchart-builder.ts
-import type { NodeID } from '@lyric-js/core';
-import { nodeId } from '@lyric-js/core';
+import type { NodeID } from '@typermaid/core';
+import { nodeId } from '@typermaid/core';
 
 export class FlowchartDiagramBuilder {
   private nodes = new Map<NodeID, FlowchartNode>();
@@ -4127,8 +4127,8 @@ export class BuilderError extends Error {
 2. **SequenceBuilder実装**
 ```typescript
 // packages/builders/src/sequence-builder.ts
-import type { ParticipantID } from '@lyric-js/core';
-import { participantId } from '@lyric-js/core';
+import type { ParticipantID } from '@typermaid/core';
+import { participantId } from '@typermaid/core';
 
 export class SequenceDiagramBuilder {
   private participants = new Map<ParticipantID, Participant>();
@@ -4346,7 +4346,7 @@ export function computeDagreLayout<N = unknown, E = unknown>(
 2. **Shape generator型強化**
 ```typescript
 // packages/renderer-core/src/shapes/generators.ts
-import type { NodeShape } from '@lyric-js/core';
+import type { NodeShape } from '@typermaid/core';
 
 export type ShapePathGenerator = (width: number, height: number) => string;
 
@@ -4442,8 +4442,8 @@ export const darkTheme: Readonly<Theme> = {
 1. **React Props厳格化**
 ```typescript
 // packages/react-renderer/src/components/MermaidDiagram.tsx
-import type { FlowchartDiagram, SequenceDiagram, ... } from '@lyric-js/core';
-import type { Theme } from '@lyric-js/renderer-core';
+import type { FlowchartDiagram, SequenceDiagram, ... } from '@typermaid/core';
+import type { Theme } from '@typermaid/renderer-core';
 
 // Discriminated union for diagram props
 export type MermaidDiagramProps = 
@@ -4478,7 +4478,7 @@ export const MermaidDiagram: React.FC<MermaidDiagramProps> = (props) => {
 ```typescript
 // packages/angular-renderer/src/lib/components/mermaid-diagram.component.ts
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import type { FlowchartDiagram, SequenceDiagram, ... } from '@lyric-js/core';
+import type { FlowchartDiagram, SequenceDiagram, ... } from '@typermaid/core';
 
 @Component({ ... })
 export class MermaidDiagramComponent {
@@ -4771,7 +4771,7 @@ const updated = builder.build();
 - **用途**: 高度な変換・最適化・静的解析
 
 ```typescript
-import { ASTTransformer, NodeVisitor } from '@lyric-js/ast-tools';
+import { ASTTransformer, NodeVisitor } from '@typermaid/ast-tools';
 
 // AST訪問パターン
 class NodeLabelUpdater extends NodeVisitor {
@@ -4926,7 +4926,7 @@ import type {
   SubgraphAST,
   SequenceDiagramAST,
   // ... all AST types
-} from '@lyric-js/parser';
+} from '@typermaid/parser';
 
 /**
  * Base Visitor for AST traversal
@@ -5036,7 +5036,7 @@ export class ASTTransformer {
 **新規ファイル**: `packages/ast-tools/src/transform.ts`
 
 ```typescript
-import type { ProgramAST, FlowchartNodeAST, EdgeAST, /* ... */ } from '@lyric-js/parser';
+import type { ProgramAST, FlowchartNodeAST, EdgeAST, /* ... */ } from '@typermaid/parser';
 
 /**
  * Transform functions for each AST node type
@@ -5268,8 +5268,8 @@ interface ValidationResult {
 
 #### UC1: Mermaidコードの編集
 ```typescript
-import { parse } from '@lyric-js/parser';
-import { FlowchartDiagramBuilder } from '@lyric-js/builders';
+import { parse } from '@typermaid/parser';
+import { FlowchartDiagramBuilder } from '@typermaid/builders';
 
 // 既存のMermaidコードを読み込み
 const code = `
@@ -5292,7 +5292,7 @@ const updated = builder.build();
 
 #### UC2: 静的解析（ラベル大文字化）
 ```typescript
-import { transformAST } from '@lyric-js/ast-tools';
+import { transformAST } from '@typermaid/ast-tools';
 
 const transformed = transformAST(ast, {
   FlowchartNode: (node) => ({
@@ -5304,7 +5304,7 @@ const transformed = transformAST(ast, {
 
 #### UC3: ダイアグラムマージ
 ```typescript
-import { mergeDiagrams } from '@lyric-js/ast-tools';
+import { mergeDiagrams } from '@typermaid/ast-tools';
 
 const diagram1 = parse('flowchart LR\n  A --> B');
 const diagram2 = parse('flowchart LR\n  B --> C');
@@ -5314,7 +5314,7 @@ const merged = mergeDiagrams(diagram1.body[0], diagram2.body[0]);
 
 #### UC4: バリデーション
 ```typescript
-import { validateDiagram } from '@lyric-js/ast-tools';
+import { validateDiagram } from '@typermaid/ast-tools';
 
 const result = validateDiagram(ast.body[0]);
 if (!result.valid) {

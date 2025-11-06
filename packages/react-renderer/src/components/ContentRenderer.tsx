@@ -1,4 +1,4 @@
-import type { Content } from '@lyric-js/core';
+import type { Content } from '@typermaid/core';
 import DOMPurify from 'isomorphic-dompurify';
 import type React from 'react';
 

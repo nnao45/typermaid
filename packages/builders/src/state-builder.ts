@@ -1,4 +1,4 @@
-import type { State, StateDiagram, StateTransition } from '@lyric-js/core';
+import type { State, StateDiagram, StateTransition } from '@typermaid/core';
 import {
   brandID,
   isValidIDFormat,

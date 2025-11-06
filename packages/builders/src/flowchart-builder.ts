@@ -7,7 +7,7 @@ import type {
   NodeShape,
   Style,
   Subgraph,
-} from '@lyric-js/core';
+} from '@typermaid/core';
 import {
   brandID,
   type ClassDefID,

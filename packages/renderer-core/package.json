@@ -1,5 +1,5 @@
 {
-  "name": "@lyric-js/renderer-core",
+  "name": "@typermaid/renderer-core",
   "version": "0.1.0",
   "description": "Core rendering engine for Lyric-JS diagrams",
   "type": "module",
@@ -24,8 +24,8 @@
     "lint:fix": "biome check --write src"
   },
   "dependencies": {
-    "@lyric-js/core": "workspace:*",
-    "@lyric-js/parser": "workspace:*",
+    "@typermaid/core": "workspace:*",
+    "@typermaid/parser": "workspace:*",
     "dagre": "^0.8.5"
   },
   "devDependencies": {

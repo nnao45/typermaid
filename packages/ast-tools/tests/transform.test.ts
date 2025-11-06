@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { parse } from "@lyric-js/parser";
-import type { FlowchartNodeAST, EdgeAST, MessageAST } from "@lyric-js/parser";
+import { parse } from "@typermaid/parser";
+import type { FlowchartNodeAST, EdgeAST, MessageAST } from "@typermaid/parser";
 import {
 	transformAST,
 	findNodes,

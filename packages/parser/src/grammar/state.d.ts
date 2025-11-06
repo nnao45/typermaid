@@ -1,4 +1,4 @@
-import type { State, StateDirection, StateNote, StateTransition } from '@lyric-js/core';
+import type { State, StateDirection, StateNote, StateTransition } from '@typermaid/core';
 import type { Token } from '../lexer/tokens.js';
 export interface StateDiagramAST {
     type: 'state';

@@ -23,7 +23,7 @@ import type {
 	ERRelationship,
 	GanttTask,
 	GanttSection,
-} from "@lyric-js/parser";
+} from "@typermaid/parser";
 
 /**
  * Transform functions for each AST node type

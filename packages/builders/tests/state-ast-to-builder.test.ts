@@ -1,4 +1,4 @@
-import { parse, type StateDiagramAST } from '@lyric-js/parser';
+import { parse, type StateDiagramAST } from '@typermaid/parser';
 import { describe, expect, it } from 'vitest';
 import { stateASTToBuilder } from '../src/converters/state-ast-to-builder.js';
 import { brandID } from '../src/types.js';

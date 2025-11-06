@@ -1,4 +1,4 @@
-import type { GanttDiagram, GanttTask } from '@lyric-js/core';
+import type { GanttDiagram, GanttTask } from '@typermaid/core';
 import {
   calculateTimelineRange,
   calculateTimelineTasks,
@@ -6,7 +6,7 @@ import {
   measureTextCanvas,
   type TimelineConfig,
   type TimelineTask,
-} from '@lyric-js/renderer-core';
+} from '@typermaid/renderer-core';
 import type React from 'react';
 import { useMemo } from 'react';
 import type { Theme } from '../themes/types';

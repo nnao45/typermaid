@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, EventEmitter, Input, Output } from '@angular/core';
-import type { FlowchartDiagramAST } from '@lyric-js/parser';
-import type { LayoutEdge, LayoutNode } from '@lyric-js/renderer-core';
-import { astToSchema, createLayout } from '@lyric-js/renderer-core';
+import type { FlowchartDiagramAST } from '@typermaid/parser';
+import type { LayoutEdge, LayoutNode } from '@typermaid/renderer-core';
+import { astToSchema, createLayout } from '@typermaid/renderer-core';
 import type { Theme } from '../services/theme.service';
 
 @Component({

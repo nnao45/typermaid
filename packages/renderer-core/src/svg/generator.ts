@@ -2,7 +2,7 @@
  * High-level SVG generator that combines layout, shapes, and edges
  */
 
-import type { FlowchartDiagram } from '@lyric-js/core';
+import type { FlowchartDiagram } from '@typermaid/core';
 import { createArrowMarker } from '../edges/markers.js';
 import { createLayout } from '../layout/dagre-layout.js';
 import { generateShapePath } from '../shapes/index.js';

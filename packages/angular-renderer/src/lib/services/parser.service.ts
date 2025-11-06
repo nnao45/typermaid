@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import type { ProgramAST } from '@lyric-js/parser';
-import { parse } from '@lyric-js/parser';
+import type { ProgramAST } from '@typermaid/parser';
+import { parse } from '@typermaid/parser';
 
 @Injectable({ providedIn: 'root' })
 export class ParserService {

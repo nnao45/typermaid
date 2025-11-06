@@ -1,7 +1,7 @@
 /**
  * High-level SVG generator that combines layout, shapes, and edges
  */
-import type { FlowchartDiagram } from '@lyric-js/core';
+import type { FlowchartDiagram } from '@typermaid/core';
 import type { SVGDocument } from './types.js';
 /**
  * Default theme colors

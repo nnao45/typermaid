@@ -1,4 +1,4 @@
-import { type ClassDiagramAST, parse } from '@lyric-js/parser';
+import { type ClassDiagramAST, parse } from '@typermaid/parser';
 import { describe, expect, it } from 'vitest';
 import { classASTToBuilder } from '../src/converters/class-ast-to-builder.js';
 import { brandID } from '../src/types.js';

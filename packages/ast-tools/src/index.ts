@@ -1,5 +1,5 @@
 /**
- * @lyric-js/ast-tools
+ * @typermaid/ast-tools
  *
  * AST manipulation and transformation tools for Lyric.js
  * Provides visitor pattern, functional transforms, and utilities

@@ -2,7 +2,7 @@ import type {
 	GanttDiagramAST,
 	GanttTask,
 	GanttSection,
-} from "@lyric-js/parser";
+} from "@typermaid/parser";
 
 /**
  * Generate Mermaid code from Gantt Diagram AST

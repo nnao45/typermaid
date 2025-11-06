@@ -8,7 +8,7 @@ import type {
 	ClassDiagramAST,
 	ERDiagramAST,
 	GanttDiagramAST,
-} from "@lyric-js/parser";
+} from "@typermaid/parser";
 import { transformAST } from "./transform.js";
 
 /**

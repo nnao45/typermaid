@@ -1,4 +1,4 @@
-import type { Direction, EdgeType, NodeShape } from '@lyric-js/core';
+import type { Direction, EdgeType, NodeShape } from '@typermaid/core';
 import type {
   ASTNode,
   EdgeAST,

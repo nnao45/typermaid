@@ -1,4 +1,4 @@
-import { MermaidDiagram } from '@lyric-js/react-renderer';
+import { MermaidDiagram } from '@typermaid/react-renderer';
 
 const code = `
 flowchart TB

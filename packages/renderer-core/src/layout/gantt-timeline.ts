@@ -1,4 +1,4 @@
-import type { GanttTask } from '@lyric-js/core';
+import type { GanttTask } from '@typermaid/core';
 
 export interface TimelineConfig {
   startDate: Date;

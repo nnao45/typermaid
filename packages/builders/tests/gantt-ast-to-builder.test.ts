@@ -1,4 +1,4 @@
-import { type GanttDiagramAST, parse } from '@lyric-js/parser';
+import { type GanttDiagramAST, parse } from '@typermaid/parser';
 import { describe, expect, it } from 'vitest';
 import { ganttASTToBuilder } from '../src/converters/gantt-ast-to-builder.js';
 

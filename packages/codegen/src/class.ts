@@ -3,7 +3,7 @@ import type {
 	Class,
 	ClassMember,
 	Relationship,
-} from "@lyric-js/parser";
+} from "@typermaid/parser";
 
 /**
  * Generate Mermaid code from Class Diagram AST

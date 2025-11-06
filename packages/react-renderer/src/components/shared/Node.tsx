@@ -1,4 +1,4 @@
-import type { LayoutNode } from '@lyric-js/renderer-core';
+import type { LayoutNode } from '@typermaid/renderer-core';
 import React from 'react';
 import type { Theme } from '../../themes/types';
 

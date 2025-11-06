@@ -7,7 +7,7 @@ import {
   NodeShapeSchema,
   SequenceDiagramSchema,
   StateDiagramSchema,
-} from '@lyric-js/core';
+} from '@typermaid/core';
 import { z } from 'zod';
 
 /**

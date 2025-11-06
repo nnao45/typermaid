@@ -1,4 +1,4 @@
-import type { LayoutEdge } from '@lyric-js/renderer-core';
+import type { LayoutEdge } from '@typermaid/renderer-core';
 import React from 'react';
 import type { Theme } from '../../themes/types';
 

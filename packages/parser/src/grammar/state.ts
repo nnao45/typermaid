@@ -6,7 +6,7 @@ import type {
   StateNote,
   StateTransition,
   StateType,
-} from '@lyric-js/core';
+} from '@typermaid/core';
 import { ParserError } from '../error.js';
 import type { Token } from '../lexer/tokens.js';
 

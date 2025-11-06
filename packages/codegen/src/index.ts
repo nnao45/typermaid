@@ -6,7 +6,7 @@ import type {
   ProgramAST,
   SequenceDiagramAST,
   StateDiagramAST,
-} from '@lyric-js/parser';
+} from '@typermaid/parser';
 import { generateFlowchart } from './flowchart.js';
 import { generateSequence } from './sequence.js';
 import { generateState } from './state.js';
@@ -17,7 +17,7 @@ import { generateGantt } from './gantt.js';
 /**
  * Generate Mermaid code from AST
  *
- * @param ast - Parsed AST from @lyric-js/parser
+ * @param ast - Parsed AST from @typermaid/parser
  * @returns Generated Mermaid code
  */
 export function generateCode(ast: ProgramAST): string {

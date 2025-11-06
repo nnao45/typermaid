@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parse } from "@lyric-js/parser";
+import { parse } from "@typermaid/parser";
 import { generateCode } from "../src/index.js";
 
 describe("generateClass", () => {

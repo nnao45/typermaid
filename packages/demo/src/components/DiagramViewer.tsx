@@ -1,4 +1,4 @@
-import { MermaidDiagram } from '@lyric-js/react-renderer';
+import { MermaidDiagram } from '@typermaid/react-renderer';
 import type React from 'react';
 import { useState } from 'react';
 

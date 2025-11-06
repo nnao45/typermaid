@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, Input } from '@angular/core';
-import type { SequenceDiagramAST } from '@lyric-js/parser';
+import type { SequenceDiagramAST } from '@typermaid/parser';
 import type { Theme } from '../services/theme.service';
 
 @Component({

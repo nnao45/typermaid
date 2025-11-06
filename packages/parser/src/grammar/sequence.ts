@@ -14,7 +14,7 @@ import type {
   Rect,
   SequenceDiagram,
   SequenceStatement,
-} from '@lyric-js/core';
+} from '@typermaid/core';
 import { ParserError } from '../error.js';
 import { SequenceTokenizer } from '../lexer/sequence-tokenizer.js';
 import type { Token } from '../lexer/tokens.js';

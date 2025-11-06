@@ -1,8 +1,8 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { parse } from '@lyric-js/parser';
-import { generateCode } from '@lyric-js/codegen';
+import { parse } from '@typermaid/parser';
+import { generateCode } from '@typermaid/codegen';
 
 describe('E2E: Sequence Diagram Examples', () => {
   const examplesDir = join(process.cwd(), 'e2e', 'sequence');

@@ -49,7 +49,7 @@ export type {
   // Gantt types
   GanttTask,
   GanttSection,
-} from '@lyric-js/core';
+} from '@typermaid/core';
 
 // Parser exports
 export { ParserError } from './error.js';

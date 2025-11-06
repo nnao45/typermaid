@@ -4,9 +4,9 @@ import type {
   GanttDiagram,
   SequenceDiagram,
   StateDiagram,
-} from '@lyric-js/core';
-import type { ASTNode, FlowchartDiagramAST } from '@lyric-js/parser';
-import type { LayoutEdge, LayoutNode } from '@lyric-js/renderer-core';
+} from '@typermaid/core';
+import type { ASTNode, FlowchartDiagramAST } from '@typermaid/parser';
+import type { LayoutEdge, LayoutNode } from '@typermaid/renderer-core';
 import type React from 'react';
 import { useMermaidParser } from '../hooks/useMermaidParser';
 import { useTheme } from '../hooks/useTheme';

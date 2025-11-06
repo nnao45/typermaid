@@ -13,10 +13,10 @@ A strict TypeScript framework for generating visual diagrams from text, inspired
 
 This is a monorepo containing:
 
-- `@lyric-js/core` - Core schema and validation
-- `@lyric-js/parser` - Text DSL parser
-- `@lyric-js/renderer` - SVG rendering engine
-- `@lyric-js/cli` - Command-line interface
+- `@typermaid/core` - Core schema and validation
+- `@typermaid/parser` - Text DSL parser
+- `@typermaid/renderer` - SVG rendering engine
+- `@typermaid/cli` - Command-line interface
 
 ## 🛠️ Development
 
@@ -46,7 +46,7 @@ pnpm format
 ## 📝 Example
 
 ```typescript
-import { validateDiagram } from '@lyric-js/core';
+import { validateDiagram } from '@typermaid/core';
 
 const diagram = {
   id: 'my-flow',

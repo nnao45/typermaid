@@ -18,16 +18,16 @@ importers:
       '@biomejs/biome':
         specifier: ^2.3.2
         version: 2.3.2
-      '@lyric-js/ast-tools':
+      '@typermaid/ast-tools':
         specifier: workspace:*
         version: link:packages/ast-tools
-      '@lyric-js/builders':
+      '@typermaid/builders':
         specifier: workspace:*
         version: link:packages/builders
-      '@lyric-js/codegen':
+      '@typermaid/codegen':
         specifier: workspace:*
         version: link:packages/codegen
-      '@lyric-js/parser':
+      '@typermaid/parser':
         specifier: workspace:*
         version: link:packages/parser
       '@types/node':
@@ -51,13 +51,13 @@ importers:
 
   packages/angular-renderer:
     dependencies:
-      '@lyric-js/core':
+      '@typermaid/core':
         specifier: workspace:*
         version: link:../core
-      '@lyric-js/parser':
+      '@typermaid/parser':
         specifier: workspace:*
         version: link:../parser
-      '@lyric-js/renderer-core':
+      '@typermaid/renderer-core':
         specifier: workspace:*
         version: link:../renderer-core
       tslib:
@@ -76,7 +76,7 @@ importers:
 
   packages/ast-tools:
     dependencies:
-      '@lyric-js/parser':
+      '@typermaid/parser':
         specifier: workspace:*
         version: link:../parser
     devDependencies:
@@ -92,10 +92,10 @@ importers:
 
   packages/builders:
     dependencies:
-      '@lyric-js/core':
+      '@typermaid/core':
         specifier: workspace:*
         version: link:../core
-      '@lyric-js/parser':
+      '@typermaid/parser':
         specifier: workspace:*
         version: link:../parser
     devDependencies:
@@ -108,10 +108,10 @@ importers:
 
   packages/codegen:
     dependencies:
-      '@lyric-js/core':
+      '@typermaid/core':
         specifier: workspace:*
         version: link:../core
-      '@lyric-js/parser':
+      '@typermaid/parser':
         specifier: workspace:*
         version: link:../parser
     devDependencies:
@@ -137,18 +137,18 @@ importers:
 
   packages/demo:
     dependencies:
-      '@lyric-js/parser':
-        specifier: workspace:*
-        version: link:../parser
-      '@lyric-js/react-renderer':
-        specifier: workspace:*
-        version: link:../react-renderer
-      '@lyric-js/renderer-core':
-        specifier: workspace:*
-        version: link:../renderer-core
       '@monaco-editor/react':
         specifier: ^4.6.0
         version: 4.7.0(monaco-editor@0.54.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@typermaid/parser':
+        specifier: workspace:*
+        version: link:../parser
+      '@typermaid/react-renderer':
+        specifier: workspace:*
+        version: link:../react-renderer
+      '@typermaid/renderer-core':
+        specifier: workspace:*
+        version: link:../renderer-core
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -186,7 +186,7 @@ importers:
 
   packages/parser:
     dependencies:
-      '@lyric-js/core':
+      '@typermaid/core':
         specifier: workspace:*
         version: link:../core
       zod:
@@ -202,13 +202,13 @@ importers:
 
   packages/react-renderer:
     dependencies:
-      '@lyric-js/core':
+      '@typermaid/core':
         specifier: workspace:*
         version: link:../core
-      '@lyric-js/parser':
+      '@typermaid/parser':
         specifier: workspace:*
         version: link:../parser
-      '@lyric-js/renderer-core':
+      '@typermaid/renderer-core':
         specifier: workspace:*
         version: link:../renderer-core
       dagre:
@@ -251,10 +251,10 @@ importers:
 
   packages/renderer-core:
     dependencies:
-      '@lyric-js/core':
+      '@typermaid/core':
         specifier: workspace:*
         version: link:../core
-      '@lyric-js/parser':
+      '@typermaid/parser':
         specifier: workspace:*
         version: link:../parser
       dagre:

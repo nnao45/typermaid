@@ -1,4 +1,4 @@
-import { type ERDiagramAST, parse } from '@lyric-js/parser';
+import { type ERDiagramAST, parse } from '@typermaid/parser';
 import { describe, expect, it } from 'vitest';
 import { erASTToBuilder } from '../src/converters/er-ast-to-builder.js';
 import { brandID } from '../src/types.js';

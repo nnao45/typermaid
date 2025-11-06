@@ -1,6 +1,6 @@
-import type { FlowchartDiagramAST } from '@lyric-js/parser';
-import type { LayoutEdge, LayoutNode } from '@lyric-js/renderer-core';
-import { astToSchema, createLayout } from '@lyric-js/renderer-core';
+import type { FlowchartDiagramAST } from '@typermaid/parser';
+import type { LayoutEdge, LayoutNode } from '@typermaid/renderer-core';
+import { astToSchema, createLayout } from '@typermaid/renderer-core';
 import type React from 'react';
 import { useMemo } from 'react';
 import { useZoomPan } from '../hooks/useZoomPan';

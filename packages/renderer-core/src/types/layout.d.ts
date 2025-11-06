@@ -1,4 +1,4 @@
-import type { FlowchartEdge, FlowchartNode } from '@lyric-js/core';
+import type { FlowchartEdge, FlowchartNode } from '@typermaid/core';
 /**
  * Position in 2D space
  */

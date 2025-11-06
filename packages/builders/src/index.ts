@@ -1,5 +1,5 @@
 /**
- * @lyric-js/builders
+ * @typermaid/builders
  *
  * Type-safe builders for creating Mermaid diagrams with compile-time validation
  */

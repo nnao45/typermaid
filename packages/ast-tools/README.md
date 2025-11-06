@@ -1,4 +1,4 @@
-# @lyric-js/ast-tools
+# @typermaid/ast-tools
 
 AST manipulation and transformation tools for Lyric.js. Provides powerful APIs for transforming, querying, and validating Mermaid diagram ASTs.
 
@@ -13,7 +13,7 @@ AST manipulation and transformation tools for Lyric.js. Provides powerful APIs f
 ## Installation
 
 ```bash
-npm install @lyric-js/ast-tools
+npm install @typermaid/ast-tools
 ```
 
 ## Usage
@@ -23,8 +23,8 @@ npm install @lyric-js/ast-tools
 Transform ASTs using the visitor pattern for complex transformations:
 
 ```typescript
-import { parse } from '@lyric-js/parser';
-import { ASTTransformer, ASTVisitor } from '@lyric-js/ast-tools';
+import { parse } from '@typermaid/parser';
+import { ASTTransformer, ASTVisitor } from '@typermaid/ast-tools';
 
 const code = `
 flowchart LR
@@ -56,7 +56,7 @@ const transformed = transformer.transform(ast.body[0]);
 Simple, functional API for quick transformations:
 
 ```typescript
-import { transformAST } from '@lyric-js/ast-tools';
+import { transformAST } from '@typermaid/ast-tools';
 
 const transformed = transformAST(ast, {
   FlowchartNode: (node) => ({
@@ -75,7 +75,7 @@ const transformed = transformAST(ast, {
 Remove nodes and connected edges:
 
 ```typescript
-import { removeNode } from '@lyric-js/ast-tools';
+import { removeNode } from '@typermaid/ast-tools';
 
 const updated = removeNode(ast, 'B');
 // Node 'B' and all edges connected to it are removed
@@ -86,7 +86,7 @@ const updated = removeNode(ast, 'B');
 Query AST for specific node types:
 
 ```typescript
-import { findNodes } from '@lyric-js/ast-tools';
+import { findNodes } from '@typermaid/ast-tools';
 
 const nodes = findNodes(ast, 'Node');
 console.log(nodes); // All FlowchartNode nodes
@@ -100,7 +100,7 @@ console.log(edges); // All Edge nodes
 Update nodes by ID or name:
 
 ```typescript
-import { replaceNodeById, replaceNodeByName } from '@lyric-js/ast-tools';
+import { replaceNodeById, replaceNodeByName } from '@typermaid/ast-tools';
 
 // Replace by ID (for flowchart nodes, participants, states)
 const updated = replaceNodeById(ast, 'A', {
@@ -118,7 +118,7 @@ const updated2 = replaceNodeByName(ast, 'User', {
 Clone and merge diagrams:
 
 ```typescript
-import { cloneAST, mergeDiagrams } from '@lyric-js/ast-tools';
+import { cloneAST, mergeDiagrams } from '@typermaid/ast-tools';
 
 // Deep clone
 const clone = cloneAST(ast);
@@ -139,7 +139,7 @@ import {
   validateFlowchart,
   validateSequence,
   validateState,
-} from '@lyric-js/ast-tools';
+} from '@typermaid/ast-tools';
 
 const result = validateFlowchart(diagram);
 
@@ -282,7 +282,7 @@ Validate state diagram (dangling transitions, etc.).
 ### Complex Transformation with Multiple Visitors
 
 ```typescript
-import { ASTTransformer, ASTVisitor } from '@lyric-js/ast-tools';
+import { ASTTransformer, ASTVisitor } from '@typermaid/ast-tools';
 
 class UppercaseVisitor implements ASTVisitor {
   visitFlowchartNode(node) {
@@ -308,7 +308,7 @@ const transformed = transformer.transform(ast);
 ### Static Analysis - Find All Orphan Nodes
 
 ```typescript
-import { getAllNodeIds, findNodes } from '@lyric-js/ast-tools';
+import { getAllNodeIds, findNodes } from '@typermaid/ast-tools';
 
 const nodeIds = new Set(getAllNodeIds(diagram));
 const edges = findNodes(diagram, 'Edge');
@@ -326,7 +326,7 @@ console.log('Orphan nodes:', orphanNodes);
 ### Remove All Edges Without Labels
 
 ```typescript
-import { transformAST } from '@lyric-js/ast-tools';
+import { transformAST } from '@typermaid/ast-tools';
 
 const cleaned = transformAST(ast, {
   Edge: (edge) => (edge.label ? edge : null),
@@ -348,7 +348,7 @@ MIT
 
 ## Related Packages
 
-- `@lyric-js/parser` - Mermaid parser
-- `@lyric-js/builders` - Type-safe diagram builders
-- `@lyric-js/react-renderer` - React renderer
-- `@lyric-js/angular-renderer` - Angular renderer
+- `@typermaid/parser` - Mermaid parser
+- `@typermaid/builders` - Type-safe diagram builders
+- `@typermaid/react-renderer` - React renderer
+- `@typermaid/angular-renderer` - Angular renderer

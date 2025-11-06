@@ -1,4 +1,4 @@
-# @lyric-js/codegen
+# @typermaid/codegen
 
 AST to Mermaid code generator. Converts parsed or transformed ASTs back to Mermaid diagram syntax.
 
@@ -12,7 +12,7 @@ AST to Mermaid code generator. Converts parsed or transformed ASTs back to Merma
 ## Installation
 
 ```bash
-npm install @lyric-js/codegen
+npm install @typermaid/codegen
 ```
 
 ## Usage
@@ -20,8 +20,8 @@ npm install @lyric-js/codegen
 ### Basic Usage
 
 ```typescript
-import { parse } from '@lyric-js/parser';
-import { generateCode } from '@lyric-js/codegen';
+import { parse } from '@typermaid/parser';
+import { generateCode } from '@typermaid/codegen';
 
 // Parse Mermaid code
 const ast = parse(`
@@ -44,9 +44,9 @@ console.log(code);
 Perfect for AST manipulation workflows:
 
 ```typescript
-import { parse } from '@lyric-js/parser';
-import { transformAST } from '@lyric-js/ast-tools';
-import { generateCode } from '@lyric-js/codegen';
+import { parse } from '@typermaid/parser';
+import { transformAST } from '@typermaid/ast-tools';
+import { generateCode } from '@typermaid/codegen';
 
 // 1. Parse
 const ast = parse('flowchart LR\n  A --> B --> C');
@@ -78,7 +78,7 @@ import {
   generateClass,
   generateER,
   generateGantt,
-} from '@lyric-js/codegen';
+} from '@typermaid/codegen';
 
 const flowchartCode = generateFlowchart(flowchartAST);
 const sequenceCode = generateSequence(sequenceAST);
@@ -90,9 +90,9 @@ const sequenceCode = generateSequence(sequenceAST);
 ### Parse → Edit → Generate
 
 ```typescript
-import { parse } from '@lyric-js/parser';
-import { findNodes, transformAST } from '@lyric-js/ast-tools';
-import { generateCode } from '@lyric-js/codegen';
+import { parse } from '@typermaid/parser';
+import { findNodes, transformAST } from '@typermaid/ast-tools';
+import { generateCode } from '@typermaid/codegen';
 
 const original = `
 flowchart TD
@@ -123,9 +123,9 @@ console.log(updated);
 ### Merge Multiple Diagrams
 
 ```typescript
-import { parse } from '@lyric-js/parser';
-import { mergeDiagrams } from '@lyric-js/ast-tools';
-import { generateCode } from '@lyric-js/codegen';
+import { parse } from '@typermaid/parser';
+import { mergeDiagrams } from '@typermaid/ast-tools';
+import { generateCode } from '@typermaid/codegen';
 
 const diagram1 = parse('flowchart LR\n  A --> B').body[0];
 const diagram2 = parse('flowchart LR\n  B --> C').body[0];
@@ -142,9 +142,9 @@ console.log(code);
 ### Programmatic Diagram Modification
 
 ```typescript
-import { parse } from '@lyric-js/parser';
-import { cloneAST } from '@lyric-js/ast-tools';
-import { generateCode } from '@lyric-js/codegen';
+import { parse } from '@typermaid/parser';
+import { cloneAST } from '@typermaid/ast-tools';
+import { generateCode } from '@typermaid/codegen';
 
 const ast = parse('sequenceDiagram\n  Alice->>Bob: Hello');
 const clone = cloneAST(ast);
@@ -353,7 +353,7 @@ const result = pipeline('flowchart LR\n  a --> b', {
 ### 2. Diagram Validation & Formatting
 
 ```typescript
-import { validateFlowchart } from '@lyric-js/ast-tools';
+import { validateFlowchart } from '@typermaid/ast-tools';
 
 const validate = (code: string) => {
   const ast = parse(code);
@@ -391,7 +391,7 @@ const migrateStateV1toV2 = (code: string) => {
 All generators are fully type-safe:
 
 ```typescript
-import type { FlowchartDiagramAST } from '@lyric-js/parser';
+import type { FlowchartDiagramAST } from '@typermaid/parser';
 
 const ast: FlowchartDiagramAST = {
   type: 'FlowchartDiagram',
@@ -410,6 +410,6 @@ MIT
 
 ## Related Packages
 
-- `@lyric-js/parser` - Mermaid parser (Code → AST)
-- `@lyric-js/ast-tools` - AST manipulation tools
-- `@lyric-js/builders` - Programmatic diagram builders
+- `@typermaid/parser` - Mermaid parser (Code → AST)
+- `@typermaid/ast-tools` - AST manipulation tools
+- `@typermaid/builders` - Programmatic diagram builders

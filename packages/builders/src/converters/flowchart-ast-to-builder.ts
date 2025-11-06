@@ -1,4 +1,4 @@
-import type { EdgeAST, FlowchartDiagramAST, FlowchartNodeAST, SubgraphAST } from '@lyric-js/parser';
+import type { EdgeAST, FlowchartDiagramAST, FlowchartNodeAST, SubgraphAST } from '@typermaid/parser';
 import { FlowchartDiagramBuilder } from '../flowchart-builder.js';
 import type { NodeID, SubgraphID } from '../types.js';
 
@@ -10,8 +10,8 @@ import type { NodeID, SubgraphID } from '../types.js';
  *
  * @example
  * ```typescript
- * import { parse } from '@lyric-js/parser';
- * import { flowchartASTToBuilder } from '@lyric-js/builders/converters';
+ * import { parse } from '@typermaid/parser';
+ * import { flowchartASTToBuilder } from '@typermaid/builders/converters';
  *
  * const code = `
  *   flowchart TB

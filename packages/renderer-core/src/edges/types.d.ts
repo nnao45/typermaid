@@ -1,4 +1,4 @@
-import type { EdgeType } from '@lyric-js/core';
+import type { EdgeType } from '@typermaid/core';
 /**
  * Edge path generator options
  */

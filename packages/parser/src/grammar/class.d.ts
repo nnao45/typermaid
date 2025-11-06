@@ -1,4 +1,4 @@
-import type { ClassDiagram } from '@lyric-js/core';
+import type { ClassDiagram } from '@typermaid/core';
 export declare class ClassParser {
     private lines;
     private currentLine;

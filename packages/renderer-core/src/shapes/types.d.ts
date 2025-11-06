@@ -1,4 +1,4 @@
-import type { NodeShape } from '@lyric-js/core';
+import type { NodeShape } from '@typermaid/core';
 /**
  * SVG path data for a node shape
  */

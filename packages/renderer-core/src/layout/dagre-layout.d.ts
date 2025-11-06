@@ -1,4 +1,4 @@
-import type { FlowchartDiagram } from '@lyric-js/core';
+import type { FlowchartDiagram } from '@typermaid/core';
 import type { Layout, LayoutOptions } from '../types/layout.js';
 /**
  * Create layout from Flowchart AST

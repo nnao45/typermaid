@@ -1,5 +1,5 @@
-import type { Participant, SequenceDiagram, SequenceStatement } from '@lyric-js/core';
-import { measureTextCanvas } from '@lyric-js/renderer-core';
+import type { Participant, SequenceDiagram, SequenceStatement } from '@typermaid/core';
+import { measureTextCanvas } from '@typermaid/renderer-core';
 import type React from 'react';
 import type { Theme } from '../themes/types';
 

@@ -1,4 +1,4 @@
-import type { NodeShape } from '@lyric-js/core';
+import type { NodeShape } from '@typermaid/core';
 import { describe, expect, it } from 'vitest';
 import { generateShapePath, shapeGenerators } from '../src/shapes/index.js';
 

@@ -1,4 +1,4 @@
-import type { FlowchartDiagram, FlowchartNode } from '@lyric-js/core';
+import type { FlowchartDiagram, FlowchartNode } from '@typermaid/core';
 import dagre from 'dagre';
 import { measureTextCanvas } from '../shapes/canvas-text-measure.js';
 import type {

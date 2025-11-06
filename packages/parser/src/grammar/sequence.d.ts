@@ -1,4 +1,4 @@
-import type { SequenceDiagram } from '@lyric-js/core';
+import type { SequenceDiagram } from '@typermaid/core';
 export declare class SequenceParser {
     private tokens;
     private current;

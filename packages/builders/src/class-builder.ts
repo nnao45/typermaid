@@ -5,7 +5,7 @@ import type {
   ClassRelation,
   ClassRelationType,
   ClassVisibility,
-} from '@lyric-js/core';
+} from '@typermaid/core';
 import {
   brandID,
   type ClassID,

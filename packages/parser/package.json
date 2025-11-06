@@ -1,5 +1,5 @@
 {
-  "name": "@lyric-js/parser",
+  "name": "@typermaid/parser",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -16,7 +16,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@lyric-js/core": "workspace:*",
+    "@typermaid/core": "workspace:*",
     "zod": "^4.1.12"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-import { DirectionSchema } from '@lyric-js/core';
+import { DirectionSchema } from '@typermaid/core';
 import { z } from 'zod';
 /**
  * AST Node types
@@ -263,83 +263,83 @@ export declare const SequenceDiagramASTSchema: z.ZodObject<{
         }, z.core.$strip>, z.ZodType<{
             type: "loop";
             condition?: string;
-            statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+            statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
         }, unknown, z.core.$ZodTypeInternals<{
             type: "loop";
             condition?: string;
-            statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+            statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
         }, unknown>>, z.ZodType<{
             type: "alt";
             condition?: string;
-            statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+            statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             elseBlocks: Array<{
                 condition?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             }>;
         }, unknown, z.core.$ZodTypeInternals<{
             type: "alt";
             condition?: string;
-            statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+            statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             elseBlocks: Array<{
                 condition?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             }>;
         }, unknown>>, z.ZodType<{
             type: "opt";
             condition?: string;
-            statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+            statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
         }, unknown, z.core.$ZodTypeInternals<{
             type: "opt";
             condition?: string;
-            statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+            statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
         }, unknown>>, z.ZodType<{
             type: "par";
             condition?: string;
-            statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+            statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             andBlocks: Array<{
                 condition?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             }>;
         }, unknown, z.core.$ZodTypeInternals<{
             type: "par";
             condition?: string;
-            statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+            statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             andBlocks: Array<{
                 condition?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             }>;
         }, unknown>>, z.ZodType<{
             type: "critical";
             condition?: string;
-            statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+            statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             optionBlocks: Array<{
                 condition?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             }>;
         }, unknown, z.core.$ZodTypeInternals<{
             type: "critical";
             condition?: string;
-            statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+            statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             optionBlocks: Array<{
                 condition?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             }>;
         }, unknown>>, z.ZodType<{
             type: "break";
             condition?: string;
-            statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+            statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
         }, unknown, z.core.$ZodTypeInternals<{
             type: "break";
             condition?: string;
-            statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+            statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
         }, unknown>>, z.ZodType<{
             type: "rect";
             color?: string;
-            statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+            statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
         }, unknown, z.core.$ZodTypeInternals<{
             type: "rect";
             color?: string;
-            statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+            statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
         }, unknown>>, z.ZodObject<{
             type: z.ZodLiteral<"box">;
             label: z.ZodOptional<z.ZodString>;
@@ -647,7 +647,7 @@ export declare const StateDiagramASTSchema: z.ZodObject<{
             LR: "LR";
             RL: "RL";
         }>>;
-        states: z.ZodArray<z.ZodType<import("@lyric-js/core").State, unknown, z.core.$ZodTypeInternals<import("@lyric-js/core").State, unknown>>>;
+        states: z.ZodArray<z.ZodType<import("@typermaid/core").State, unknown, z.core.$ZodTypeInternals<import("@typermaid/core").State, unknown>>>;
         transitions: z.ZodArray<z.ZodObject<{
             from: z.ZodString;
             to: z.ZodString;
@@ -678,7 +678,7 @@ export declare const StateDiagramASTSchema: z.ZodObject<{
             }>>;
         }, z.core.$strip>>>;
         concurrencyRegions: z.ZodOptional<z.ZodArray<z.ZodObject<{
-            states: z.ZodArray<z.ZodType<import("@lyric-js/core").State, unknown, z.core.$ZodTypeInternals<import("@lyric-js/core").State, unknown>>>;
+            states: z.ZodArray<z.ZodType<import("@typermaid/core").State, unknown, z.core.$ZodTypeInternals<import("@typermaid/core").State, unknown>>>;
             transitions: z.ZodArray<z.ZodObject<{
                 from: z.ZodString;
                 to: z.ZodString;
@@ -887,83 +887,83 @@ export declare const ProgramASTSchema: z.ZodObject<{
             }, z.core.$strip>, z.ZodType<{
                 type: "loop";
                 condition?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             }, unknown, z.core.$ZodTypeInternals<{
                 type: "loop";
                 condition?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             }, unknown>>, z.ZodType<{
                 type: "alt";
                 condition?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
                 elseBlocks: Array<{
                     condition?: string;
-                    statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                    statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
                 }>;
             }, unknown, z.core.$ZodTypeInternals<{
                 type: "alt";
                 condition?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
                 elseBlocks: Array<{
                     condition?: string;
-                    statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                    statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
                 }>;
             }, unknown>>, z.ZodType<{
                 type: "opt";
                 condition?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             }, unknown, z.core.$ZodTypeInternals<{
                 type: "opt";
                 condition?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             }, unknown>>, z.ZodType<{
                 type: "par";
                 condition?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
                 andBlocks: Array<{
                     condition?: string;
-                    statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                    statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
                 }>;
             }, unknown, z.core.$ZodTypeInternals<{
                 type: "par";
                 condition?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
                 andBlocks: Array<{
                     condition?: string;
-                    statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                    statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
                 }>;
             }, unknown>>, z.ZodType<{
                 type: "critical";
                 condition?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
                 optionBlocks: Array<{
                     condition?: string;
-                    statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                    statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
                 }>;
             }, unknown, z.core.$ZodTypeInternals<{
                 type: "critical";
                 condition?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
                 optionBlocks: Array<{
                     condition?: string;
-                    statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                    statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
                 }>;
             }, unknown>>, z.ZodType<{
                 type: "break";
                 condition?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             }, unknown, z.core.$ZodTypeInternals<{
                 type: "break";
                 condition?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             }, unknown>>, z.ZodType<{
                 type: "rect";
                 color?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             }, unknown, z.core.$ZodTypeInternals<{
                 type: "rect";
                 color?: string;
-                statements: z.infer<typeof import("@lyric-js/core").SequenceStatement>[];
+                statements: z.infer<typeof import("@typermaid/core").SequenceStatement>[];
             }, unknown>>, z.ZodObject<{
                 type: z.ZodLiteral<"box">;
                 label: z.ZodOptional<z.ZodString>;
@@ -1259,7 +1259,7 @@ export declare const ProgramASTSchema: z.ZodObject<{
                 LR: "LR";
                 RL: "RL";
             }>>;
-            states: z.ZodArray<z.ZodType<import("@lyric-js/core").State, unknown, z.core.$ZodTypeInternals<import("@lyric-js/core").State, unknown>>>;
+            states: z.ZodArray<z.ZodType<import("@typermaid/core").State, unknown, z.core.$ZodTypeInternals<import("@typermaid/core").State, unknown>>>;
             transitions: z.ZodArray<z.ZodObject<{
                 from: z.ZodString;
                 to: z.ZodString;
@@ -1290,7 +1290,7 @@ export declare const ProgramASTSchema: z.ZodObject<{
                 }>>;
             }, z.core.$strip>>>;
             concurrencyRegions: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                states: z.ZodArray<z.ZodType<import("@lyric-js/core").State, unknown, z.core.$ZodTypeInternals<import("@lyric-js/core").State, unknown>>>;
+                states: z.ZodArray<z.ZodType<import("@typermaid/core").State, unknown, z.core.$ZodTypeInternals<import("@typermaid/core").State, unknown>>>;
                 transitions: z.ZodArray<z.ZodObject<{
                     from: z.ZodString;
                     to: z.ZodString;

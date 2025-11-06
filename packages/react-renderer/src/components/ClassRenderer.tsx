@@ -1,10 +1,10 @@
-import type { ClassDiagram, ClassMember } from '@lyric-js/core';
+import type { ClassDiagram, ClassMember } from '@typermaid/core';
 import {
   computeUnifiedDagreLayout,
   measureTextCanvas,
   type UnifiedLayoutEdge,
   type UnifiedLayoutNode,
-} from '@lyric-js/renderer-core';
+} from '@typermaid/renderer-core';
 import type React from 'react';
 import { useMemo } from 'react';
 import type { Theme } from '../themes/types';

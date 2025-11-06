@@ -1,5 +1,5 @@
-import type { GanttDiagram, GanttSection, GanttTask } from '@lyric-js/core';
-import type { GanttDiagramAST } from '@lyric-js/parser';
+import type { GanttDiagram, GanttSection, GanttTask } from '@typermaid/core';
+import type { GanttDiagramAST } from '@typermaid/parser';
 import { GanttDiagramBuilder } from '../gantt-builder.js';
 import type { SectionID, TaskID } from '../types.js';
 
@@ -11,8 +11,8 @@ import type { SectionID, TaskID } from '../types.js';
  *
  * @example
  * ```typescript
- * import { parse } from '@lyric-js/parser';
- * import { ganttASTToBuilder } from '@lyric-js/builders/converters';
+ * import { parse } from '@typermaid/parser';
+ * import { ganttASTToBuilder } from '@typermaid/builders/converters';
  *
  * const code = `
  *   gantt

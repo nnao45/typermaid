@@ -4,7 +4,7 @@ import type {
   GanttSection,
   GanttTask,
   GanttTaskStatus,
-} from '@lyric-js/core';
+} from '@typermaid/core';
 import {
   brandID,
   isValidIDFormat,

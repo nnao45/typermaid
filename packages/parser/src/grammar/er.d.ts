@@ -1,4 +1,4 @@
-import type { EREntity, ERRelationship } from '@lyric-js/core';
+import type { EREntity, ERRelationship } from '@typermaid/core';
 import type { Token } from '../lexer/tokens.js';
 export interface ERDiagramAST {
     type: 'er';

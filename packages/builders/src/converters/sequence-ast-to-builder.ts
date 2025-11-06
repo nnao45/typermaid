@@ -5,8 +5,8 @@ import type {
   Participant,
   SequenceDiagram,
   SequenceStatement,
-} from '@lyric-js/core';
-import type { SequenceDiagramAST } from '@lyric-js/parser';
+} from '@typermaid/core';
+import type { SequenceDiagramAST } from '@typermaid/parser';
 import { SequenceDiagramBuilder } from '../sequence-builder.js';
 import type { ParticipantID } from '../types.js';
 
@@ -18,8 +18,8 @@ import type { ParticipantID } from '../types.js';
  *
  * @example
  * ```typescript
- * import { parse } from '@lyric-js/parser';
- * import { sequenceASTToBuilder } from '@lyric-js/builders/converters';
+ * import { parse } from '@typermaid/parser';
+ * import { sequenceASTToBuilder } from '@typermaid/builders/converters';
  *
  * const code = `
  *   sequenceDiagram

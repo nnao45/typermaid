@@ -10,9 +10,9 @@
     "emitDecoratorMetadata": true,
     "lib": ["ES2022", "DOM"],
     "paths": {
-      "@lyric-js/core": ["../core/src"],
-      "@lyric-js/parser": ["../parser/src"],
-      "@lyric-js/renderer-core": ["../renderer-core/src"]
+      "@typermaid/core": ["../core/src"],
+      "@typermaid/parser": ["../parser/src"],
+      "@typermaid/renderer-core": ["../renderer-core/src"]
     }
   },
   "include": ["src/**/*"],

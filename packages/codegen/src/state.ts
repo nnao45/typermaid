@@ -3,7 +3,7 @@ import type {
 	State,
 	Transition,
 	StateNote,
-} from "@lyric-js/parser";
+} from "@typermaid/parser";
 
 /**
  * Generate Mermaid code from State Diagram AST
