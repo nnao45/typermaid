@@ -1,8 +1,8 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { describe, expect, it } from 'vitest';
-import { parse } from '@typermaid/parser';
 import { generateCode } from '@typermaid/codegen';
+import { parse } from '@typermaid/parser';
+import { describe, expect, it } from 'vitest';
 
 describe('E2E: Flowchart Examples', () => {
   const examplesDir = join(process.cwd(), 'e2e', 'flowchart');
@@ -123,17 +123,17 @@ describe('E2E: Flowchart Examples', () => {
       try {
         // Step 1: Parse original
         const ast1 = parse(content);
-        
+
         // Step 2: Generate code
         const generated = generateCode(ast1);
-        
+
         // Step 3: Parse generated
         const ast2 = parse(generated);
-        
+
         // Step 4: Verify structure
         expect(ast2.type).toBe('Program');
         expect(ast2.body.length).toBe(ast1.body.length);
-        
+
         successCount++;
       } catch (error) {
         failCount++;

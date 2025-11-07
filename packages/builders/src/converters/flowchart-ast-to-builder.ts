@@ -1,4 +1,9 @@
-import type { EdgeAST, FlowchartDiagramAST, FlowchartNodeAST, SubgraphAST } from '@typermaid/parser';
+import type {
+  EdgeAST,
+  FlowchartDiagramAST,
+  FlowchartNodeAST,
+  SubgraphAST,
+} from '@typermaid/parser';
 import { FlowchartDiagramBuilder } from '../flowchart-builder.js';
 import type { NodeID, SubgraphID } from '../types.js';
 

@@ -6,6 +6,7 @@ import type {
   ERIdentification,
   ERRelationship,
 } from '@typermaid/core';
+import { createEntityID } from '@typermaid/core';
 import { ParserError } from '../error.js';
 import type { Token } from '../lexer/tokens.js';
 
@@ -87,7 +88,7 @@ export class ERParser {
     this.consume('CURLY_CLOSE', 'Expected }');
 
     return {
-      name,
+      name: createEntityID(name),
       attributes,
     };
   }
@@ -150,8 +151,8 @@ export class ERParser {
     }
 
     return {
-      from,
-      to,
+      from: createEntityID(from),
+      to: createEntityID(to),
       fromCardinality,
       toCardinality,
       identification,
@@ -323,9 +324,9 @@ export class ERParser {
     if (this.check('IDENTIFIER')) {
       this.advance();
       this.skipWhitespace();
-      
+
       const token = this.peek();
-      
+
       // Check for cardinality markers (excluding { which is entity declaration)
       const char = token.value;
       if ('|o'.includes(char)) {

@@ -1,5 +1,7 @@
 import { z } from 'zod';
+import { EntityIDSchema } from './branded.js';
 import type { Style } from './common.js';
+import { ContentSchema } from './content.js';
 
 // Cardinality: ||, }|, }o, o{, |{
 export const ERCardinality = z.enum([
@@ -27,25 +29,25 @@ export const ERAttribute = z.object({
   type: ERAttributeType,
   name: z.string(),
   key: ERAttributeKey.optional(),
-  comment: z.string().optional(),
+  comment: ContentSchema.optional(), // HTML/Markdown/PlainText support 💅
 });
 export type ERAttribute = z.infer<typeof ERAttribute>;
 
 // Entity
 export const EREntity = z.object({
-  name: z.string(),
+  name: EntityIDSchema,
   attributes: z.array(ERAttribute),
 });
 export type EREntity = z.infer<typeof EREntity>;
 
 // Relationship between entities
 export const ERRelationship = z.object({
-  from: z.string(),
-  to: z.string(),
+  from: EntityIDSchema,
+  to: EntityIDSchema,
   fromCardinality: ERCardinality,
   toCardinality: ERCardinality,
   identification: ERIdentification,
-  label: z.string().optional(),
+  label: ContentSchema.optional(), // HTML/Markdown/PlainText support 💅
 });
 export type ERRelationship = z.infer<typeof ERRelationship>;
 

@@ -7,14 +7,8 @@ import type {
   SequenceDiagram,
   SequenceStatement,
 } from '@typermaid/core';
-import {
-  brandID,
-  isValidIDFormat,
-  type NoteID,
-  type ParticipantID,
-  ValidationError,
-  ValidationErrorCode,
-} from './types.js';
+import { createParticipantID, type ParticipantID } from '@typermaid/core';
+import { ValidationError, ValidationErrorCode } from './types.js';
 import { validateNotReservedWord } from './validators/reserved-words.js';
 
 /**
@@ -35,8 +29,12 @@ export class SequenceDiagramBuilder {
    * @returns Branded ParticipantID that can only be used with this builder
    */
   addParticipant(id: string, alias?: string, isActor = false): ParticipantID {
-    // Validate ID format
-    if (!isValidIDFormat(id)) {
+    // Create ParticipantID with validation (throws if invalid format)
+    let participantId: ParticipantID;
+    try {
+      participantId = createParticipantID(id);
+    } catch (error) {
+      // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,
         `Invalid ID format: "${id}". IDs must start with a letter and contain only alphanumeric characters, underscores, and hyphens.`,
@@ -57,7 +55,6 @@ export class SequenceDiagramBuilder {
     validateNotReservedWord(id);
 
     // Check for duplicates
-    const participantId = brandID<ParticipantID>(id);
     if (this.participants.has(participantId)) {
       throw new ValidationError(
         ValidationErrorCode.DUPLICATE_ID,
@@ -69,12 +66,12 @@ export class SequenceDiagramBuilder {
     const participant: Participant | Actor = isActor
       ? {
           type: 'actor',
-          id,
+          id: participantId,
           alias,
         }
       : {
           type: 'participant',
-          id,
+          id: participantId,
           alias,
         };
 
@@ -122,8 +119,8 @@ export class SequenceDiagramBuilder {
 
     const message: Message = {
       type: 'message',
-      from: from as string,
-      to: to as string,
+      from, // ParticipantID is now compatible with the schema
+      to, // ParticipantID is now compatible with the schema
       arrowType,
       text,
     };
@@ -141,7 +138,7 @@ export class SequenceDiagramBuilder {
     actor: ParticipantID | ParticipantID[],
     text: string,
     position: 'left' | 'right' | 'over' = 'right'
-  ): NoteID {
+  ): SequenceDiagramBuilder {
     const actors = Array.isArray(actor) ? actor : [actor];
 
     // Validate participants exist
@@ -160,18 +157,16 @@ export class SequenceDiagramBuilder {
       throw new ValidationError(ValidationErrorCode.EMPTY_LABEL, 'Note text cannot be empty', {});
     }
 
-    const noteId = brandID<NoteID>(`note-${this.statements.length}`);
-
     const note: Note = {
       type: 'note',
       position,
-      actors: actors.map((a) => a as string),
+      actors: actors,  // ParticipantID[] is compatible with the schema
       text,
     };
 
     this.statements.push(note);
 
-    return noteId;
+    return this;  // Return self for fluent API
   }
 
   /**

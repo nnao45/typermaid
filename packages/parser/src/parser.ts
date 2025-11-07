@@ -173,12 +173,12 @@ function splitDiagrams(input: string): string[] {
     'statediagram',
     'gantt',
     'flowchart',
-    'graph'
+    'graph',
   ];
 
   for (const line of lines) {
     const trimmed = line.trim().toLowerCase();
-    const isNewDiagram = diagramKeywords.some(keyword => trimmed.startsWith(keyword));
+    const isNewDiagram = diagramKeywords.some((keyword) => trimmed.startsWith(keyword));
 
     if (isNewDiagram && currentDiagram.length > 0) {
       // Save current diagram and start new one
@@ -194,7 +194,7 @@ function splitDiagrams(input: string): string[] {
     diagrams.push(currentDiagram.join('\n'));
   }
 
-  return diagrams.filter(d => d.trim().length > 0);
+  return diagrams.filter((d) => d.trim().length > 0);
 }
 
 /**
@@ -202,7 +202,7 @@ function splitDiagrams(input: string): string[] {
  */
 function detectDiagramType(input: string): string {
   const trimmed = input.trim().toLowerCase();
-  
+
   if (trimmed.startsWith('sequencediagram')) return 'sequence';
   if (trimmed.startsWith('classdiagram')) return 'class';
   if (trimmed.startsWith('erdiagram')) return 'er';
@@ -210,7 +210,7 @@ function detectDiagramType(input: string): string {
   if (trimmed.startsWith('gantt')) return 'gantt';
   if (trimmed.startsWith('flowchart')) return 'flowchart';
   if (trimmed.startsWith('graph')) return 'flowchart';
-  
+
   return 'flowchart'; // default
 }
 
@@ -229,7 +229,6 @@ function parseSingleDiagram(input: string, type: string): ProgramAST {
       return parseState(input);
     case 'gantt':
       return parseGantt(input);
-    case 'flowchart':
     default:
       return parseFlowchart(input);
   }
@@ -241,7 +240,7 @@ function parseSingleDiagram(input: string, type: string): ProgramAST {
  */
 export function parse(input: string): ProgramAST {
   const diagrams = splitDiagrams(input);
-  
+
   // Empty input
   if (diagrams.length === 0) {
     return {
@@ -253,7 +252,7 @@ export function parse(input: string): ProgramAST {
       },
     };
   }
-  
+
   // Single diagram case
   if (diagrams.length === 1) {
     const diagram = diagrams[0];
@@ -270,7 +269,7 @@ export function parse(input: string): ProgramAST {
     const type = detectDiagramType(diagram);
     return parseSingleDiagram(diagram, type);
   }
-  
+
   // Multiple diagrams case
   const allDiagrams = [];
   for (const diagramInput of diagrams) {
@@ -278,7 +277,7 @@ export function parse(input: string): ProgramAST {
     const ast = parseSingleDiagram(diagramInput, type);
     allDiagrams.push(...ast.body);
   }
-  
+
   return {
     type: 'Program',
     body: allDiagrams,

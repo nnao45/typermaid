@@ -3,6 +3,15 @@ import { measureTextCanvas } from '@typermaid/renderer-core';
 import type React from 'react';
 import type { Theme } from '../themes/types';
 
+/**
+ * Extract string value from Content type
+ */
+function contentToString(content: string | { type: string; raw: string } | undefined): string | undefined {
+  if (!content) return undefined;
+  if (typeof content === 'string') return content;
+  return content.raw;
+}
+
 interface SequenceRendererProps {
   diagram: SequenceDiagram;
   theme: Theme;
@@ -132,7 +141,7 @@ export const SequenceRenderer: React.FC<SequenceRendererProps> = ({
                 fontSize={12}
                 textAnchor="start"
               >
-                {stmt.text || ''}
+                {contentToString(stmt.text) || ''}
               </text>
             </g>
           );
@@ -158,7 +167,7 @@ export const SequenceRenderer: React.FC<SequenceRendererProps> = ({
                 fontSize={12}
                 textAnchor="middle"
               >
-                {stmt.text || ''}
+                {contentToString(stmt.text) || ''}
               </text>
             </g>
           );
@@ -218,7 +227,7 @@ export const SequenceRenderer: React.FC<SequenceRendererProps> = ({
                 textAnchor="middle"
                 dominantBaseline="middle"
               >
-                {stmt.text}
+                {contentToString(stmt.text)}
               </text>
             </g>
           );

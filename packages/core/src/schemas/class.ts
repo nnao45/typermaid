@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import { ClassIDSchema } from './branded.js';
+import { ContentSchema } from './content.js';
 
 export const ClassVisibility = z.enum([
   '+', // public
@@ -22,7 +24,7 @@ export const ClassMember = z.object({
 export const ClassAnnotation = z.enum(['interface', 'abstract', 'service', 'enumeration']);
 
 export const ClassDefinition = z.object({
-  id: z.string(),
+  id: ClassIDSchema,
   name: z.string(),
   annotation: ClassAnnotation.optional(),
   members: z.array(ClassMember).default([]),
@@ -41,17 +43,17 @@ export const ClassRelationType = z.enum([
 ]);
 
 export const ClassRelation = z.object({
-  from: z.string(),
-  to: z.string(),
+  from: ClassIDSchema,
+  to: ClassIDSchema,
   relationType: ClassRelationType,
-  label: z.string().optional(),
+  label: ContentSchema.optional(), // HTML/Markdown/PlainText support 💅
   cardinalityFrom: z.string().optional(),
   cardinalityTo: z.string().optional(),
 });
 
 export const ClassNamespace = z.object({
   name: z.string(),
-  classes: z.array(z.string()),
+  classes: z.array(ClassIDSchema),
 });
 
 export const ClassDiagram = z.object({

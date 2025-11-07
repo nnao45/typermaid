@@ -4,6 +4,15 @@ import type { ERDiagramAST } from '@typermaid/parser';
 import { computeUnifiedDagreLayout } from '@typermaid/renderer-core';
 import type { Theme } from '../services/theme.service';
 
+/**
+ * Extract string value from Content type
+ */
+function contentToString(content: string | { type: string; raw: string } | undefined): string | undefined {
+  if (!content) return undefined;
+  if (typeof content === 'string') return content;
+  return content.raw;
+}
+
 @Component({
   selector: 'lyric-er-renderer',
   standalone: true,
@@ -92,11 +101,14 @@ export class ERRendererComponent {
       height: 80 + entity.attributes.length * 15,
     }));
 
-    const edges = erDiagram.relationships.map((rel) => ({
-      from: rel.from,
-      to: rel.to,
-      ...(rel.label ? { label: rel.label } : {}),
-    }));
+    const edges = erDiagram.relationships.map((rel) => {
+      const labelStr = contentToString(rel.label);
+      return {
+        from: rel.from,
+        to: rel.to,
+        ...(labelStr ? { label: labelStr } : {}),
+      };
+    });
 
     return computeUnifiedDagreLayout(nodes, edges, {
       rankdir: 'LR',

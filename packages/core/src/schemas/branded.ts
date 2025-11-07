@@ -1,87 +1,149 @@
+import { z } from 'zod';
+
 /**
  * Branded Types for type-safe ID references
  *
- * Branded Typesを使うことで、文字列IDの誤用を型レベルで防止するわよ💅
- * 例: NodeIDとParticipantIDを混同できなくなる✨
+ * Zodのbrand機能を使って compile-time と runtime の両方で型安全性を保証するわよ✨
+ * これで型レベルでも実行時でもIDの誤用を防止できる💪
  */
 
 /**
- * Flowchart Node ID (branded type)
+ * Base ID format validation (must start with letter, contain only alphanumeric, underscore, hyphen)
  */
-export type NodeID = string & { readonly __brand: 'NodeID' };
+const BaseIDSchema = z
+  .string()
+  .min(1, 'ID must not be empty')
+  .regex(
+    /^[a-zA-Z][a-zA-Z0-9_-]*$/,
+    'ID must start with a letter and contain only alphanumeric characters, underscores, and hyphens'
+  );
 
 /**
- * Sequence Diagram Participant ID (branded type)
+ * Flowchart Node ID (Zod branded type with runtime validation)
  */
-export type ParticipantID = string & { readonly __brand: 'ParticipantID' };
+export const NodeIDSchema = BaseIDSchema.brand<'NodeID'>();
+export type NodeID = z.infer<typeof NodeIDSchema>;
 
 /**
- * State Diagram State ID (branded type)
+ * Sequence Diagram Participant ID (Zod branded type with runtime validation)
  */
-export type StateID = string & { readonly __brand: 'StateID' };
+export const ParticipantIDSchema = BaseIDSchema.brand<'ParticipantID'>();
+export type ParticipantID = z.infer<typeof ParticipantIDSchema>;
 
 /**
- * ER Diagram Entity ID (branded type)
+ * State Diagram State ID (Zod branded type with runtime validation)
  */
-export type EntityID = string & { readonly __brand: 'EntityID' };
+export const StateIDSchema = BaseIDSchema.brand<'StateID'>();
+export type StateID = z.infer<typeof StateIDSchema>;
 
 /**
- * Class Diagram Class ID (branded type)
+ * ER Diagram Entity ID (Zod branded type with runtime validation)
  */
-export type ClassID = string & { readonly __brand: 'ClassID' };
+export const EntityIDSchema = BaseIDSchema.brand<'EntityID'>();
+export type EntityID = z.infer<typeof EntityIDSchema>;
 
 /**
- * Gantt Chart Task ID (branded type)
+ * Class Diagram Class ID (Zod branded type with runtime validation)
  */
-export type TaskID = string & { readonly __brand: 'TaskID' };
+export const ClassIDSchema = BaseIDSchema.brand<'ClassID'>();
+export type ClassID = z.infer<typeof ClassIDSchema>;
 
 /**
- * Type guard: string to NodeID
+ * Gantt Chart Task ID (Zod branded type with runtime validation)
  */
-export function nodeId(id: string): NodeID {
-  return id as NodeID;
+export const TaskIDSchema = BaseIDSchema.brand<'TaskID'>();
+export type TaskID = z.infer<typeof TaskIDSchema>;
+
+/**
+ * Subgraph ID (Zod branded type with runtime validation)
+ */
+export const SubgraphIDSchema = BaseIDSchema.brand<'SubgraphID'>();
+export type SubgraphID = z.infer<typeof SubgraphIDSchema>;
+
+/**
+ * ClassDef ID (Zod branded type with runtime validation)
+ */
+export const ClassDefIDSchema = BaseIDSchema.brand<'ClassDefID'>();
+export type ClassDefID = z.infer<typeof ClassDefIDSchema>;
+
+/**
+ * Section ID for Gantt charts (Zod branded type with runtime validation)
+ */
+export const SectionIDSchema = BaseIDSchema.brand<'SectionID'>();
+export type SectionID = z.infer<typeof SectionIDSchema>;
+
+/**
+ * Helper functions for creating branded IDs with runtime validation
+ */
+
+/**
+ * Create and validate a NodeID
+ */
+export function createNodeID(id: string): NodeID {
+  return NodeIDSchema.parse(id);
 }
 
 /**
- * Type guard: string to ParticipantID
+ * Create and validate a ParticipantID
  */
-export function participantId(id: string): ParticipantID {
-  return id as ParticipantID;
+export function createParticipantID(id: string): ParticipantID {
+  return ParticipantIDSchema.parse(id);
 }
 
 /**
- * Type guard: string to StateID
+ * Create and validate a StateID
  */
-export function stateId(id: string): StateID {
-  return id as StateID;
+export function createStateID(id: string): StateID {
+  return StateIDSchema.parse(id);
 }
 
 /**
- * Type guard: string to EntityID
+ * Create and validate an EntityID
  */
-export function entityId(id: string): EntityID {
-  return id as EntityID;
+export function createEntityID(id: string): EntityID {
+  return EntityIDSchema.parse(id);
 }
 
 /**
- * Type guard: string to ClassID
+ * Create and validate a ClassID
  */
-export function classId(id: string): ClassID {
-  return id as ClassID;
+export function createClassID(id: string): ClassID {
+  return ClassIDSchema.parse(id);
 }
 
 /**
- * Type guard: string to TaskID
+ * Create and validate a TaskID
  */
-export function taskId(id: string): TaskID {
-  return id as TaskID;
+export function createTaskID(id: string): TaskID {
+  return TaskIDSchema.parse(id);
+}
+
+/**
+ * Create and validate a SubgraphID
+ */
+export function createSubgraphID(id: string): SubgraphID {
+  return SubgraphIDSchema.parse(id);
+}
+
+/**
+ * Create and validate a ClassDefID
+ */
+export function createClassDefID(id: string): ClassDefID {
+  return ClassDefIDSchema.parse(id);
+}
+
+/**
+ * Create and validate a SectionID
+ */
+export function createSectionID(id: string): SectionID {
+  return SectionIDSchema.parse(id);
 }
 
 /**
  * Validation: NodeID exists check
  */
-export function validateNodeId(id: string, existingNodes: Set<NodeID>): NodeID {
-  const nid = nodeId(id);
+export function validateNodeIdExists(id: string, existingNodes: Set<NodeID>): NodeID {
+  const nid = NodeIDSchema.parse(id);
   if (!existingNodes.has(nid)) {
     throw new Error(`Node '${id}' does not exist`);
   }
@@ -91,11 +153,11 @@ export function validateNodeId(id: string, existingNodes: Set<NodeID>): NodeID {
 /**
  * Validation: ParticipantID exists check
  */
-export function validateParticipantId(
+export function validateParticipantIdExists(
   id: string,
   existingParticipants: Set<ParticipantID>
 ): ParticipantID {
-  const pid = participantId(id);
+  const pid = ParticipantIDSchema.parse(id);
   if (!existingParticipants.has(pid)) {
     throw new Error(`Participant '${id}' does not exist`);
   }
@@ -105,8 +167,8 @@ export function validateParticipantId(
 /**
  * Validation: StateID exists check
  */
-export function validateStateId(id: string, existingStates: Set<StateID>): StateID {
-  const sid = stateId(id);
+export function validateStateIdExists(id: string, existingStates: Set<StateID>): StateID {
+  const sid = StateIDSchema.parse(id);
   if (!existingStates.has(sid)) {
     throw new Error(`State '${id}' does not exist`);
   }
@@ -116,8 +178,8 @@ export function validateStateId(id: string, existingStates: Set<StateID>): State
 /**
  * Validation: EntityID exists check
  */
-export function validateEntityId(id: string, existingEntities: Set<EntityID>): EntityID {
-  const eid = entityId(id);
+export function validateEntityIdExists(id: string, existingEntities: Set<EntityID>): EntityID {
+  const eid = EntityIDSchema.parse(id);
   if (!existingEntities.has(eid)) {
     throw new Error(`Entity '${id}' does not exist`);
   }
@@ -127,8 +189,8 @@ export function validateEntityId(id: string, existingEntities: Set<EntityID>): E
 /**
  * Validation: ClassID exists check
  */
-export function validateClassId(id: string, existingClasses: Set<ClassID>): ClassID {
-  const cid = classId(id);
+export function validateClassIdExists(id: string, existingClasses: Set<ClassID>): ClassID {
+  const cid = ClassIDSchema.parse(id);
   if (!existingClasses.has(cid)) {
     throw new Error(`Class '${id}' does not exist`);
   }
@@ -138,8 +200,8 @@ export function validateClassId(id: string, existingClasses: Set<ClassID>): Clas
 /**
  * Validation: TaskID exists check
  */
-export function validateTaskId(id: string, existingTasks: Set<TaskID>): TaskID {
-  const tid = taskId(id);
+export function validateTaskIdExists(id: string, existingTasks: Set<TaskID>): TaskID {
+  const tid = TaskIDSchema.parse(id);
   if (!existingTasks.has(tid)) {
     throw new Error(`Task '${id}' does not exist`);
   }

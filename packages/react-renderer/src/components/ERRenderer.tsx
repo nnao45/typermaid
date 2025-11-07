@@ -9,6 +9,15 @@ import type React from 'react';
 import { useMemo } from 'react';
 import type { Theme } from '../themes/types';
 
+/**
+ * Extract string value from Content type
+ */
+function contentToString(content: string | { type: string; raw: string } | undefined): string | undefined {
+  if (!content) return undefined;
+  if (typeof content === 'string') return content;
+  return content.raw;
+}
+
 interface ERRendererProps {
   diagram: ERDiagram;
   theme: Theme;
@@ -91,7 +100,8 @@ export const ERRenderer: React.FC<ERRendererProps> = ({
 
     const edges: UnifiedLayoutEdge[] = relationships
       .map((rel): UnifiedLayoutEdge | null => {
-        if (rel.label === undefined) {
+        const labelStr = contentToString(rel.label);
+        if (labelStr === undefined) {
           return {
             from: rel.from,
             to: rel.to,
@@ -100,7 +110,7 @@ export const ERRenderer: React.FC<ERRendererProps> = ({
         return {
           from: rel.from,
           to: rel.to,
-          label: rel.label,
+          label: labelStr,
         };
       })
       .filter((edge): edge is UnifiedLayoutEdge => edge !== null);

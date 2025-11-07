@@ -1,4 +1,4 @@
-const { readFileSync } = require('fs');
+const { readFileSync } = require('node:fs');
 const { parse } = require('../packages/parser/dist/index.js');
 
 const filePath = '/home/nnao45/ghq/github.com/nnao45/lyric-js/e2e/flowchart/100_complete.mmd';
@@ -23,7 +23,6 @@ try {
   console.log('AST body length:', ast.body.length);
   console.log('AST type:', ast.type);
   console.log('First diagram type:', ast.body[0]?.type);
-
 } catch (err) {
   console.error('\n✗ Error:', err.message);
   if (err.stack) {

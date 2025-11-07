@@ -1,5 +1,7 @@
 import { z } from 'zod';
+import { ParticipantIDSchema } from './branded.js';
 import { StyleSchema } from './common.js';
+import { ContentSchema } from './content.js';
 
 // Arrow types
 export const ArrowType = z.enum([
@@ -22,7 +24,7 @@ export type NotePosition = z.infer<typeof NotePosition>;
 // Participant
 export const Participant = z.object({
   type: z.literal('participant'),
-  id: z.string().min(1),
+  id: ParticipantIDSchema,
   alias: z.string().optional(),
 });
 
@@ -31,7 +33,7 @@ export type Participant = z.infer<typeof Participant>;
 // Actor
 export const Actor = z.object({
   type: z.literal('actor'),
-  id: z.string().min(1),
+  id: ParticipantIDSchema,
   alias: z.string().optional(),
 });
 
@@ -40,10 +42,10 @@ export type Actor = z.infer<typeof Actor>;
 // Message
 export const Message = z.object({
   type: z.literal('message'),
-  from: z.string().min(1),
-  to: z.string().min(1),
+  from: ParticipantIDSchema,
+  to: ParticipantIDSchema,
   arrowType: ArrowType,
-  text: z.string().optional(),
+  text: ContentSchema.optional(), // HTML/Markdown/PlainText support 💅
 });
 
 export type Message = z.infer<typeof Message>;
@@ -51,7 +53,7 @@ export type Message = z.infer<typeof Message>;
 // Activation
 export const Activation = z.object({
   type: z.literal('activation'),
-  actor: z.string().min(1),
+  actor: ParticipantIDSchema,
   activate: z.boolean(),
 });
 
@@ -61,8 +63,8 @@ export type Activation = z.infer<typeof Activation>;
 export const Note = z.object({
   type: z.literal('note'),
   position: NotePosition,
-  actors: z.array(z.string().min(1)).min(1),
-  text: z.string(),
+  actors: z.array(ParticipantIDSchema).min(1),
+  text: ContentSchema, // HTML/Markdown/PlainText support 💅
 });
 
 export type Note = z.infer<typeof Note>;
@@ -232,14 +234,14 @@ export type Autonumber = z.infer<typeof Autonumber>;
 // Create/Destroy
 export const Create = z.object({
   type: z.literal('create'),
-  actor: z.string().min(1),
+  actor: ParticipantIDSchema,
 });
 
 export type Create = z.infer<typeof Create>;
 
 export const Destroy = z.object({
   type: z.literal('destroy'),
-  actor: z.string().min(1),
+  actor: ParticipantIDSchema,
 });
 
 export type Destroy = z.infer<typeof Destroy>;
@@ -247,7 +249,7 @@ export type Destroy = z.infer<typeof Destroy>;
 // Links
 export const Link = z.object({
   type: z.literal('link'),
-  actor: z.string().min(1),
+  actor: ParticipantIDSchema,
   url: z.string().url(),
   label: z.string().optional(),
 });
@@ -257,7 +259,7 @@ export type Link = z.infer<typeof Link>;
 // Properties
 export const Properties = z.object({
   type: z.literal('properties'),
-  actor: z.string().min(1),
+  actor: ParticipantIDSchema,
   properties: z.record(z.string(), z.string()),
 });
 

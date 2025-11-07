@@ -1,5 +1,7 @@
 import { z } from 'zod';
+import { ClassDefIDSchema, NodeIDSchema, SubgraphIDSchema } from './branded.js';
 import { DirectionSchema, StyleSchema } from './common.js';
+import { ContentSchema } from './content.js';
 
 /**
  * Flowchart node shapes (Mermaid compatible)
@@ -42,9 +44,9 @@ export const EdgeTypeSchema = z.enum([
  * Flowchart node definition
  */
 export const FlowchartNodeSchema = z.object({
-  id: z.string().min(1),
+  id: NodeIDSchema,
   shape: NodeShapeSchema,
-  label: z.string(),
+  label: ContentSchema, // HTML/Markdown/PlainText support 💅
   style: StyleSchema.optional(),
   classes: z.array(z.string()).optional(),
 });
@@ -54,10 +56,10 @@ export const FlowchartNodeSchema = z.object({
  */
 export const FlowchartEdgeSchema = z.object({
   id: z.string().min(1),
-  from: z.string().min(1),
-  to: z.string().min(1),
+  from: NodeIDSchema,
+  to: NodeIDSchema,
   type: EdgeTypeSchema,
-  label: z.string().optional(),
+  label: ContentSchema.optional(), // HTML/Markdown/PlainText support 💅
   style: StyleSchema.optional(),
   length: z.number().int().positive().optional(), // extra dashes
 });
@@ -66,10 +68,10 @@ export const FlowchartEdgeSchema = z.object({
  * Flowchart subgraph
  */
 export const SubgraphSchema = z.object({
-  id: z.string().min(1),
-  label: z.string().optional(),
+  id: SubgraphIDSchema,
+  label: ContentSchema.optional(), // HTML/Markdown/PlainText support 💅
   direction: DirectionSchema.optional(),
-  nodes: z.array(z.string()), // node IDs
+  nodes: z.array(NodeIDSchema), // node IDs
   style: StyleSchema.optional(),
 });
 
@@ -77,7 +79,7 @@ export const SubgraphSchema = z.object({
  * Class definition for styling
  */
 export const ClassDefSchema = z.object({
-  name: z.string().min(1),
+  name: ClassDefIDSchema,
   style: StyleSchema,
 });
 

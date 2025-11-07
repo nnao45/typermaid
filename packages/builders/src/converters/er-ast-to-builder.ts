@@ -4,6 +4,15 @@ import { ERDiagramBuilder } from '../er-builder.js';
 import type { EntityID } from '../types.js';
 
 /**
+ * Extract string value from Content type
+ */
+function contentToString(content: string | { type: string; raw: string } | undefined): string | undefined {
+  if (!content) return undefined;
+  if (typeof content === 'string') return content;
+  return content.raw;
+}
+
+/**
  * Convert parsed ER Diagram AST to Builder for manipulation
  *
  * @param ast - Parsed ERDiagramAST
@@ -113,7 +122,7 @@ function processRelationship(
     fromId,
     toId,
     cardinality,
-    rel.label,
+    contentToString(rel.label),
     rel.identification === 'IDENTIFYING'
   );
 }

@@ -6,13 +6,8 @@ import type {
   ClassRelationType,
   ClassVisibility,
 } from '@typermaid/core';
-import {
-  brandID,
-  type ClassID,
-  isValidIDFormat,
-  ValidationError,
-  ValidationErrorCode,
-} from './types.js';
+import { type ClassID, createClassID } from '@typermaid/core';
+import { ValidationError, ValidationErrorCode } from './types.js';
 import { validateNotReservedWord } from './validators/reserved-words.js';
 
 /**
@@ -28,15 +23,18 @@ export class ClassDiagramBuilder {
   private relations: ClassRelation[] = [];
   private classOrder: ClassID[] = [];
   private relationCount = 0;
-  private classCounter = 0;
 
   /**
    * Add a class to the diagram
    * @returns Branded ClassID that can only be used with this builder
    */
   addClass(name: string, label: string): ClassID {
-    // Validate class name format
-    if (!isValidIDFormat(name)) {
+    // Create ClassID with validation (throws if invalid format)
+    let classId: ClassID;
+    try {
+      classId = createClassID(name);
+    } catch (error) {
+      // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,
         `Invalid ID format: "${name}". IDs must start with a letter and contain only alphanumeric characters, underscores, and hyphens.`,
@@ -55,7 +53,6 @@ export class ClassDiagramBuilder {
     validateNotReservedWord(name);
 
     // Check for duplicates
-    const classId = brandID<ClassID>(name);
     if (this.classes.has(classId)) {
       throw new ValidationError(
         ValidationErrorCode.DUPLICATE_ID,
@@ -65,7 +62,7 @@ export class ClassDiagramBuilder {
     }
 
     const classDef: ClassDefinition = {
-      id: `class-${this.classCounter++}`,
+      id: classId, // Use the ClassID directly
       name,
       members: [],
     };
@@ -269,8 +266,8 @@ export class ClassDiagramBuilder {
     }
 
     const relation: ClassRelation = {
-      from: from as string,
-      to: to as string,
+      from, // ClassID is now compatible with the schema
+      to, // ClassID is now compatible with the schema
       relationType,
       label,
       cardinalityFrom,

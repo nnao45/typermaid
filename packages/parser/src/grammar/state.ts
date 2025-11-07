@@ -7,6 +7,7 @@ import type {
   StateTransition,
   StateType,
 } from '@typermaid/core';
+import { createStateID } from '@typermaid/core';
 import { ParserError } from '../error.js';
 import type { Token } from '../lexer/tokens.js';
 
@@ -127,25 +128,25 @@ export class StateParser {
     // Create separate start and end states if needed
     if (hasStart && !stateMap.has('[*]_start')) {
       stateMap.set('[*]_start', {
-        id: '[*]_start',
+        id: createStateID('[*]_start'),
         type: 'START',
       });
       // Update transitions to use the new start state ID
       transitions.forEach((t) => {
         if (t.from === '[*]') {
-          t.from = '[*]_start';
+          t.from = createStateID('[*]_start');
         }
       });
     }
     if (hasEnd && !stateMap.has('[*]_end')) {
       stateMap.set('[*]_end', {
-        id: '[*]_end',
+        id: createStateID('[*]_end'),
         type: 'END',
       });
       // Update transitions to use the new end state ID
       transitions.forEach((t) => {
         if (t.to === '[*]') {
-          t.to = '[*]_end';
+          t.to = createStateID('[*]_end');
         }
       });
     }
@@ -254,7 +255,7 @@ export class StateParser {
     }
 
     return {
-      id,
+      id: createStateID(id),
       type: 'STATE',
       description: this.parseHTMLContent(description.trim()),
     };
@@ -292,7 +293,7 @@ export class StateParser {
     const id = this.consume('IDENTIFIER', 'Expected state id').value;
 
     return {
-      id,
+      id: createStateID(id),
       type: 'STATE',
       label: this.parseHTMLContent(label),
     };
@@ -346,7 +347,7 @@ export class StateParser {
     this.consume('CURLY_CLOSE', 'Expected }');
 
     return {
-      id,
+      id: createStateID(id),
       type: 'STATE',
       compositeStates,
     };
@@ -402,7 +403,7 @@ export class StateParser {
     }
 
     return {
-      id,
+      id: createStateID(id),
       type: stateType,
     };
   }
@@ -419,7 +420,7 @@ export class StateParser {
       this.skipWhitespace();
     }
 
-    const state = this.consume('IDENTIFIER', 'Expected state id').value;
+    const state = createStateID(this.consume('IDENTIFIER', 'Expected state id').value);
     this.skipWhitespaceAndNewlines();
 
     // Check for multi-line note (no colon, just newline)
@@ -583,8 +584,8 @@ export class StateParser {
     }
 
     return {
-      from,
-      to,
+      from: createStateID(from),
+      to: createStateID(to),
       label,
     };
   }

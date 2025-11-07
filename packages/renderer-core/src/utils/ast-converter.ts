@@ -1,4 +1,5 @@
 import type { FlowchartDiagram, FlowchartEdge, FlowchartNode } from '@typermaid/core';
+import { createNodeID } from '@typermaid/core';
 import type { EdgeAST, FlowchartDiagramAST, ProgramAST } from '@typermaid/parser';
 
 /**
@@ -26,7 +27,7 @@ export function astToSchema(ast: ProgramAST): FlowchartDiagram {
       if (s.type === 'Node') {
         const node = stmt as unknown as { id: string; shape: string; label: string };
         nodeMap.set(node.id, {
-          id: node.id,
+          id: createNodeID(node.id),
           shape: node.shape as FlowchartNode['shape'],
           label: node.label || node.id,
         });
@@ -50,7 +51,7 @@ export function astToSchema(ast: ProgramAST): FlowchartDiagram {
         // Create implicit nodes if they don't exist
         if (!nodeMap.has(edge.from)) {
           nodeMap.set(edge.from, {
-            id: edge.from,
+            id: createNodeID(edge.from),
             shape: 'square',
             label: edge.from,
           });
@@ -58,7 +59,7 @@ export function astToSchema(ast: ProgramAST): FlowchartDiagram {
 
         if (!nodeMap.has(edge.to)) {
           nodeMap.set(edge.to, {
-            id: edge.to,
+            id: createNodeID(edge.to),
             shape: 'square',
             label: edge.to,
           });
@@ -66,8 +67,8 @@ export function astToSchema(ast: ProgramAST): FlowchartDiagram {
 
         edges.push({
           id: `edge-${edgeIdCounter++}`,
-          from: edge.from,
-          to: edge.to,
+          from: createNodeID(edge.from),
+          to: createNodeID(edge.to),
           type: mapEdgeType(edge.edgeType),
           label: edge.label,
         });

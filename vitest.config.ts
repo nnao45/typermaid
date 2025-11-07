@@ -14,7 +14,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@typermaid/core': path.resolve(__dirname, 'packages/core/src'),
+      '@typermaid/core': path.resolve(__dirname, 'packages/core/dist'),
       '@typermaid/parser': path.resolve(__dirname, 'packages/parser/dist'),
       '@typermaid/codegen': path.resolve(__dirname, 'packages/codegen/dist'),
       '@typermaid/renderer': path.resolve(__dirname, 'packages/renderer/src'),

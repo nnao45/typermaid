@@ -1,11 +1,6 @@
 import type { State, StateDiagram, StateTransition } from '@typermaid/core';
-import {
-  brandID,
-  isValidIDFormat,
-  type StateID,
-  ValidationError,
-  ValidationErrorCode,
-} from './types.js';
+import { createStateID, type StateID } from '@typermaid/core';
+import { ValidationError, ValidationErrorCode } from './types.js';
 import { validateNotReservedWord } from './validators/reserved-words.js';
 
 /**
@@ -25,7 +20,7 @@ export class StateDiagramBuilder {
   private endStateId: StateID | null = null;
 
   // Special state IDs
-  private readonly START_STATE = brandID<StateID>('[*]');
+  private readonly START_STATE = '[*]' as StateID;
   private readonly FORK_STATE_PREFIX = 'fork_';
   private readonly JOIN_STATE_PREFIX = 'join_';
 
@@ -34,13 +29,22 @@ export class StateDiagramBuilder {
    * @returns Branded StateID that can only be used with this builder
    */
   addState(id: string, label?: string, description?: string): StateID {
-    // Validate ID format (allow [*] for start/end)
-    if (id !== '[*]' && !isValidIDFormat(id)) {
-      throw new ValidationError(
-        ValidationErrorCode.INVALID_ID_FORMAT,
-        `Invalid ID format: "${id}". IDs must start with a letter and contain only alphanumeric characters, underscores, and hyphens.`,
-        { id }
-      );
+    // Create StateID with validation (allow [*] for start/end states)
+    let stateId: StateID;
+    if (id === '[*]') {
+      // Special case for start/end states
+      stateId = id as StateID;
+    } else {
+      try {
+        stateId = createStateID(id);
+      } catch (error) {
+        // Convert ZodError to ValidationError for consistent API
+        throw new ValidationError(
+          ValidationErrorCode.INVALID_ID_FORMAT,
+          `Invalid ID format: "${id}". IDs must start with a letter and contain only alphanumeric characters, underscores, and hyphens.`,
+          { id }
+        );
+      }
     }
 
     // Validate label is not empty
@@ -57,7 +61,6 @@ export class StateDiagramBuilder {
     }
 
     // Check for duplicates
-    const stateId = brandID<StateID>(id);
     if (this.states.has(stateId)) {
       throw new ValidationError(
         ValidationErrorCode.DUPLICATE_ID,
@@ -67,7 +70,7 @@ export class StateDiagramBuilder {
     }
 
     const state: State = {
-      id,
+      id: stateId,
       type: 'STATE',
       label,
       description,
@@ -87,18 +90,20 @@ export class StateDiagramBuilder {
     label?: string,
     callback?: (builder: StateDiagramBuilder) => void
   ): StateID {
-    // Validate ID
-    if (!isValidIDFormat(id)) {
+    // Create StateID with validation
+    let stateId: StateID;
+    try {
+      stateId = createStateID(id);
+    } catch (error) {
+      // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,
-        `Invalid ID format: "${id}"`,
+        `Invalid ID format: "${id}". IDs must start with a letter and contain only alphanumeric characters, underscores, and hyphens.`,
         { id }
       );
     }
 
     validateNotReservedWord(id);
-
-    const stateId = brandID<StateID>(id);
 
     if (this.states.has(stateId)) {
       throw new ValidationError(
@@ -110,7 +115,7 @@ export class StateDiagramBuilder {
 
     // Create composite state with empty children initially
     const compositeState: State = {
-      id,
+      id: stateId,
       type: 'STATE',
       label,
       compositeStates: [],
@@ -192,8 +197,8 @@ export class StateDiagramBuilder {
     }
 
     const transition: StateTransition = {
-      from: from as string,
-      to: to as string,
+      from,
+      to,
       label,
     };
 
@@ -216,15 +221,17 @@ export class StateDiagramBuilder {
   addFork(id: string): StateID {
     const forkId = `${this.FORK_STATE_PREFIX}${id}`;
 
-    if (!isValidIDFormat(forkId)) {
+    let stateId: StateID;
+    try {
+      stateId = createStateID(forkId);
+    } catch (error) {
+      // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,
-        `Invalid Fork ID format: "${forkId}"`,
+        `Invalid Fork ID format: "${forkId}". IDs must start with a letter and contain only alphanumeric characters, underscores, and hyphens.`,
         { id: forkId }
       );
     }
-
-    const stateId = brandID<StateID>(forkId);
 
     if (this.states.has(stateId)) {
       throw new ValidationError(
@@ -235,7 +242,7 @@ export class StateDiagramBuilder {
     }
 
     const forkState: State = {
-      id: forkId,
+      id: stateId,
       type: 'FORK',
     };
 
@@ -251,15 +258,17 @@ export class StateDiagramBuilder {
   addJoin(id: string): StateID {
     const joinId = `${this.JOIN_STATE_PREFIX}${id}`;
 
-    if (!isValidIDFormat(joinId)) {
+    let stateId: StateID;
+    try {
+      stateId = createStateID(joinId);
+    } catch (error) {
+      // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,
-        `Invalid Join ID format: "${joinId}"`,
+        `Invalid Join ID format: "${joinId}". IDs must start with a letter and contain only alphanumeric characters, underscores, and hyphens.`,
         { id: joinId }
       );
     }
-
-    const stateId = brandID<StateID>(joinId);
 
     if (this.states.has(stateId)) {
       throw new ValidationError(
@@ -270,7 +279,7 @@ export class StateDiagramBuilder {
     }
 
     const joinState: State = {
-      id: joinId,
+      id: stateId,
       type: 'JOIN',
     };
 

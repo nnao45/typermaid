@@ -1,86 +1,21 @@
 /**
- * Branded Types for Type-Level Proof System
+ * Builder Types and Validation Errors
  *
- * These types provide compile-time guarantees that only valid IDs are used
- * when building diagrams. Each diagram type has its own branded ID types.
+ * Branded types are now imported from @typermaid/core to maintain single source of truth ✨
  */
 
-// ============================================================================
-// Flowchart Branded Types
-// ============================================================================
-
-/**
- * Branded type for Flowchart node IDs
- * Ensures only registered nodes can be referenced in edges
- */
-export type NodeID = string & { readonly __brand: 'NodeID' };
-
-/**
- * Branded type for Subgraph IDs
- */
-export type SubgraphID = string & { readonly __brand: 'SubgraphID' };
-
-/**
- * Branded type for ClassDef IDs
- */
-export type ClassDefID = string & { readonly __brand: 'ClassDefID' };
-
-// ============================================================================
-// Sequence Diagram Branded Types
-// ============================================================================
-
-/**
- * Branded type for Participant/Actor IDs
- * Ensures only declared participants can send/receive messages
- */
-export type ParticipantID = string & { readonly __brand: 'ParticipantID' };
-
-/**
- * Branded type for Note IDs
- */
-export type NoteID = string & { readonly __brand: 'NoteID' };
-
-// ============================================================================
-// State Diagram Branded Types
-// ============================================================================
-
-/**
- * Branded type for State IDs
- * Ensures only declared states can be referenced in transitions
- */
-export type StateID = string & { readonly __brand: 'StateID' };
-
-// ============================================================================
-// Class Diagram Branded Types
-// ============================================================================
-
-/**
- * Branded type for Class IDs
- */
-export type ClassID = string & { readonly __brand: 'ClassID' };
-
-// ============================================================================
-// ER Diagram Branded Types
-// ============================================================================
-
-/**
- * Branded type for Entity IDs
- */
-export type EntityID = string & { readonly __brand: 'EntityID' };
-
-// ============================================================================
-// Gantt Chart Branded Types
-// ============================================================================
-
-/**
- * Branded type for Task IDs
- */
-export type TaskID = string & { readonly __brand: 'TaskID' };
-
-/**
- * Branded type for Section IDs
- */
-export type SectionID = string & { readonly __brand: 'SectionID' };
+// Re-export branded types from core
+export type {
+  ClassDefID,
+  ClassID,
+  EntityID,
+  NodeID,
+  ParticipantID,
+  SectionID,
+  StateID,
+  SubgraphID,
+  TaskID,
+} from '@typermaid/core';
 
 // ============================================================================
 // Validation Error Types
@@ -138,22 +73,8 @@ export class ValidationError extends Error {
 // Type Branding Helpers
 // ============================================================================
 
-/**
- * Brand a string as a specific ID type
- *
- * @internal This should only be used by builder classes
- */
-export function brandID<T extends string>(id: string): T {
-  return id as T;
-}
-
-/**
- * Unbrand an ID back to a plain string
- * Useful for serialization or logging
- */
-export function unbrandID<T extends string>(id: T): string {
-  return id as string;
-}
+// NOTE: brandID function removed - use Zod schemas from @typermaid/core instead
+// Example: NodeIDSchema.parse(id) instead of brandID<NodeID>(id)
 
 // ============================================================================
 // Reserved Words (共通)

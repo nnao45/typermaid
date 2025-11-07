@@ -7,6 +7,7 @@ import type {
   ClassRelation,
   ClassVisibility,
 } from '@typermaid/core';
+import { createClassID } from '@typermaid/core';
 
 export class ClassParser {
   private lines: string[];
@@ -89,9 +90,10 @@ export class ClassParser {
 
         if (className && memberDef) {
           // Find or create class
-          let classData = diagram.classes.find((c) => c.id === className);
+          const classId = createClassID(className);
+          let classData = diagram.classes.find((c) => c.id === classId);
           if (!classData) {
-            classData = { id: className, name: className, members: [] };
+            classData = { id: classId, name: className, members: [] };
             diagram.classes.push(classData);
           }
 
@@ -120,7 +122,7 @@ export class ClassParser {
     const match = line.match(/namespace\s+(\w+)\s*{?/);
     const name = match?.[1] || '';
 
-    const classes: string[] = [];
+    const classes = [];
     this.currentLine++;
 
     while (this.currentLine < this.lines.length) {
@@ -136,7 +138,7 @@ export class ClassParser {
 
       if (currentLine.startsWith('class ')) {
         const className = currentLine.match(/class\s+(\w+)/)?.[1];
-        if (className) classes.push(className);
+        if (className) classes.push(createClassID(className));
       }
       this.currentLine++;
     }
@@ -147,7 +149,7 @@ export class ClassParser {
   private parseClass(): ClassDefinition {
     const line = this.lines[this.currentLine];
     if (!line) {
-      return { id: '', name: '', members: [] };
+      return { id: createClassID(''), name: '', members: [] };
     }
     let match = line.match(/class\s+(\w+)(?:~([^~]+)~)?\s*{?/);
 
@@ -159,7 +161,7 @@ export class ClassParser {
     const generics = match?.[2];
 
     const classData: ClassDefinition = {
-      id: name,
+      id: createClassID(name),
       name,
       members: [],
     };
@@ -319,8 +321,8 @@ export class ClassParser {
     }
 
     return {
-      from,
-      to,
+      from: createClassID(from),
+      to: createClassID(to),
       relationType: relationType as ClassRelation['relationType'],
       label,
       cardinalityFrom,

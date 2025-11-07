@@ -1,4 +1,4 @@
-const { readFileSync } = require('fs');
+const { readFileSync } = require('node:fs');
 const { parse } = require('../packages/parser/dist/index.js');
 const { generateCode } = require('../packages/codegen/dist/index.js');
 

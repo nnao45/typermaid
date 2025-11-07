@@ -4,6 +4,15 @@ import { ClassDiagramBuilder } from '../class-builder.js';
 import type { ClassID } from '../types.js';
 
 /**
+ * Extract string value from Content type
+ */
+function contentToString(content: string | { type: string; raw: string } | undefined): string | undefined {
+  if (!content) return undefined;
+  if (typeof content === 'string') return content;
+  return content.raw;
+}
+
+/**
  * Convert parsed Class Diagram AST to Builder for manipulation
  *
  * @param ast - Parsed ClassDiagramAST
@@ -97,7 +106,7 @@ function processRelationship(
     fromId,
     toId,
     rel.relationType,
-    rel.label,
+    contentToString(rel.label),
     rel.cardinalityFrom,
     rel.cardinalityTo
   );

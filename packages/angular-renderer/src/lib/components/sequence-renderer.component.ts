@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, Input } from '@angular/core';
+import type { Message, Participant } from '@typermaid/core';
 import type { SequenceDiagramAST } from '@typermaid/parser';
 import type { Theme } from '../services/theme.service';
 
@@ -103,29 +104,12 @@ export class SequenceRendererComponent {
   participants = computed(() => {
     const seqDiagram = this.diagram.diagram;
     const statements = seqDiagram.statements;
-    return statements.filter(
-      (s): s is { type: 'participant'; id: string; alias?: string } => s.type === 'participant'
-    );
+    return statements.filter((s): s is Participant => s.type === 'participant');
   });
   messages = computed(() => {
     const seqDiagram = this.diagram.diagram;
     const statements = seqDiagram.statements;
-    type MessageStatement = {
-      type: 'message';
-      from: string;
-      to: string;
-      arrowType:
-        | 'solid'
-        | 'dotted'
-        | 'solid_arrow'
-        | 'dotted_arrow'
-        | 'solid_cross'
-        | 'dotted_cross'
-        | 'solid_open'
-        | 'dotted_open';
-      text?: string;
-    };
-    return statements.filter((s): s is MessageStatement => s.type === 'message');
+    return statements.filter((s): s is Message => s.type === 'message');
   });
 
   width = computed(() => {
@@ -146,7 +130,7 @@ export class SequenceRendererComponent {
   }
 
   getParticipantIndex(id: string): number {
-    return this.participants().findIndex((p: { id: string }) => p.id === id);
+    return this.participants().findIndex((p) => p.id === id);
   }
 
   getMessageY(index: number): number {

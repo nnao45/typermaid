@@ -15,6 +15,7 @@ import type {
   SequenceDiagram,
   SequenceStatement,
 } from '@typermaid/core';
+import { createParticipantID } from '@typermaid/core';
 import { ParserError } from '../error.js';
 import { SequenceTokenizer } from '../lexer/sequence-tokenizer.js';
 import type { Token } from '../lexer/tokens.js';
@@ -109,7 +110,7 @@ export class SequenceParser {
 
     return {
       type: 'participant',
-      id,
+      id: createParticipantID(id),
       alias,
     };
   }
@@ -126,7 +127,7 @@ export class SequenceParser {
 
     return {
       type: 'actor',
-      id,
+      id: createParticipantID(id),
       alias,
     };
   }
@@ -135,7 +136,7 @@ export class SequenceParser {
     this.consume('NOTE');
 
     let position: NotePosition = 'over';
-    const actors: string[] = [];
+    const actors = [];
 
     if (this.match('LEFT_OF')) {
       this.advance();
@@ -143,23 +144,23 @@ export class SequenceParser {
         this.advance();
       }
       position = 'left';
-      actors.push(this.consume('IDENTIFIER').value);
+      actors.push(createParticipantID(this.consume('IDENTIFIER').value));
     } else if (this.match('RIGHT_OF')) {
       this.advance();
       if (this.match('OF')) {
         this.advance();
       }
       position = 'right';
-      actors.push(this.consume('IDENTIFIER').value);
+      actors.push(createParticipantID(this.consume('IDENTIFIER').value));
     } else if (this.match('OVER')) {
       this.advance();
       position = 'over';
-      actors.push(this.consume('IDENTIFIER').value);
+      actors.push(createParticipantID(this.consume('IDENTIFIER').value));
       // Can have multiple actors for 'over'
       while (this.match('COMMA') || this.match('SPECIAL_CHAR')) {
         this.advance();
         if (this.match('IDENTIFIER')) {
-          actors.push(this.consume('IDENTIFIER').value);
+          actors.push(createParticipantID(this.consume('IDENTIFIER').value));
         }
       }
     }
@@ -176,7 +177,7 @@ export class SequenceParser {
   }
 
   private parseMessage(): Message {
-    const from = this.consume('IDENTIFIER').value;
+    const from = createParticipantID(this.consume('IDENTIFIER').value);
 
     if (this.match('PLUS')) {
       this.advance();
@@ -191,7 +192,7 @@ export class SequenceParser {
       this.advance();
     }
 
-    const to = this.consume('IDENTIFIER').value;
+    const to = createParticipantID(this.consume('IDENTIFIER').value);
 
     let text: string | undefined;
     if (this.match('COLON')) {

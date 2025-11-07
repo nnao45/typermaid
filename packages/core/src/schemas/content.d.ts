@@ -5,11 +5,14 @@ import { z } from 'zod';
  * HTMLタグを含むコンテンツを表現するわよ💅
  * サニタイズ前のrawと、サニタイズ後のsanitizedを持つの✨
  */
-export declare const HTMLContentSchema: z.ZodObject<{
-    type: z.ZodLiteral<"html">;
+export declare const HTMLContentSchema: z.ZodObject<
+  {
+    type: z.ZodLiteral<'html'>;
     raw: z.ZodString;
     sanitized: z.ZodOptional<z.ZodString>;
-}, z.core.$strip>;
+  },
+  z.core.$strip
+>;
 export type HTMLContent = z.infer<typeof HTMLContentSchema>;
 /**
  * Markdown Content Schema
@@ -17,11 +20,14 @@ export type HTMLContent = z.infer<typeof HTMLContentSchema>;
  * Markdown記法のコンテンツを表現するわよ💖
  * 将来的にMarkdown → HTMLパース機能を追加予定✨
  */
-export declare const MarkdownContentSchema: z.ZodObject<{
-    type: z.ZodLiteral<"markdown">;
+export declare const MarkdownContentSchema: z.ZodObject<
+  {
+    type: z.ZodLiteral<'markdown'>;
     raw: z.ZodString;
     parsed: z.ZodOptional<z.ZodString>;
-}, z.core.$strip>;
+  },
+  z.core.$strip
+>;
 export type MarkdownContent = z.infer<typeof MarkdownContentSchema>;
 /**
  * Plain Text Content Schema
@@ -34,15 +40,27 @@ export type PlainContent = z.infer<typeof PlainContentSchema>;
  * プレーンテキスト、HTML、Markdownのいずれかを表現するわよ💅
  * Discriminated Unionで型安全に判定できるの✨
  */
-export declare const ContentSchema: z.ZodUnion<readonly [z.ZodObject<{
-    type: z.ZodLiteral<"html">;
-    raw: z.ZodString;
-    sanitized: z.ZodOptional<z.ZodString>;
-}, z.core.$strip>, z.ZodObject<{
-    type: z.ZodLiteral<"markdown">;
-    raw: z.ZodString;
-    parsed: z.ZodOptional<z.ZodString>;
-}, z.core.$strip>, z.ZodString]>;
+export declare const ContentSchema: z.ZodUnion<
+  readonly [
+    z.ZodObject<
+      {
+        type: z.ZodLiteral<'html'>;
+        raw: z.ZodString;
+        sanitized: z.ZodOptional<z.ZodString>;
+      },
+      z.core.$strip
+    >,
+    z.ZodObject<
+      {
+        type: z.ZodLiteral<'markdown'>;
+        raw: z.ZodString;
+        parsed: z.ZodOptional<z.ZodString>;
+      },
+      z.core.$strip
+    >,
+    z.ZodString,
+  ]
+>;
 export type Content = z.infer<typeof ContentSchema>;
 /**
  * Type guard: check if content is HTML

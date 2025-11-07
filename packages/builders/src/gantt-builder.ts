@@ -5,14 +5,8 @@ import type {
   GanttTask,
   GanttTaskStatus,
 } from '@typermaid/core';
-import {
-  brandID,
-  isValidIDFormat,
-  type SectionID,
-  type TaskID,
-  ValidationError,
-  ValidationErrorCode,
-} from './types.js';
+import { createSectionID, createTaskID, type SectionID, type TaskID } from '@typermaid/core';
+import { ValidationError, ValidationErrorCode } from './types.js';
 import { validateNotReservedWord } from './validators/reserved-words.js';
 
 /**
@@ -61,19 +55,31 @@ export class GanttDiagramBuilder {
   /**
    * Add a section to the Gantt chart
    * @param name - Section ID (used for internal reference)
-   * @param label - Optional display label (defaults to name)
+   * @param _label - Optional display label (defaults to name) - currently unused
    * @returns Branded SectionID that can only be used with this builder
    * @note For AST conversion, we convert display names to valid IDs automatically
    */
-  addSection(name: string, label?: string): SectionID {
+  addSection(name: string, _label?: string): SectionID {
     // Convert name to valid ID if needed (for AST conversion compatibility)
     const normalizedName = this.toValidSectionID(name);
 
     // Check reserved words
     validateNotReservedWord(normalizedName);
 
+    // Create SectionID with validation
+    let sectionId: SectionID;
+    try {
+      sectionId = createSectionID(normalizedName);
+    } catch (error) {
+      // Convert ZodError to ValidationError for consistent API
+      throw new ValidationError(
+        ValidationErrorCode.INVALID_ID_FORMAT,
+        `Invalid section ID format: "${normalizedName}". IDs must start with a letter and contain only alphanumeric characters, underscores, and hyphens.`,
+        { id: normalizedName }
+      );
+    }
+
     // Check for duplicates
-    const sectionId = brandID<SectionID>(normalizedName);
     if (this.sections.has(sectionId)) {
       throw new ValidationError(
         ValidationErrorCode.DUPLICATE_ID,
@@ -83,7 +89,7 @@ export class GanttDiagramBuilder {
     }
 
     const section: GanttSection = {
-      name: label ?? name,
+      name: sectionId,
       tasks: [],
     };
 
@@ -98,15 +104,6 @@ export class GanttDiagramBuilder {
    * @returns Branded TaskID that can only be used with this builder
    */
   addMilestone(id: string, description: string, date: string, status?: GanttTaskStatus): TaskID {
-    // Validate task ID format
-    if (!isValidIDFormat(id)) {
-      throw new ValidationError(
-        ValidationErrorCode.INVALID_ID_FORMAT,
-        `Invalid ID format: "${id}". IDs must start with a letter and contain only alphanumeric characters, underscores, and hyphens.`,
-        { id }
-      );
-    }
-
     // Check reserved words
     validateNotReservedWord(id);
 
@@ -138,8 +135,18 @@ export class GanttDiagramBuilder {
       );
     }
 
-    // Create task ID
-    const taskId = brandID<TaskID>(id);
+    // Create TaskID with validation (milestone)
+    let taskId: TaskID;
+    try {
+      taskId = createTaskID(id);
+    } catch (error) {
+      // Convert ZodError to ValidationError for consistent API
+      throw new ValidationError(
+        ValidationErrorCode.INVALID_ID_FORMAT,
+        `Invalid ID format: "${id}". IDs must start with a letter and contain only alphanumeric characters, underscores, and hyphens.`,
+        { id }
+      );
+    }
 
     // Check for duplicate task ID
     if (this.tasks.has(taskId)) {
@@ -151,7 +158,7 @@ export class GanttDiagramBuilder {
     }
 
     const task: GanttTask = {
-      id,
+      id: taskId,
       name: description,
       startDate: date,
       duration: '0d', // Milestone has 0 duration
@@ -176,15 +183,6 @@ export class GanttDiagramBuilder {
     endDate: string,
     status?: GanttTaskStatus
   ): TaskID {
-    // Validate task ID format
-    if (!isValidIDFormat(id)) {
-      throw new ValidationError(
-        ValidationErrorCode.INVALID_ID_FORMAT,
-        `Invalid ID format: "${id}". IDs must start with a letter and contain only alphanumeric characters, underscores, and hyphens.`,
-        { id }
-      );
-    }
-
     // Check reserved words
     validateNotReservedWord(id);
 
@@ -245,8 +243,18 @@ export class GanttDiagramBuilder {
       );
     }
 
-    // Create task ID
-    const taskId = brandID<TaskID>(id);
+    // Create TaskID with validation (regular task)
+    let taskId: TaskID;
+    try {
+      taskId = createTaskID(id);
+    } catch (error) {
+      // Convert ZodError to ValidationError for consistent API
+      throw new ValidationError(
+        ValidationErrorCode.INVALID_ID_FORMAT,
+        `Invalid ID format: "${id}". IDs must start with a letter and contain only alphanumeric characters, underscores, and hyphens.`,
+        { id }
+      );
+    }
 
     // Check for duplicate task ID
     if (this.tasks.has(taskId)) {
@@ -263,7 +271,7 @@ export class GanttDiagramBuilder {
     const duration = `${durationDays}d`;
 
     const task: GanttTask = {
-      id,
+      id: taskId,
       name: description,
       startDate,
       duration,
@@ -427,7 +435,7 @@ export class GanttDiagramBuilder {
       if (!Array.isArray(task.dependencies)) {
         task.dependencies = [];
       }
-      task.dependencies.push(to as string); // 'from' depends on 'to'
+      task.dependencies.push(to); // 'from' depends on 'to'
     }
 
     return this;
@@ -459,9 +467,8 @@ export class GanttDiagramBuilder {
       const task = this.tasks.get(current);
       if (task?.dependencies) {
         for (const depId of task.dependencies) {
-          const depTaskId = this.taskIdToTaskID.get(depId) ?? brandID<TaskID>(depId);
-          if (this.tasks.has(depTaskId)) {
-            stack.push(depTaskId);
+          if (this.tasks.has(depId)) {
+            stack.push(depId);
           }
         }
       }
@@ -555,9 +562,9 @@ export class GanttDiagramBuilder {
       // Convert tasks to string IDs for test compatibility
       return {
         ...section,
-        tasks: section.tasks.map((t) => t.id).filter((id): id is string => id !== undefined),
+        tasks: section.tasks.map((t) => t.id).filter((id) => id !== undefined) as TaskID[],
       };
-    }) as Array<GanttSection & { tasks: string[] }>;
+    }) as Array<GanttSection & { tasks: TaskID[] }>;
 
     // Get all tasks as array for test compatibility
     const tasks = Array.from(this.tasks.values());

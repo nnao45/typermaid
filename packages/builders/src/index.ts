@@ -27,7 +27,6 @@ export type {
   ClassID,
   EntityID,
   NodeID,
-  NoteID,
   ParticipantID,
   SectionID,
   StateID,
@@ -35,11 +34,9 @@ export type {
   TaskID,
 } from './types.js';
 export {
-  brandID,
   isReservedWord,
   isValidIDFormat,
   RESERVED_WORDS,
-  unbrandID,
   ValidationError,
   ValidationErrorCode,
 } from './types.js';

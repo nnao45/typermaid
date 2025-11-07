@@ -1,4 +1,5 @@
 import type { GanttConfig, GanttSection, GanttTask, GanttTaskStatus } from '@typermaid/core';
+import { createSectionID, createTaskID } from '@typermaid/core';
 import type { Token } from '../lexer/tokens.js';
 
 export interface GanttDiagramAST {
@@ -96,7 +97,7 @@ export class GanttParser {
         this.skipWhitespace();
         const sectionName = this.consumeRestOfLine();
         currentSection = {
-          name: sectionName,
+          name: createSectionID(sectionName),
           tasks: [],
         };
       } else if (currentSection && token.type === 'IDENTIFIER') {
@@ -133,7 +134,7 @@ export class GanttParser {
     // Debug: log parsing
     // console.log(`Task: ${taskName}, restOfLine: '${restOfLine}', parts: ${JSON.stringify(parts)}`);
 
-    let id: string | undefined;
+    let id;
     let status: GanttTaskStatus | undefined;
     let startDate = '';
     let duration = '';
@@ -164,13 +165,13 @@ export class GanttParser {
         !firstPart.includes(':') &&
         !firstPart.match(/^\d/)
       ) {
-        id = firstPart;
+        id = createTaskID(firstPart);
         partIndex++;
       }
     }
 
     // Next part is start date, "after id", or duration-only
-    const dependencies: string[] = [];
+    const dependencies = [];
     if (partIndex < parts.length) {
       const startPart = parts[partIndex];
       if (startPart?.startsWith('after ')) {
@@ -178,7 +179,7 @@ export class GanttParser {
         const afterId = startPart.slice(6).trim();
         if (afterId) {
           startDate = `after ${afterId}`;
-          dependencies.push(afterId);
+          dependencies.push(createTaskID(afterId));
         }
         partIndex++;
       } else if (startPart && /^\d+[hdwm]$/i.test(startPart)) {

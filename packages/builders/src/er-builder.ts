@@ -6,13 +6,8 @@ import type {
   ERIdentification,
   ERRelationship,
 } from '@typermaid/core';
-import {
-  brandID,
-  type EntityID,
-  isValidIDFormat,
-  ValidationError,
-  ValidationErrorCode,
-} from './types.js';
+import { createEntityID, type EntityID } from '@typermaid/core';
+import { ValidationError, ValidationErrorCode } from './types.js';
 import { validateNotReservedWord } from './validators/reserved-words.js';
 
 /**
@@ -34,8 +29,12 @@ export class ERDiagramBuilder {
    * @returns Branded EntityID that can only be used with this builder
    */
   addEntity(name: string, label: string): EntityID {
-    // Validate entity name format
-    if (!isValidIDFormat(name)) {
+    // Create EntityID with validation
+    let entityId: EntityID;
+    try {
+      entityId = createEntityID(name);
+    } catch (error) {
+      // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,
         `Invalid ID format: "${name}". IDs must start with a letter and contain only alphanumeric characters, underscores, and hyphens.`,
@@ -54,7 +53,6 @@ export class ERDiagramBuilder {
     validateNotReservedWord(name);
 
     // Check for duplicates
-    const entityId = brandID<EntityID>(name);
     if (this.entities.has(entityId)) {
       throw new ValidationError(
         ValidationErrorCode.DUPLICATE_ID,
@@ -64,7 +62,7 @@ export class ERDiagramBuilder {
     }
 
     const entity: EREntity = {
-      name,
+      name: entityId,
       attributes: [],
     };
 
@@ -257,8 +255,8 @@ export class ERDiagramBuilder {
     }
 
     const relationship: ERRelationship = {
-      from: from as string,
-      to: to as string,
+      from,
+      to,
       fromCardinality,
       toCardinality,
       identification: identifying ? 'IDENTIFYING' : 'NON_IDENTIFYING',

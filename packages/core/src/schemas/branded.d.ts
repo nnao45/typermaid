@@ -8,37 +8,37 @@
  * Flowchart Node ID (branded type)
  */
 export type NodeID = string & {
-    readonly __brand: 'NodeID';
+  readonly __brand: 'NodeID';
 };
 /**
  * Sequence Diagram Participant ID (branded type)
  */
 export type ParticipantID = string & {
-    readonly __brand: 'ParticipantID';
+  readonly __brand: 'ParticipantID';
 };
 /**
  * State Diagram State ID (branded type)
  */
 export type StateID = string & {
-    readonly __brand: 'StateID';
+  readonly __brand: 'StateID';
 };
 /**
  * ER Diagram Entity ID (branded type)
  */
 export type EntityID = string & {
-    readonly __brand: 'EntityID';
+  readonly __brand: 'EntityID';
 };
 /**
  * Class Diagram Class ID (branded type)
  */
 export type ClassID = string & {
-    readonly __brand: 'ClassID';
+  readonly __brand: 'ClassID';
 };
 /**
  * Gantt Chart Task ID (branded type)
  */
 export type TaskID = string & {
-    readonly __brand: 'TaskID';
+  readonly __brand: 'TaskID';
 };
 /**
  * Type guard: string to NodeID
@@ -71,7 +71,10 @@ export declare function validateNodeId(id: string, existingNodes: Set<NodeID>): 
 /**
  * Validation: ParticipantID exists check
  */
-export declare function validateParticipantId(id: string, existingParticipants: Set<ParticipantID>): ParticipantID;
+export declare function validateParticipantId(
+  id: string,
+  existingParticipants: Set<ParticipantID>
+): ParticipantID;
 /**
  * Validation: StateID exists check
  */

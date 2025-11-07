@@ -1,5 +1,5 @@
-const { readdirSync, readFileSync, statSync } = require('fs');
-const { join } = require('path');
+const { readdirSync, readFileSync, statSync } = require('node:fs');
+const { join } = require('node:path');
 
 const E2E_DIR = __dirname;
 const files = [];
@@ -13,7 +13,7 @@ for (const entry of entries) {
 
   try {
     stat = statSync(fullPath);
-  } catch (err) {
+  } catch (_err) {
     console.log('Skip:', entry, '(cannot stat)');
     continue;
   }
@@ -47,11 +47,15 @@ for (const entry of entries) {
 
 console.log('\n=== Summary ===');
 console.log('Total files loaded:', files.length);
-console.log('Total size:', files.reduce((sum, f) => sum + f.size, 0), 'bytes');
+console.log(
+  'Total size:',
+  files.reduce((sum, f) => sum + f.size, 0),
+  'bytes'
+);
 
 // Find largest files
 const largest = files.sort((a, b) => b.size - a.size).slice(0, 5);
 console.log('\nLargest files:');
-largest.forEach(f => {
+largest.forEach((f) => {
   console.log(`  ${f.category}/${f.name}: ${f.size} bytes`);
 });

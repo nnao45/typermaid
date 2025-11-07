@@ -1,18 +1,19 @@
 import { z } from 'zod';
+import { SectionIDSchema, TaskIDSchema } from './branded.js';
 
 export const GanttTaskStatus = z.enum(['active', 'done', 'crit', 'milestone']);
 
 export const GanttTask = z.object({
-  id: z.string().optional(),
+  id: TaskIDSchema.optional(),
   name: z.string(),
   status: GanttTaskStatus.optional(),
   startDate: z.string(),
   duration: z.string(),
-  dependencies: z.array(z.string()).optional(),
+  dependencies: z.array(TaskIDSchema).optional(),
 });
 
 export const GanttSection = z.object({
-  name: z.string(),
+  name: SectionIDSchema,
   tasks: z.array(GanttTask),
 });
 

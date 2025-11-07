@@ -11,6 +11,15 @@ import { SequenceDiagramBuilder } from '../sequence-builder.js';
 import type { ParticipantID } from '../types.js';
 
 /**
+ * Extract string value from Content type
+ */
+function contentToString(content: string | { type: string; raw: string } | undefined): string | undefined {
+  if (!content) return undefined;
+  if (typeof content === 'string') return content;
+  return content.raw;
+}
+
+/**
  * Convert parsed Sequence Diagram AST to Builder for manipulation
  *
  * @param ast - Parsed SequenceDiagramAST
@@ -88,7 +97,7 @@ function processStatement(
         participantIdMap.set(message.to, toId);
       }
 
-      builder.sendMessage(fromId, toId, message.text ?? '', message.arrowType);
+      builder.sendMessage(fromId, toId, contentToString(message.text) ?? '', message.arrowType);
       break;
     }
 
@@ -110,7 +119,7 @@ function processStatement(
 
       if (actors.length > 0) {
         const target = actors.length === 1 && actors[0] !== undefined ? actors[0] : actors;
-        builder.addNote(target, note.text, note.position);
+        builder.addNote(target, contentToString(note.text) ?? '', note.position);
       }
       break;
     }

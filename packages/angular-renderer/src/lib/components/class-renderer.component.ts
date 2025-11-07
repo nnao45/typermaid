@@ -5,6 +5,15 @@ import type { ClassDiagramAST } from '@typermaid/parser';
 import { computeUnifiedDagreLayout } from '@typermaid/renderer-core';
 import type { Theme } from '../services/theme.service';
 
+/**
+ * Extract string value from Content type
+ */
+function contentToString(content: string | { type: string; raw: string } | undefined): string | undefined {
+  if (!content) return undefined;
+  if (typeof content === 'string') return content;
+  return content.raw;
+}
+
 @Component({
   selector: 'lyric-class-renderer',
   standalone: true,
@@ -90,11 +99,14 @@ export class ClassRendererComponent {
       height: 80 + cls.members.length * 15,
     }));
 
-    const edges = this.diagram.diagram.relations.map((rel) => ({
-      from: rel.from,
-      to: rel.to,
-      ...(rel.label ? { label: rel.label } : {}),
-    }));
+    const edges = this.diagram.diagram.relations.map((rel) => {
+      const labelStr = contentToString(rel.label);
+      return {
+        from: rel.from,
+        to: rel.to,
+        ...(labelStr ? { label: labelStr } : {}),
+      };
+    });
 
     return computeUnifiedDagreLayout(nodes, edges, {
       rankdir: 'TB',

@@ -7,12 +7,12 @@ import type {
   SequenceDiagramAST,
   StateDiagramAST,
 } from '@typermaid/parser';
-import { generateFlowchart } from './flowchart.js';
-import { generateSequence } from './sequence.js';
-import { generateState } from './state.js';
 import { generateClass } from './class.js';
 import { generateER } from './er.js';
+import { generateFlowchart } from './flowchart.js';
 import { generateGantt } from './gantt.js';
+import { generateSequence } from './sequence.js';
+import { generateState } from './state.js';
 
 /**
  * Generate Mermaid code from AST
@@ -60,10 +60,10 @@ export function generateCode(ast: ProgramAST): string {
   return parts.join('\n\n');
 }
 
-// Re-export individual generators
-export { generateFlowchart } from './flowchart.js';
-export { generateSequence } from './sequence.js';
-export { generateState } from './state.js';
 export { generateClass } from './class.js';
 export { generateER } from './er.js';
+// Re-export individual generators
+export { generateFlowchart } from './flowchart.js';
 export { generateGantt } from './gantt.js';
+export { generateSequence } from './sequence.js';
+export { generateState } from './state.js';

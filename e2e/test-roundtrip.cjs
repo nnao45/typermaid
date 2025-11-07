@@ -1,5 +1,5 @@
-const { readdirSync, readFileSync, statSync } = require('fs');
-const { join } = require('path');
+const { readdirSync, readFileSync, statSync } = require('node:fs');
+const { join } = require('node:path');
 const { parse } = require('../packages/parser/dist/index.js');
 const { generateCode } = require('../packages/codegen/dist/index.js');
 
@@ -15,7 +15,7 @@ function getE2EFiles() {
 
     try {
       stat = statSync(fullPath);
-    } catch (err) {
+    } catch (_err) {
       continue;
     }
 

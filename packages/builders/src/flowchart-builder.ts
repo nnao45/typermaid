@@ -1,22 +1,22 @@
 import type {
   ClassDef,
+  ClassDefID,
   EdgeType,
   FlowchartDiagram,
   FlowchartEdge,
   FlowchartNode,
+  NodeID,
   NodeShape,
   Style,
   Subgraph,
+  SubgraphID,
 } from '@typermaid/core';
 import {
-  brandID,
-  type ClassDefID,
-  isValidIDFormat,
-  type NodeID,
-  type SubgraphID,
-  ValidationError,
-  ValidationErrorCode,
-} from './types.js';
+  createClassDefID,
+  createNodeID, 
+  createSubgraphID,
+} from '@typermaid/core';
+import { ValidationError, ValidationErrorCode } from './types.js';
 import { validateNotReservedWord } from './validators/reserved-words.js';
 
 /**
@@ -49,8 +49,12 @@ export class FlowchartDiagramBuilder {
    * @returns Branded NodeID that can only be used with this builder
    */
   addNode(id: string, shape: NodeShape, label: string): NodeID {
-    // Validate ID format
-    if (!isValidIDFormat(id)) {
+    // Create NodeID with validation (throws if invalid format)
+    let nodeId: NodeID;
+    try {
+      nodeId = createNodeID(id);
+    } catch (error) {
+      // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,
         `Invalid ID format: "${id}". IDs must start with a letter and contain only alphanumeric characters, underscores, and hyphens.`,
@@ -62,7 +66,6 @@ export class FlowchartDiagramBuilder {
     validateNotReservedWord(id);
 
     // Check for duplicates
-    const nodeId = brandID<NodeID>(id);
     if (this.nodes.has(nodeId)) {
       throw new ValidationError(
         ValidationErrorCode.DUPLICATE_ID,
@@ -79,7 +82,7 @@ export class FlowchartDiagramBuilder {
     }
 
     const node: FlowchartNode = {
-      id,
+      id: nodeId,
       shape,
       label,
     };
@@ -114,8 +117,8 @@ export class FlowchartDiagramBuilder {
 
     const edge: FlowchartEdge = {
       id: `edge-${this.edgeCount++}`,
-      from: from as string,
-      to: to as string,
+      from, // NodeID is compatible with the schema now
+      to, // NodeID is compatible with the schema now
       type,
       label,
     };
@@ -128,8 +131,12 @@ export class FlowchartDiagramBuilder {
    * Define a CSS class for styling nodes
    */
   defineClass(name: string, style: Style): ClassDefID {
-    // Validate ID
-    if (!isValidIDFormat(name)) {
+    // Create ClassDefID with validation (throws if invalid format)
+    let classDefId: ClassDefID;
+    try {
+      classDefId = createClassDefID(name);
+    } catch (error) {
+      // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,
         `Invalid ClassDef ID format: "${name}"`,
@@ -138,8 +145,6 @@ export class FlowchartDiagramBuilder {
     }
 
     validateNotReservedWord(name);
-
-    const classDefId = brandID<ClassDefID>(name);
 
     if (this.classDefs.has(classDefId)) {
       throw new ValidationError(
@@ -150,7 +155,7 @@ export class FlowchartDiagramBuilder {
     }
 
     const classDef: ClassDef = {
-      name,
+      name: classDefId,
       style,
     };
 
@@ -182,7 +187,7 @@ export class FlowchartDiagramBuilder {
       if (!node.classes) {
         node.classes = [];
       }
-      node.classes.push(classDefId as string);
+      node.classes.push(classDefId);
     }
 
     return this;
@@ -192,8 +197,12 @@ export class FlowchartDiagramBuilder {
    * Create a subgraph
    */
   addSubgraph(id: string, label: string, nodeIds: NodeID[]): SubgraphID {
-    // Validate ID
-    if (!isValidIDFormat(id)) {
+    // Create SubgraphID with validation (throws if invalid format)
+    let subgraphId: SubgraphID;
+    try {
+      subgraphId = createSubgraphID(id);
+    } catch (error) {
+      // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,
         `Invalid Subgraph ID format: "${id}"`,
@@ -202,8 +211,6 @@ export class FlowchartDiagramBuilder {
     }
 
     validateNotReservedWord(id);
-
-    const subgraphId = brandID<SubgraphID>(id);
 
     if (this.subgraphs.has(subgraphId)) {
       throw new ValidationError(
@@ -225,9 +232,9 @@ export class FlowchartDiagramBuilder {
     }
 
     const subgraph: Subgraph = {
-      id,
+      id: subgraphId,
       label,
-      nodes: nodeIds.map((nid) => nid as string),
+      nodes: nodeIds, // NodeID[] is now compatible with the schema
     };
 
     this.subgraphs.set(subgraphId, subgraph);

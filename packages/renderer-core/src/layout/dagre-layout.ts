@@ -12,6 +12,15 @@ import type {
 import { DEFAULT_LAYOUT_OPTIONS } from '../types/layout.js';
 
 /**
+ * Extract string value from Content type
+ */
+function contentToString(content: string | { type: string; raw: string } | undefined): string | undefined {
+  if (!content) return undefined;
+  if (typeof content === 'string') return content;
+  return content.raw;
+}
+
+/**
  * Default font settings for text measurement
  */
 const DEFAULT_FONT_SIZE = 14;
@@ -91,7 +100,8 @@ export function createLayout(diagram: FlowchartDiagram, options: LayoutOptions =
   const nodeMap = new Map<string, LayoutNode>();
 
   for (const node of diagram.nodes) {
-    const dimensions = calculateNodeDimensions(node.label || node.id, node.shape);
+    const labelStr = contentToString(node.label) || node.id;
+    const dimensions = calculateNodeDimensions(labelStr, node.shape);
 
     g.setNode(node.id, {
       width: dimensions.width,
@@ -100,7 +110,7 @@ export function createLayout(diagram: FlowchartDiagram, options: LayoutOptions =
 
     nodeMap.set(node.id, {
       id: node.id,
-      label: node.label || node.id,
+      label: labelStr,
       shape: node.shape,
       position: { x: 0, y: 0 }, // Will be set by dagre
       dimensions,
@@ -142,12 +152,13 @@ export function createLayout(diagram: FlowchartDiagram, options: LayoutOptions =
       { x: 0, y: 0 },
     ];
 
-    if (edge.label) {
+    const labelStr = contentToString(edge.label);
+    if (labelStr) {
       layoutEdges.push({
         id: edge.id,
         from: edge.from,
         to: edge.to,
-        label: edge.label,
+        label: labelStr,
         edgeType: edge.type,
         points,
       });

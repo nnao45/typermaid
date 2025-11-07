@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { StateIDSchema } from './branded.js';
 import { type Content, ContentSchema } from './content.js';
 
 // State types
@@ -19,7 +20,7 @@ export type StateDirection = z.infer<typeof StateDirection>;
 
 // State definition
 export type State = {
-  id: string;
+  id: z.infer<typeof StateIDSchema>;
   type: StateType;
   label?: Content | undefined; // HTML support for state labels
   description?: Content | undefined; // HTML support for state descriptions
@@ -27,7 +28,7 @@ export type State = {
 };
 
 export const StateSchema: z.ZodType<State> = z.object({
-  id: z.string(),
+  id: StateIDSchema,
   type: StateType.default('STATE'),
   label: ContentSchema.optional(),
   description: ContentSchema.optional(),
@@ -36,8 +37,8 @@ export const StateSchema: z.ZodType<State> = z.object({
 
 // State transition
 export const StateTransitionSchema = z.object({
-  from: z.string(),
-  to: z.string(),
+  from: StateIDSchema,
+  to: StateIDSchema,
   label: ContentSchema.optional(), // HTML support for transition labels
 });
 
@@ -45,7 +46,7 @@ export type StateTransition = z.infer<typeof StateTransitionSchema>;
 
 // Note
 export const StateNoteSchema = z.object({
-  state: z.string(),
+  state: StateIDSchema,
   note: ContentSchema, // HTML support for notes
   position: z.enum(['left', 'right']).optional(),
 });
