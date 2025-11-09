@@ -16,7 +16,7 @@ describe('Enhanced Sequence AST-Builder API', () => {
     expect(ast.diagram).toBeDefined();
 
     // Builder capabilities - add new participant
-    const charlieId = ast.createParticipant('Charlie', 'Charlie Brown');
+    const charlieId = ast.addParticipant('Charlie', 'Charlie Brown');
     ast.addParticipant('David', 'David Smith', true); // Actor
 
     // Check if participants were added
@@ -29,7 +29,7 @@ describe('Enhanced Sequence AST-Builder API', () => {
     expect(davidParticipants[0]?.type).toBe('actor');
 
     // Add messages with new participants
-    const aliceId = ast.createParticipant('AliceExisting', 'Alice'); // Get existing Alice
+    const aliceId = ast.addParticipant('AliceExisting', 'Alice'); // Get existing Alice
     ast
       .sendMessage(aliceId, charlieId, 'Hey Charlie!', 'solid_arrow')
       .addNote(charlieId, 'This is a note', 'right');
@@ -58,8 +58,8 @@ describe('Enhanced Sequence AST-Builder API', () => {
     const ast = parseSequence(source);
 
     // Add different arrow types
-    const cId = ast.createParticipant('C', 'Service C');
-    const aId = ast.createParticipant('AExisting', 'A'); // Get A
+    const cId = ast.addParticipant('C', 'Service C');
+    const aId = ast.addParticipant('AExisting', 'A'); // Get A
 
     ast
       .sendMessage(aId, cId, 'Sync call', 'solid_arrow')
@@ -108,10 +108,12 @@ describe('Enhanced Sequence AST-Builder API', () => {
   test('should support method chaining', () => {
     const ast = parseSequence('sequenceDiagram\n  participant Base');
 
-    // Method chaining should work
-    const result = ast
-      .addParticipant('User', 'User Interface')
-      .addParticipant('API', 'API Server', true);
+    // addParticipant returns ParticipantID, but sendMessage/addNote support chaining
+    const user = ast.addParticipant('User', 'User Interface');
+    const api = ast.addParticipant('API', 'API Server', true);
+
+    // sendMessage and addNote support method chaining
+    const result = ast.sendMessage(user, api, 'Request').addNote(api, 'Processing');
 
     expect(result).toBe(ast); // Should return self
     expect(ast.findParticipants('User')).toHaveLength(1);
@@ -127,8 +129,8 @@ describe('Enhanced Sequence AST-Builder API', () => {
     const ast1 = parseSequence(original);
 
     // Modify: add new participant and messages
-    const charlieId = ast1.createParticipant('Charlie', 'Charlie');
-    const bobId = ast1.createParticipant('BobExisting', 'Bob'); // Get existing Bob
+    const charlieId = ast1.addParticipant('Charlie', 'Charlie');
+    const bobId = ast1.addParticipant('BobExisting', 'Bob'); // Get existing Bob
     ast1.sendMessage(bobId, charlieId, 'Forward to Charlie', 'solid_arrow');
 
     // Generate modified code
@@ -176,8 +178,8 @@ describe('Enhanced Sequence AST-Builder API', () => {
     const ast = parseSequence(source);
 
     // Add more notes and interactions
-    const dbId = ast.createParticipant('Database', 'Database');
-    const serverId = ast.createParticipant('ServerExisting', 'Server');
+    const dbId = ast.addParticipant('Database', 'Database');
+    const serverId = ast.addParticipant('ServerExisting', 'Server');
 
     ast
       .sendMessage(serverId, dbId, 'Query', 'solid_arrow')

@@ -238,9 +238,8 @@ export function parseGantt(input: string): EnhancedGanttDiagramAST {
   const diagram = parser.parse();
 
   const ganttDiagramAST: GanttDiagramAST = {
-    type: 'gantt',
-    config: diagram.config,
-    sections: diagram.sections,
+    type: 'GanttDiagram',
+    diagram,
     loc: {
       start: { line: 1, column: 0 },
       end: { line: 1, column: input.length },

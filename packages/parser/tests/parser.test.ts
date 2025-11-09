@@ -7,14 +7,8 @@ describe('Flowchart Parser', () => {
       const input = 'flowchart LR';
       const ast = parseFlowchart(input);
 
-      expect(ast.type).toBe('Program');
-      expect(ast.body).toHaveLength(1);
-
-      const diagram = ast.body[0];
-      expect(diagram?.type).toBe('FlowchartDiagram');
-      if (diagram?.type === 'FlowchartDiagram') {
-        expect(diagram.direction).toBe('LR');
-      }
+      expect(ast.type).toBe('FlowchartDiagram');
+      expect(ast.direction).toBe('LR');
     });
 
     it('should parse flowchart with single node', () => {
@@ -160,17 +154,14 @@ describe('Flowchart Parser', () => {
         D --> E`;
 
       const ast = parseFlowchart(input);
-      const diagram = ast.body[0];
 
-      expect(diagram?.type).toBe('FlowchartDiagram');
+      expect(ast.type).toBe('FlowchartDiagram');
 
-      if (diagram?.type === 'FlowchartDiagram') {
-        const nodes = diagram.body.filter((n) => n.type === 'Node');
-        const edges = diagram.body.filter((n) => n.type === 'Edge');
+      const nodes = ast.body.filter((n) => n.type === 'Node');
+      const edges = ast.body.filter((n) => n.type === 'Edge');
 
-        expect(nodes.length).toBeGreaterThan(0);
-        expect(edges.length).toBeGreaterThan(0);
-      }
+      expect(nodes.length).toBeGreaterThan(0);
+      expect(edges.length).toBeGreaterThan(0);
     });
   });
 

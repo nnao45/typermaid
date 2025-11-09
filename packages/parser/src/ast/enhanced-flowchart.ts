@@ -1,8 +1,3 @@
-// TODO: Fix circular dependency - temporarily disabled
-// import { cloneAST, findNodes, removeNode, replaceNodeById } from '@typermaid/ast-tools';
-// Temporary: avoid circular dependency by not using builders/codegen directly
-// import { FlowchartDiagramBuilder } from '@typermaid/builders';
-// import { generateFlowchart } from '@typermaid/codegen';
 import type {
   Direction,
   EdgeType,
@@ -30,9 +25,6 @@ export class EnhancedFlowchartDiagramAST implements FlowchartDiagramAST {
         end: { line: number; column: number };
       }
     | undefined;
-
-  // Temporary: no builder dependency
-  // private builder: FlowchartDiagramBuilder;
 
   constructor(ast: FlowchartDiagramAST) {
     // Copy AST properties

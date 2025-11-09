@@ -1,6 +1,7 @@
 import type { State, StateDiagram, StateID, StateTransition } from '@typermaid/core';
 import { createStateID } from '@typermaid/core';
 import type { StateDiagramAST } from './nodes.js';
+import { extractContentString } from './utils/index.js';
 
 /**
  * Enhanced StateDiagramAST with integrated Builder and CodeGen capabilities
@@ -50,8 +51,8 @@ export class EnhancedStateDiagramAST implements StateDiagramAST {
       this.diagram.states.push({
         id: stateId,
         type: 'STATE',
-        label: label ? { content: label, type: 'text' } : undefined,
-        description: description ? { content: description, type: 'text' } : undefined,
+        label: label || undefined,
+        description: description || undefined,
       });
     }
 
@@ -73,7 +74,7 @@ export class EnhancedStateDiagramAST implements StateDiagramAST {
       this.diagram.states.push({
         id: stateId,
         type: 'STATE',
-        label: label ? { content: label, type: 'text' } : undefined,
+        label: label || undefined,
         compositeStates: [],
       });
     }
@@ -112,7 +113,7 @@ export class EnhancedStateDiagramAST implements StateDiagramAST {
     this.diagram.transitions.push({
       from,
       to,
-      label: label ? { content: label, type: 'text' } : undefined,
+      label: label || undefined,
     });
 
     return this;
@@ -257,12 +258,7 @@ export class EnhancedStateDiagramAST implements StateDiagramAST {
       } else if (state.type === 'CHOICE') {
         lines.push(`    state ${state.id} <<choice>>`);
       } else if (state.type === 'STATE') {
-        const label =
-          typeof state.label === 'string'
-            ? state.label
-            : state.label?.content
-              ? state.label.content
-              : undefined;
+        const label = extractContentString(state.label);
 
         if (label && label !== state.id) {
           lines.push(`    ${state.id} : ${label}`);
@@ -272,12 +268,7 @@ export class EnhancedStateDiagramAST implements StateDiagramAST {
 
         // Add description if present
         if (state.description) {
-          const desc =
-            typeof state.description === 'string'
-              ? state.description
-              : state.description.content
-                ? state.description.content
-                : '';
+          const desc = extractContentString(state.description);
           lines.push(`    ${state.id} : ${desc}`);
         }
 
@@ -285,12 +276,7 @@ export class EnhancedStateDiagramAST implements StateDiagramAST {
         if (state.compositeStates && state.compositeStates.length > 0) {
           lines.push(`    state ${state.id} {`);
           for (const nestedState of state.compositeStates) {
-            const nestedLabel =
-              typeof nestedState.label === 'string'
-                ? nestedState.label
-                : nestedState.label?.content
-                  ? nestedState.label.content
-                  : undefined;
+            const nestedLabel = extractContentString(nestedState.label);
 
             if (nestedLabel) {
               lines.push(`        ${nestedState.id} : ${nestedLabel}`);
@@ -305,12 +291,7 @@ export class EnhancedStateDiagramAST implements StateDiagramAST {
 
     // Generate transitions
     for (const transition of this.diagram.transitions) {
-      const label =
-        typeof transition.label === 'string'
-          ? transition.label
-          : transition.label?.content
-            ? transition.label.content
-            : '';
+      const label = extractContentString(transition.label);
 
       if (label) {
         lines.push(`    ${transition.from} --> ${transition.to} : ${label}`);
@@ -321,12 +302,7 @@ export class EnhancedStateDiagramAST implements StateDiagramAST {
 
     // Generate notes if present
     for (const note of this.diagram.notes || []) {
-      const noteText =
-        typeof note.note === 'string'
-          ? note.note
-          : note.note.content
-            ? note.note.content
-            : '';
+      const noteText = extractContentString(note.note);
       const position = note.position || 'right';
       lines.push(`    note ${position} of ${note.state} : ${noteText}`);
     }

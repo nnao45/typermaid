@@ -37,13 +37,8 @@
   },
   "include": ["src/**/*"],
   "exclude": [
-    "**/*.test.ts", 
-    "**/*.spec.ts",
-    "src/ast/enhanced-class.ts",
-    "src/ast/enhanced-er.ts", 
-    "src/ast/enhanced-gantt.ts",
-    "src/ast/enhanced-sequence.ts",
-    "src/ast/enhanced-state.ts"
+    "**/*.test.ts",
+    "**/*.spec.ts"
   ],
   "references": [{ "path": "../core" }]
 }

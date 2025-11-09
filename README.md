@@ -24,9 +24,8 @@ Mermaid text → Tokenizer & grammar parsers → AST → Builders / AST converte
 Zod-validated schema objects → Layout engine → Framework renderers
 ```
 
-- **Parsing** – `@typermaid/parser` tokenizes Mermaid syntax and lifts diagrams into a typed AST shared across packages.
-- **Building** – `@typermaid/builders` offers diagram-specific builders plus helpers that transform parser ASTs into schema-compliant objects while preserving branded IDs.
-- **Validation** – `@typermaid/core` exposes reusable Zod schemas and validation helpers so every consumer enforces the same guarantees.
+- **Parsing & Building** – `@typermaid/parser` tokenizes Mermaid syntax and lifts diagrams into Enhanced AST objects that combine parsing, building, validation, and code generation in a unified API.
+- **Validation** – `@typermaid/core` exposes reusable Zod schemas and validation helpers, with additional validators in `@typermaid/parser` for builder operations.
 - **Rendering** – `@typermaid/renderer-core` turns validated diagrams into positioned nodes and edges, and UI packages render them in React or Angular apps.
 
 ## 📦 Monorepo packages
@@ -34,8 +33,7 @@ Zod-validated schema objects → Layout engine → Framework renderers
 | Package | Description |
 | --- | --- |
 | `@typermaid/core` | Zod schemas, branded types, and validation utilities for all supported diagrams. |
-| `@typermaid/parser` | Mermaid-compatible lexers and parsers that emit a unified AST for each diagram family. |
-| `@typermaid/builders` | Type-safe builders plus AST converters and graph validators for assembling diagrams programmatically. |
+| `@typermaid/parser` | Mermaid-compatible lexers and parsers that emit Enhanced AST objects with integrated builder, validation, and codegen capabilities. |
 | `@typermaid/renderer-core` | Layout algorithms, SVG primitives, and AST-to-schema helpers shared by framework renderers. |
 | `@typermaid/react-renderer` | Ready-to-use React components and hooks for interactive diagrams and theme management. |
 | `@typermaid/angular-renderer` | Angular components, directives, and services for embedding Typermaid diagrams in Angular apps. |

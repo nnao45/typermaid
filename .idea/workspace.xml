@@ -6,145 +6,100 @@
   <component name="ChangeListManager">
     <list default="true" id="dccfe7c3-3ffd-4645-b04f-84185615f706" name="変更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/biome.json" beforeDir="false" afterPath="$PROJECT_DIR$/biome.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/e2e/roundtrip.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/e2e/roundtrip.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/angular-renderer/src/lib/components/class-renderer.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/angular-renderer/src/lib/components/class-renderer.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/angular-renderer/src/lib/components/er-renderer.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/angular-renderer/src/lib/components/er-renderer.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/angular-renderer/tsconfig.lib.tsbuildinfo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/ast-tools/src/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/ast-tools/src/utils.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/ast-tools/src/visitor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/ast-tools/src/visitor.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/ast-tools/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/ast-tools/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/ast-tools/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/ast-tools/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/codegen/src/er.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/codegen/src/er.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/codegen/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/codegen/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/codegen/tsconfig.tmp.tsbuildinfo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/codegen/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/codegen/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/index.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/index.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/index.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schema.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schema.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schema.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schema.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/branded.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/branded.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/branded.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/branded.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/branded.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/schemas/branded.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/class.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/class.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/class.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/class.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/common.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/common.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/common.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/common.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/content.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/content.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/content.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/content.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/er.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/er.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/er.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/er.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/flowchart.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/flowchart.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/flowchart.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/flowchart.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/flowchart.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/schemas/flowchart.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/gantt.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/gantt.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/gantt.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/gantt.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/index.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/index.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/index.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/src/schemas/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/sequence.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/sequence.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/sequence.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/sequence.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/state.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/state.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/state.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/schemas/state.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/validator.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/validator.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/validator.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/src/validator.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/core/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/core/tsconfig.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API_IMPROVEMENT_PLAN.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PLAN.md" beforeDir="false" afterPath="$PROJECT_DIR$/PLAN.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TYPE_SAFETY_ANALYSIS.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TYPE_SAFETY_AND_API_IMPROVEMENT_PLAN.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TYPE_SAFETY_IMPROVEMENT_PLAN.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UNIFIED_API_IMPROVEMENT_PLAN.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UNIFIED_API_IMPROVEMENT_PLAN_v2.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UNIFIED_API_IMPROVEMENT_PLAN_v3.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UNIFIED_API_PLAN.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/ast-tools/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/ast-tools/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/ast-tools/src/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/ast-tools/src/transform.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/ast-tools/src/utils.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/ast-tools/src/visitor.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/ast-tools/tests/transform.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/ast-tools/tests/utils.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/ast-tools/tests/visitor.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/ast-tools/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/ast-tools/tsconfig.tsbuildinfo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/src/class-builder.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/src/er-builder.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/src/flowchart-builder.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/src/gantt-builder.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/src/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/src/sequence-builder.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/src/state-builder.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/src/types.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/src/validators/graph-validator.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/src/validators/reserved-words.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/temp/converters/class-ast-to-builder.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/temp/converters/er-ast-to-builder.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/temp/converters/flowchart-ast-to-builder.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/temp/converters/gantt-ast-to-builder.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/temp/converters/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/temp/converters/sequence-ast-to-builder.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/temp/converters/state-ast-to-builder.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/tests/class-ast-to-builder.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/tests/class-builder.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/tests/er-ast-to-builder.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/tests/er-builder.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/tests/flowchart-ast-to-builder.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/tests/flowchart-builder.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/tests/gantt-ast-to-builder.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/tests/gantt-builder.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/tests/sequence-ast-to-builder.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/tests/sequence-builder.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/tests/state-ast-to-builder.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/tests/state-builder.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/builders/tsconfig.tsbuildinfo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/codegen/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/codegen/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/codegen/src/class.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/codegen/src/er.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/codegen/src/flowchart.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/codegen/src/gantt.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/codegen/src/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/codegen/src/sequence.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/codegen/src/state.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/codegen/tests/class-er-gantt.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/codegen/tests/flowchart.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/codegen/tests/sequence-state.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/codegen/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/codegen/tsconfig.tmp.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/codegen/tsconfig.tsbuildinfo" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/parser/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/nodes.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/nodes.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/nodes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/nodes.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/error.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/error.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/error.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/error.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/class.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/class.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/class.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/class.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/er.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/er.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/er.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/er.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/flowchart.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/gantt.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/gantt.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/gantt.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/gantt.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/gantt.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/gantt.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/sequence.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/sequence.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/sequence.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/sequence.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/state.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/state.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/state.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/state.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/grammar/state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/grammar/state.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/index.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/index.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/index.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/enhanced-class.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/ast/enhanced-class.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/enhanced-er.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/ast/enhanced-er.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/enhanced-flowchart.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/ast/enhanced-flowchart.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/enhanced-gantt.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/ast/enhanced-gantt.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/enhanced-sequence.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/ast/enhanced-sequence.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/src/ast/enhanced-state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/ast/enhanced-state.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/parser/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/lexer/tokenizer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/lexer/tokens.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/parser.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/parser.d.ts.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/parser.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/src/parser.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/parser/src/parser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/src/parser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/parser/test-debug.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/tests/enhanced-class.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/tests/enhanced-class.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/tests/enhanced-er.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/tests/enhanced-er.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/tests/enhanced-sequence.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/tests/enhanced-sequence.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/tests/enhanced-state.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/tests/enhanced-state.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/parser/tests/parser.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/tests/parser.test.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/parser/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/tsconfig.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/parser/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/parser/tsconfig.tsbuildinfo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/ClassRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/ClassRenderer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/ERRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/ERRenderer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-renderer/src/components/SequenceRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/packages/react-renderer/src/components/SequenceRenderer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/react-renderer/tsconfig.tsbuildinfo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/layout/dagre-layout.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/layout/dagre-layout.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/renderer-core/src/utils/ast-converter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/src/utils/ast-converter.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/renderer-core/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/packages/renderer-core/tsconfig.tsbuildinfo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quick-api-test.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simple-api-test.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-phase1.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-phase2.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-real-phase1.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unified-api-test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unified-api-test.test.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -199,7 +154,7 @@
       <updated>1761921340844</updated>
       <workItem from="1761921342231" duration="14980000" />
       <workItem from="1762172302176" duration="16395000" />
-      <workItem from="1762437619554" duration="7071000" />
+      <workItem from="1762437619554" duration="11212000" />
     </task>
     <servers />
   </component>
@@ -383,14 +338,31 @@
         <option value="$PROJECT_DIR$/packages/parser/src/index.d.ts.map" />
         <option value="$PROJECT_DIR$/packages/parser/src/lexer/sequence-tokenizer.d.ts.map" />
         <option value="$PROJECT_DIR$/packages/renderer-core/src/edges/markers.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-gantt.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-sequence.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-state.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-class.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-er.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-state.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-sequence.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-gantt.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-state.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-class.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-er.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-class.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-gantt.d.ts" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-sequence.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-gantt.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-er.js" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-er.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-class.js.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-sequence.d.ts.map" />
+        <option value="$PROJECT_DIR$/packages/parser/src/ast/enhanced-state.d.ts.map" />
       </list>
     </option>
     <option name="additionalRoots">
       <list>
         <option value="$PROJECT_DIR$/packages/core/dist" />
-        <option value="$PROJECT_DIR$/packages/codegen/dist" />
-        <option value="$PROJECT_DIR$/packages/builders/dist" />
-        <option value="$PROJECT_DIR$/packages/ast-tools/dist" />
       </list>
     </option>
   </component>

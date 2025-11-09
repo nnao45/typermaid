@@ -1,5 +1,4 @@
 import type {
-  GanttConfig,
   GanttDiagram,
   GanttSection,
   GanttTask,
@@ -8,7 +7,7 @@ import type {
   TaskID,
 } from '@typermaid/core';
 import { createSectionID, createTaskID } from '@typermaid/core';
-import type { GanttDiagramAST } from '../grammar/gantt.js';
+import type { GanttDiagramAST } from './nodes.js';
 
 /**
  * Enhanced GanttDiagramAST with integrated Builder and CodeGen capabilities
@@ -16,18 +15,26 @@ import type { GanttDiagramAST } from '../grammar/gantt.js';
  */
 export class EnhancedGanttDiagramAST implements GanttDiagramAST {
   // AST properties
-  type: 'gantt' = 'gantt';
-  config: GanttConfig;
-  sections: GanttSection[];
+  type: 'GanttDiagram' = 'GanttDiagram';
+  diagram: GanttDiagram;
+  loc?:
+    | {
+        start: { line: number; column: number };
+        end: { line: number; column: number };
+      }
+    | undefined;
 
   constructor(ast: GanttDiagramAST) {
     // Copy AST properties
-    this.config = { ...ast.config };
-    this.sections = [...ast.sections];
+    this.diagram = { ...ast.diagram };
+    this.loc = ast.loc;
 
-    // Initialize sections if not present
-    if (!this.sections) {
-      this.sections = [];
+    // Initialize diagram if not present
+    if (!this.diagram.config) {
+      this.diagram.config = { dateFormat: 'YYYY-MM-DD' };
+    }
+    if (!this.diagram.sections) {
+      this.diagram.sections = [];
     }
   }
 
@@ -35,10 +42,10 @@ export class EnhancedGanttDiagramAST implements GanttDiagramAST {
    * Set the chart title
    */
   setTitle(title: string): this {
-    if (!this.config) {
-      this.config = { dateFormat: 'YYYY-MM-DD' };
+    if (!this.diagram.config) {
+      this.diagram.config = { dateFormat: 'YYYY-MM-DD' };
     }
-    this.config.title = title;
+    this.diagram.config.title = title;
     return this;
   }
 
@@ -46,10 +53,10 @@ export class EnhancedGanttDiagramAST implements GanttDiagramAST {
    * Set the date format
    */
   setDateFormat(format: string): this {
-    if (!this.config) {
-      this.config = { dateFormat: 'YYYY-MM-DD' };
+    if (!this.diagram.config) {
+      this.diagram.config = { dateFormat: 'YYYY-MM-DD' };
     }
-    this.config.dateFormat = format;
+    this.diagram.config.dateFormat = format;
     return this;
   }
 
@@ -62,9 +69,9 @@ export class EnhancedGanttDiagramAST implements GanttDiagramAST {
     const sectionId = createSectionID(name);
 
     // Check if section already exists
-    const existingSection = this.sections.find((s) => s.name === sectionId);
+    const existingSection = this.diagram.sections.find((s) => s.name === sectionId);
     if (!existingSection) {
-      this.sections.push({
+      this.diagram.sections.push({
         name: sectionId,
         tasks: [],
       });
@@ -99,13 +106,13 @@ export class EnhancedGanttDiagramAST implements GanttDiagramAST {
     const duration = `${durationDays}d`;
 
     // Find or create a default section to add the task to
-    let defaultSection = this.sections.find((s) => s.name === createSectionID('Tasks'));
+    let defaultSection = this.diagram.sections.find((s) => s.name === createSectionID('Tasks'));
     if (!defaultSection) {
       defaultSection = {
         name: createSectionID('Tasks'),
         tasks: [],
       };
-      this.sections.push(defaultSection);
+      this.diagram.sections.push(defaultSection);
     }
 
     const existingTask = defaultSection.tasks.find((t) => t.id === taskId);
@@ -135,13 +142,13 @@ export class EnhancedGanttDiagramAST implements GanttDiagramAST {
     const taskId = createTaskID(id);
 
     // Find or create a default section
-    let defaultSection = this.sections.find((s) => s.name === createSectionID('Tasks'));
+    let defaultSection = this.diagram.sections.find((s) => s.name === createSectionID('Tasks'));
     if (!defaultSection) {
       defaultSection = {
         name: createSectionID('Tasks'),
         tasks: [],
       };
-      this.sections.push(defaultSection);
+      this.diagram.sections.push(defaultSection);
     }
 
     const existingTask = defaultSection.tasks.find((t) => t.id === taskId);
@@ -169,7 +176,7 @@ export class EnhancedGanttDiagramAST implements GanttDiagramAST {
     let task: GanttTask | undefined;
 
     // Find and remove task from current section
-    for (const section of this.sections) {
+    for (const section of this.diagram.sections) {
       const taskIndex = section.tasks.findIndex((t) => t.id === taskId);
       if (taskIndex !== -1) {
         task = section.tasks[taskIndex];
@@ -180,7 +187,7 @@ export class EnhancedGanttDiagramAST implements GanttDiagramAST {
 
     // Add task to target section
     if (task) {
-      const targetSection = this.sections.find((s) => s.name === sectionId);
+      const targetSection = this.diagram.sections.find((s) => s.name === sectionId);
       if (targetSection) {
         targetSection.tasks.push(task);
       }
@@ -197,7 +204,7 @@ export class EnhancedGanttDiagramAST implements GanttDiagramAST {
    */
   addDependency(from: TaskID, to: TaskID): this {
     // Find the task and add dependency
-    for (const section of this.sections) {
+    for (const section of this.diagram.sections) {
       const task = section.tasks.find((t) => t.id === from);
       if (task) {
         if (!task.dependencies) {
@@ -217,7 +224,7 @@ export class EnhancedGanttDiagramAST implements GanttDiagramAST {
    * Get all section IDs
    */
   getAllSections(): SectionID[] {
-    return this.sections.map((s) => s.name);
+    return this.diagram.sections.map((s) => s.name);
   }
 
   /**
@@ -225,7 +232,7 @@ export class EnhancedGanttDiagramAST implements GanttDiagramAST {
    */
   getAllTasks(): TaskID[] {
     const tasks: TaskID[] = [];
-    for (const section of this.sections) {
+    for (const section of this.diagram.sections) {
       for (const task of section.tasks) {
         if (task.id) {
           tasks.push(task.id);
@@ -239,14 +246,14 @@ export class EnhancedGanttDiagramAST implements GanttDiagramAST {
    * Get a section by ID
    */
   getSection(id: SectionID): GanttSection | undefined {
-    return this.sections.find((s) => s.name === id);
+    return this.diagram.sections.find((s) => s.name === id);
   }
 
   /**
    * Get a task by ID
    */
   getTask(id: TaskID): GanttTask | undefined {
-    for (const section of this.sections) {
+    for (const section of this.diagram.sections) {
       const task = section.tasks.find((t) => t.id === id);
       if (task) return task;
     }
@@ -257,7 +264,7 @@ export class EnhancedGanttDiagramAST implements GanttDiagramAST {
    * Replace section ID throughout the diagram
    */
   replaceSection(oldId: SectionID, newId: SectionID): this {
-    for (const section of this.sections) {
+    for (const section of this.diagram.sections) {
       if (section.name === oldId) {
         section.name = newId;
       }
@@ -270,7 +277,7 @@ export class EnhancedGanttDiagramAST implements GanttDiagramAST {
    */
   replaceTask(oldId: TaskID, newId: TaskID): this {
     // Replace in tasks
-    for (const section of this.sections) {
+    for (const section of this.diagram.sections) {
       for (const task of section.tasks) {
         if (task.id === oldId) {
           task.id = newId;
@@ -297,24 +304,24 @@ export class EnhancedGanttDiagramAST implements GanttDiagramAST {
     const lines: string[] = ['gantt'];
 
     // Generate config
-    if (this.config.title) {
-      lines.push(`    title ${this.config.title}`);
+    if (this.diagram.config.title) {
+      lines.push(`    title ${this.diagram.config.title}`);
     }
-    if (this.config.dateFormat) {
-      lines.push(`    dateFormat ${this.config.dateFormat}`);
+    if (this.diagram.config.dateFormat) {
+      lines.push(`    dateFormat ${this.diagram.config.dateFormat}`);
     }
-    if (this.config.axisFormat) {
-      lines.push(`    axisFormat ${this.config.axisFormat}`);
+    if (this.diagram.config.axisFormat) {
+      lines.push(`    axisFormat ${this.diagram.config.axisFormat}`);
     }
-    if (this.config.excludes) {
-      lines.push(`    excludes ${this.config.excludes}`);
+    if (this.diagram.config.excludes) {
+      lines.push(`    excludes ${this.diagram.config.excludes}`);
     }
-    if (this.config.todayMarker) {
-      lines.push(`    todayMarker ${this.config.todayMarker}`);
+    if (this.diagram.config.todayMarker) {
+      lines.push(`    todayMarker ${this.diagram.config.todayMarker}`);
     }
 
     // Generate sections and tasks
-    for (const section of this.sections) {
+    for (const section of this.diagram.sections) {
       lines.push(`    section ${section.name}`);
 
       for (const task of section.tasks) {
@@ -351,11 +358,7 @@ export class EnhancedGanttDiagramAST implements GanttDiagramAST {
    * Build final GanttDiagram with asCode capability
    */
   build(): GanttDiagram & { asCode(): string } {
-    const diagram: GanttDiagram = {
-      type: 'gantt',
-      config: this.config,
-      sections: this.sections,
-    };
+    const diagram = { ...this.diagram };
 
     return {
       ...diagram,

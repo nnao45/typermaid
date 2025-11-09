@@ -2,12 +2,12 @@ import type {
   ClassDefinition,
   ClassDiagram,
   ClassID,
-  ClassMember,
   ClassRelationType,
   ClassVisibility,
 } from '@typermaid/core';
 import { createClassID } from '@typermaid/core';
 import type { ClassDiagramAST } from './nodes.js';
+import { extractContentString } from './utils/index.js';
 
 /**
  * Enhanced ClassDiagramAST with integrated Builder and CodeGen capabilities
@@ -44,10 +44,9 @@ export class EnhancedClassDiagramAST implements ClassDiagramAST {
   /**
    * Add a class to the diagram
    * @param name - Class name (used as ID)
-   * @param label - Display label
    * @returns ClassID for method chaining with relationships
    */
-  addClass(name: string, label?: string): ClassID {
+  addClass(name: string): ClassID {
     const classId = createClassID(name);
 
     // Check if class already exists
@@ -154,7 +153,7 @@ export class EnhancedClassDiagramAST implements ClassDiagramAST {
       from,
       to,
       relationType: type,
-      label: label ? { content: label, type: 'text' } : undefined,
+      label: label || undefined,
       cardinalityFrom,
       cardinalityTo,
     });
@@ -293,9 +292,7 @@ export class EnhancedClassDiagramAST implements ClassDiagramAST {
     for (const rel of this.diagram.relations) {
       const fromCard = rel.cardinalityFrom ? `"${rel.cardinalityFrom}" ` : '';
       const toCard = rel.cardinalityTo ? ` "${rel.cardinalityTo}"` : '';
-      const label = rel.label
-        ? ` : ${typeof rel.label === 'string' ? rel.label : rel.label.content}`
-        : '';
+      const label = rel.label ? ` : ${extractContentString(rel.label)}` : '';
 
       lines.push(`    ${rel.from} ${fromCard}${rel.relationType}${toCard} ${rel.to}${label}`);
     }

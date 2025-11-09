@@ -3,11 +3,10 @@ import type {
   ERCardinality,
   ERDiagram,
   EREntity,
-  ERAttribute,
-  ERRelationship,
 } from '@typermaid/core';
 import { createEntityID } from '@typermaid/core';
 import type { ERDiagramAST } from './nodes.js';
+import { extractContentString } from './utils/index.js';
 
 /**
  * Enhanced ERDiagramAST with integrated Builder and CodeGen capabilities
@@ -41,10 +40,9 @@ export class EnhancedERDiagramAST implements ERDiagramAST {
   /**
    * Add an entity to the ER diagram
    * @param id - Entity identifier
-   * @param label - Optional display label
    * @returns EntityID for method chaining with relationships
    */
-  addEntity(id: string, label?: string): EntityID {
+  addEntity(id: string): EntityID {
     const entityId = createEntityID(id);
 
     // Check if entity already exists
@@ -189,8 +187,7 @@ export class EnhancedERDiagramAST implements ERDiagramAST {
             line += ` ${attr.key}`;
           }
           if (attr.comment) {
-            const commentStr =
-              typeof attr.comment === 'string' ? attr.comment : attr.comment.raw;
+            const commentStr = extractContentString(attr.comment);
             line += ` "${commentStr}"`;
           }
           lines.push(line);
@@ -211,7 +208,7 @@ export class EnhancedERDiagramAST implements ERDiagramAST {
       let line = `  ${rel.from} ${fromCard}${ident}${toCard} ${rel.to}`;
 
       if (rel.label) {
-        const labelStr = typeof rel.label === 'string' ? rel.label : rel.label.raw;
+        const labelStr = extractContentString(rel.label);
         const quotedLabel = labelStr.includes(' ') ? `"${labelStr}"` : labelStr;
         line += ` : ${quotedLabel}`;
       }

@@ -155,7 +155,8 @@ erDiagram
     const ast1 = parseER(source1);
 
     // Modify
-    ast1.addEntity('Added', 'Added Entity').addAttribute('Added', 'addedId', 'int', 'PK');
+    const addedId = ast1.addEntity('Added', 'Added Entity');
+    ast1.addAttribute(addedId, 'addedId', 'int', 'PK');
 
     // Generate code
     const code = ast1.asCode();
@@ -186,7 +187,8 @@ erDiagram
     const originalLoc = ast.loc;
 
     // Modify AST
-    ast.addEntity('NewEntity', 'New Entity').addAttribute('NewEntity', 'newId', 'int', 'PK');
+    const newEntityId = ast.addEntity('NewEntity', 'New Entity');
+    ast.addAttribute(newEntityId, 'newId', 'int', 'PK');
 
     // Verify original properties preserved
     expect(ast.type).toBe(originalType);
@@ -218,7 +220,7 @@ erDiagram
     const pkAttr = entity.attributes.find((a) => a.key === 'PK');
     const fkAttr = entity.attributes.find((a) => a.key === 'FK');
     const ukAttr = entity.attributes.find((a) => a.key === 'UK');
-    const normalAttr = entity.attributes.find((a) => a.key === '');
+    const normalAttr = entity.attributes.find((a) => !a.key);
 
     expect(pkAttr).toBeDefined();
     expect(fkAttr).toBeDefined();

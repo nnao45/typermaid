@@ -6,6 +6,7 @@ import type {
 } from '@typermaid/core';
 import { createParticipantID } from '@typermaid/core';
 import type { SequenceDiagramAST } from './nodes.js';
+import { contentMatches, extractContentString } from './utils/index.js';
 
 /**
  * Enhanced SequenceDiagramAST with integrated Builder and CodeGen capabilities
@@ -79,7 +80,7 @@ export class EnhancedSequenceDiagramAST implements SequenceDiagramAST {
       from,
       to,
       arrowType,
-      text: { content: text, type: 'text' },
+      text,
     });
 
     return this;
@@ -103,7 +104,7 @@ export class EnhancedSequenceDiagramAST implements SequenceDiagramAST {
       type: 'note',
       position,
       actors,
-      text: { content: text, type: 'text' },
+      text,
     });
 
     return this;
@@ -114,22 +115,21 @@ export class EnhancedSequenceDiagramAST implements SequenceDiagramAST {
    */
   findParticipants(
     pattern: string
-  ): Array<{ type: 'participant' | 'actor'; id: string; alias?: string }> {
+  ): Array<{ type: 'participant' | 'actor'; id: ParticipantID; alias?: string }> {
     return this.diagram.statements.filter(
-      (stmt: { type: string; id?: string; alias?: string }) =>
+      (stmt) =>
         (stmt.type === 'participant' || stmt.type === 'actor') &&
-        (stmt.id?.includes(pattern) || stmt.alias?.includes(pattern))
-    ) as Array<{ type: 'participant' | 'actor'; id: string; alias?: string }>;
+        (stmt.id.includes(pattern) || stmt.alias?.includes(pattern))
+    ) as Array<{ type: 'participant' | 'actor'; id: ParticipantID; alias?: string }>;
   }
 
   /**
    * Find messages by pattern
    */
-  findMessages(pattern: string): Array<{ type: 'message'; text?: { content: string } }> {
+  findMessages(pattern: string): Array<{ type: 'message'; text?: string }> {
     return this.diagram.statements.filter(
-      (stmt: { type: string; text?: { content?: string } }) =>
-        stmt.type === 'message' && stmt.text?.content?.includes(pattern)
-    ) as Array<{ type: 'message'; text?: { content: string } }>;
+      (stmt) => stmt.type === 'message' && contentMatches(stmt.text, pattern)
+    ) as Array<{ type: 'message'; text?: string }>;
   }
 
   /**
@@ -176,20 +176,10 @@ export class EnhancedSequenceDiagramAST implements SequenceDiagramAST {
         lines.push(`    actor ${stmt.id}${alias}`);
       } else if (stmt.type === 'message') {
         const arrow = this.getArrowSymbol(stmt.arrowType);
-        const text =
-          typeof stmt.text === 'string'
-            ? stmt.text
-            : stmt.text?.content
-              ? stmt.text.content
-              : '';
+        const text = extractContentString(stmt.text);
         lines.push(`    ${stmt.from}${arrow}${stmt.to}: ${text}`);
       } else if (stmt.type === 'note') {
-        const text =
-          typeof stmt.text === 'string'
-            ? stmt.text
-            : stmt.text?.content
-              ? stmt.text.content
-              : '';
+        const text = extractContentString(stmt.text);
         const actors = stmt.actors.join(',');
         lines.push(`    Note ${stmt.position} of ${actors}: ${text}`);
       } else if (stmt.type === 'activation') {
@@ -282,10 +272,8 @@ export class EnhancedSequenceDiagramAST implements SequenceDiagramAST {
    * Check if participant exists
    */
   hasParticipant(participantId: ParticipantID): boolean {
-    const participantIdStr = participantId as string;
     return this.diagram.statements.some(
-      (stmt: { type: string; id?: string }) =>
-        (stmt.type === 'participant' || stmt.type === 'actor') && stmt.id === participantIdStr
+      (stmt) => (stmt.type === 'participant' || stmt.type === 'actor') && stmt.id === participantId
     );
   }
 }

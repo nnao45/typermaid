@@ -69,3 +69,16 @@ export {
   parseSequence,
   parseState,
 } from './parser.js';
+
+// Validation exports
+export {
+  ValidationError,
+  ValidationErrorCode,
+  RESERVED_WORDS,
+  isReservedWord,
+  validateNotReservedWord,
+  getReservedWords,
+  validateNotEmpty,
+  validateUnique,
+  validateExists,
+} from './validators/index.js';
