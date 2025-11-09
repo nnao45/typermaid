@@ -37,7 +37,7 @@ export class StateDiagramBuilder {
     } else {
       try {
         stateId = createStateID(id);
-      } catch (error) {
+      } catch (_error) {
         // Convert ZodError to ValidationError for consistent API
         throw new ValidationError(
           ValidationErrorCode.INVALID_ID_FORMAT,
@@ -94,7 +94,7 @@ export class StateDiagramBuilder {
     let stateId: StateID;
     try {
       stateId = createStateID(id);
-    } catch (error) {
+    } catch (_error) {
       // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,
@@ -224,7 +224,7 @@ export class StateDiagramBuilder {
     let stateId: StateID;
     try {
       stateId = createStateID(forkId);
-    } catch (error) {
+    } catch (_error) {
       // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,
@@ -261,7 +261,7 @@ export class StateDiagramBuilder {
     let stateId: StateID;
     try {
       stateId = createStateID(joinId);
-    } catch (error) {
+    } catch (_error) {
       // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,
@@ -350,14 +350,6 @@ export class StateDiagramBuilder {
           `State "${sid}" not found in build`,
           { sid }
         );
-      }
-
-      // Convert compositeStates to IDs for test compatibility
-      if (Array.isArray(state.compositeStates) && state.compositeStates.length > 0) {
-        return {
-          ...state,
-          compositeStates: state.compositeStates.map((cs) => cs.id),
-        } as unknown as State;
       }
 
       return state;

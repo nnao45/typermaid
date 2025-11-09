@@ -166,7 +166,8 @@ export class ASTTransformer {
       case 'Attribute':
         return (visitor.visitAttribute?.(astNode as unknown as Attribute) ?? astNode) as T;
       case 'ERRelationship':
-        return (visitor.visitERRelationship?.(astNode as unknown as ERRelationship) ?? astNode) as T;
+        return (visitor.visitERRelationship?.(astNode as unknown as ERRelationship) ??
+          astNode) as T;
 
       case 'GanttDiagram':
         return this.visitGanttDiagram(astNode as GanttDiagramAST, visitor) as T;

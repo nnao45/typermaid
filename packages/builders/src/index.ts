@@ -6,14 +6,14 @@
 
 export { ClassDiagramBuilder } from './class-builder.js';
 // Converters (AST to Builder)
-export {
-  classASTToBuilder,
-  erASTToBuilder,
-  flowchartASTToBuilder,
-  ganttASTToBuilder,
-  sequenceASTToBuilder,
-  stateASTToBuilder,
-} from './converters/index.js';
+// export {
+//   classASTToBuilder,
+//   erASTToBuilder,
+//   flowchartASTToBuilder,
+//   ganttASTToBuilder,
+//   sequenceASTToBuilder,
+//   stateASTToBuilder,
+// } from './converters/index.js';
 export { ERDiagramBuilder } from './er-builder.js';
 // Builders
 export { FlowchartDiagramBuilder } from './flowchart-builder.js';

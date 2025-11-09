@@ -17,6 +17,8 @@
   },
   "dependencies": {
     "@typermaid/core": "workspace:*",
+    "@typermaid/builders": "workspace:*",
+    "@typermaid/codegen": "workspace:*",
     "zod": "^4.1.12"
   },
   "devDependencies": {

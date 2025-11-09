@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ClassDefIDSchema, NodeIDSchema, SubgraphIDSchema } from './branded.js';
+import { ClassDefIDSchema, EdgeIDSchema, NodeIDSchema, SubgraphIDSchema } from './branded.js';
 import { DirectionSchema, StyleSchema } from './common.js';
 import { ContentSchema } from './content.js';
 
@@ -55,7 +55,7 @@ export const FlowchartNodeSchema = z.object({
  * Flowchart edge/link definition
  */
 export const FlowchartEdgeSchema = z.object({
-  id: z.string().min(1),
+  id: EdgeIDSchema,
   from: NodeIDSchema,
   to: NodeIDSchema,
   type: EdgeTypeSchema,

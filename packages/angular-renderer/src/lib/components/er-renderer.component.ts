@@ -7,7 +7,9 @@ import type { Theme } from '../services/theme.service';
 /**
  * Extract string value from Content type
  */
-function contentToString(content: string | { type: string; raw: string } | undefined): string | undefined {
+function contentToString(
+  content: string | { type: string; raw: string } | undefined
+): string | undefined {
   if (!content) return undefined;
   if (typeof content === 'string') return content;
   return content.raw;

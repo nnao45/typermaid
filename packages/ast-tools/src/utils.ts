@@ -243,7 +243,7 @@ export function getAllParticipantIds(diagram: SequenceDiagramAST): string[] {
  * ```
  */
 export function getAllStateIds(diagram: StateDiagramAST): string[] {
-  return diagram.diagram.states.map((state) => state.id);
+  return diagram.diagram.states.map((state: { id: string }) => state.id);
 }
 
 /**

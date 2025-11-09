@@ -1,4 +1,19 @@
-import type { ProgramAST } from './ast/nodes.js';
+// Enhanced AST imports
+import { EnhancedClassDiagramAST } from './ast/enhanced-class.js';
+import { EnhancedERDiagramAST } from './ast/enhanced-er.js';
+import { EnhancedFlowchartDiagramAST } from './ast/enhanced-flowchart.js';
+import { EnhancedGanttDiagramAST } from './ast/enhanced-gantt.js';
+import { EnhancedSequenceDiagramAST } from './ast/enhanced-sequence.js';
+import { EnhancedStateDiagramAST } from './ast/enhanced-state.js';
+import type {
+  ClassDiagramAST,
+  ERDiagramAST,
+  FlowchartDiagramAST,
+  GanttDiagramAST,
+  ProgramAST,
+  SequenceDiagramAST,
+  StateDiagramAST,
+} from './ast/nodes.js';
 import { ClassParser } from './grammar/class.js';
 import { ERParser } from './grammar/er.js';
 import { FlowchartParser } from './grammar/flowchart.js';
@@ -8,9 +23,33 @@ import { StateParser } from './grammar/state.js';
 import { Tokenizer } from './lexer/tokenizer.js';
 
 /**
- * Parse Mermaid flowchart syntax into AST
+ * Parse Mermaid flowchart syntax into Enhanced AST with builder capabilities
  */
-export function parseFlowchart(input: string): ProgramAST {
+export function parseFlowchart(input: string): EnhancedFlowchartDiagramAST {
+  const tokenizer = new Tokenizer(input);
+  const tokens = tokenizer.tokenize();
+
+  const parser = new FlowchartParser(tokens);
+  const programAST = parser.parse();
+
+  // Extract the FlowchartDiagramAST from the Program
+  const flowchartDiagram = programAST.body.find(
+    (node) => node.type === 'FlowchartDiagram'
+  ) as FlowchartDiagramAST;
+
+  if (!flowchartDiagram) {
+    throw new Error('No flowchart diagram found in parsed AST');
+  }
+
+  // Return enhanced AST with builder capabilities
+  return new EnhancedFlowchartDiagramAST(flowchartDiagram);
+}
+
+/**
+ * Legacy function - returns ProgramAST for backward compatibility
+ * @deprecated Use parseFlowchart() for enhanced API
+ */
+export function parseFlowchartLegacy(input: string): ProgramAST {
   const tokenizer = new Tokenizer(input);
   const tokens = tokenizer.tokenize();
 
@@ -19,9 +58,30 @@ export function parseFlowchart(input: string): ProgramAST {
 }
 
 /**
- * Parse Mermaid sequence diagram syntax
+ * Parse Mermaid sequence diagram syntax into Enhanced AST with builder capabilities
  */
-export function parseSequence(input: string): ProgramAST {
+export function parseSequence(input: string): EnhancedSequenceDiagramAST {
+  const parser = new SequenceParser();
+  const diagram = parser.parse(input);
+
+  const sequenceDiagramAST: SequenceDiagramAST = {
+    type: 'SequenceDiagram',
+    diagram,
+    loc: {
+      start: { line: 1, column: 0 },
+      end: { line: 1, column: input.length },
+    },
+  };
+
+  // Return enhanced AST with builder capabilities
+  return new EnhancedSequenceDiagramAST(sequenceDiagramAST);
+}
+
+/**
+ * Legacy function - returns ProgramAST for backward compatibility
+ * @deprecated Use parseSequence() for enhanced API
+ */
+export function parseSequenceLegacy(input: string): ProgramAST {
   const parser = new SequenceParser();
   const diagram = parser.parse(input);
 
@@ -45,9 +105,30 @@ export function parseSequence(input: string): ProgramAST {
 }
 
 /**
- * Parse Mermaid class diagram syntax
+ * Parse Mermaid class diagram syntax into Enhanced AST with builder capabilities
  */
-export function parseClass(input: string): ProgramAST {
+export function parseClass(input: string): EnhancedClassDiagramAST {
+  const parser = new ClassParser();
+  const diagram = parser.parse(input);
+
+  const classDiagramAST: ClassDiagramAST = {
+    type: 'ClassDiagram',
+    diagram,
+    loc: {
+      start: { line: 1, column: 0 },
+      end: { line: 1, column: input.length },
+    },
+  };
+
+  // Return enhanced AST with builder capabilities
+  return new EnhancedClassDiagramAST(classDiagramAST);
+}
+
+/**
+ * Legacy function - returns ProgramAST for backward compatibility
+ * @deprecated Use parseClass() for enhanced API
+ */
+export function parseClassLegacy(input: string): ProgramAST {
   const parser = new ClassParser();
   const diagram = parser.parse(input);
 
@@ -71,38 +152,33 @@ export function parseClass(input: string): ProgramAST {
 }
 
 /**
- * Parse Mermaid ER diagram syntax
+ * Parse Mermaid state diagram syntax into Enhanced AST with builder capabilities
  */
-export function parseER(input: string): ProgramAST {
+export function parseState(input: string): EnhancedStateDiagramAST {
   const tokenizer = new Tokenizer(input);
   const tokens = tokenizer.tokenize();
 
-  const parser = new ERParser(tokens);
+  const parser = new StateParser(tokens);
   const diagram = parser.parse();
 
-  return {
-    type: 'Program',
-    body: [
-      {
-        type: 'ERDiagram',
-        diagram,
-        loc: {
-          start: { line: 1, column: 0 },
-          end: { line: 1, column: input.length },
-        },
-      },
-    ],
+  const stateDiagramAST: StateDiagramAST = {
+    type: 'StateDiagram',
+    diagram,
     loc: {
       start: { line: 1, column: 0 },
       end: { line: 1, column: input.length },
     },
   };
+
+  // Return enhanced AST with builder capabilities
+  return new EnhancedStateDiagramAST(stateDiagramAST);
 }
 
 /**
- * Parse Mermaid state diagram syntax
+ * Legacy function - returns ProgramAST for backward compatibility
+ * @deprecated Use parseState() for enhanced API
  */
-export function parseState(input: string): ProgramAST {
+export function parseStateLegacy(input: string): ProgramAST {
   const tokenizer = new Tokenizer(input);
   const tokens = tokenizer.tokenize();
 
@@ -129,9 +205,87 @@ export function parseState(input: string): ProgramAST {
 }
 
 /**
- * Parse Mermaid gantt chart syntax
+ * Parse Mermaid ER diagram syntax with enhanced builder capabilities
  */
-export function parseGantt(input: string): ProgramAST {
+export function parseER(input: string): EnhancedERDiagramAST {
+  const tokenizer = new Tokenizer(input);
+  const tokens = tokenizer.tokenize();
+
+  const parser = new ERParser(tokens);
+  const diagram = parser.parse();
+
+  const erDiagramAST: ERDiagramAST = {
+    type: 'ERDiagram',
+    diagram,
+    loc: {
+      start: { line: 1, column: 0 },
+      end: { line: 1, column: input.length },
+    },
+  };
+
+  // Return enhanced AST with builder capabilities
+  return new EnhancedERDiagramAST(erDiagramAST);
+}
+
+/**
+ * Parse Mermaid Gantt chart syntax with enhanced builder capabilities
+ */
+export function parseGantt(input: string): EnhancedGanttDiagramAST {
+  const tokenizer = new Tokenizer(input);
+  const tokens = tokenizer.tokenize();
+
+  const parser = new GanttParser(tokens);
+  const diagram = parser.parse();
+
+  const ganttDiagramAST: GanttDiagramAST = {
+    type: 'gantt',
+    config: diagram.config,
+    sections: diagram.sections,
+    loc: {
+      start: { line: 1, column: 0 },
+      end: { line: 1, column: input.length },
+    },
+  };
+
+  // Return enhanced AST with builder capabilities
+  return new EnhancedGanttDiagramAST(ganttDiagramAST);
+}
+
+/**
+ * Legacy function - returns ProgramAST for backward compatibility
+ * @deprecated Use parseER() for enhanced API
+ */
+export function parseERLegacy(input: string): ProgramAST {
+  const tokenizer = new Tokenizer(input);
+  const tokens = tokenizer.tokenize();
+
+  const parser = new ERParser(tokens);
+  const diagram = parser.parse();
+
+  return {
+    type: 'Program',
+    body: [
+      {
+        type: 'ERDiagram',
+        diagram,
+        loc: {
+          start: { line: 1, column: 0 },
+          end: { line: 1, column: input.length },
+        },
+      },
+    ],
+    loc: {
+      start: { line: 1, column: 0 },
+      end: { line: 1, column: input.length },
+    },
+  };
+}
+
+/**
+ * Legacy function - returns ProgramAST for backward compatibility
+ * @deprecated Use parseGantt() for enhanced API
+ */
+export function parseGanttLegacy(input: string): ProgramAST {
   const tokenizer = new Tokenizer(input);
   const tokens = tokenizer.tokenize();
 
@@ -220,17 +374,17 @@ function detectDiagramType(input: string): string {
 function parseSingleDiagram(input: string, type: string): ProgramAST {
   switch (type) {
     case 'sequence':
-      return parseSequence(input);
+      return parseSequenceLegacy(input);
     case 'class':
-      return parseClass(input);
+      return parseClassLegacy(input);
     case 'er':
-      return parseER(input);
+      return parseERLegacy(input);
     case 'state':
-      return parseState(input);
+      return parseStateLegacy(input);
     case 'gantt':
-      return parseGantt(input);
+      return parseGanttLegacy(input);
     default:
-      return parseFlowchart(input);
+      return parseFlowchartLegacy(input);
   }
 }
 

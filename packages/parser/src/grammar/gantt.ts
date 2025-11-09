@@ -1,4 +1,10 @@
-import type { GanttConfig, GanttSection, GanttTask, GanttTaskStatus } from '@typermaid/core';
+import type {
+  GanttConfig,
+  GanttSection,
+  GanttTask,
+  GanttTaskStatus,
+  TaskID,
+} from '@typermaid/core';
 import { createSectionID, createTaskID } from '@typermaid/core';
 import type { Token } from '../lexer/tokens.js';
 
@@ -134,7 +140,7 @@ export class GanttParser {
     // Debug: log parsing
     // console.log(`Task: ${taskName}, restOfLine: '${restOfLine}', parts: ${JSON.stringify(parts)}`);
 
-    let id;
+    let id: TaskID | undefined;
     let status: GanttTaskStatus | undefined;
     let startDate = '';
     let duration = '';
@@ -202,7 +208,7 @@ export class GanttParser {
 
     return {
       name: taskName.trim(),
-      id,
+      id: id ?? createTaskID(taskName.trim().replace(/\s+/g, '_').toLowerCase()),
       status,
       startDate,
       duration,

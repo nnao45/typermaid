@@ -33,7 +33,7 @@ export class ERDiagramBuilder {
     let entityId: EntityID;
     try {
       entityId = createEntityID(name);
-    } catch (error) {
+    } catch (_error) {
       // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,

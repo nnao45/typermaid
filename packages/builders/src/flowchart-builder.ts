@@ -11,11 +11,7 @@ import type {
   Subgraph,
   SubgraphID,
 } from '@typermaid/core';
-import {
-  createClassDefID,
-  createNodeID, 
-  createSubgraphID,
-} from '@typermaid/core';
+import { createClassDefID, createEdgeID, createNodeID, createSubgraphID } from '@typermaid/core';
 import { ValidationError, ValidationErrorCode } from './types.js';
 import { validateNotReservedWord } from './validators/reserved-words.js';
 
@@ -53,7 +49,7 @@ export class FlowchartDiagramBuilder {
     let nodeId: NodeID;
     try {
       nodeId = createNodeID(id);
-    } catch (error) {
+    } catch (_error) {
       // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,
@@ -116,7 +112,7 @@ export class FlowchartDiagramBuilder {
     }
 
     const edge: FlowchartEdge = {
-      id: `edge-${this.edgeCount++}`,
+      id: createEdgeID(`edge-${this.edgeCount++}`),
       from, // NodeID is compatible with the schema now
       to, // NodeID is compatible with the schema now
       type,
@@ -135,7 +131,7 @@ export class FlowchartDiagramBuilder {
     let classDefId: ClassDefID;
     try {
       classDefId = createClassDefID(name);
-    } catch (error) {
+    } catch (_error) {
       // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,
@@ -201,7 +197,7 @@ export class FlowchartDiagramBuilder {
     let subgraphId: SubgraphID;
     try {
       subgraphId = createSubgraphID(id);
-    } catch (error) {
+    } catch (_error) {
       // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,

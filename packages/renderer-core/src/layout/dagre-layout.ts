@@ -14,7 +14,9 @@ import { DEFAULT_LAYOUT_OPTIONS } from '../types/layout.js';
 /**
  * Extract string value from Content type
  */
-function contentToString(content: string | { type: string; raw: string } | undefined): string | undefined {
+function contentToString(
+  content: string | { type: string; raw: string } | undefined
+): string | undefined {
   if (!content) return undefined;
   if (typeof content === 'string') return content;
   return content.raw;

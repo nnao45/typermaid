@@ -584,8 +584,8 @@ export class StateParser {
     }
 
     return {
-      from: createStateID(from),
-      to: createStateID(to),
+      from: createStateID(from), // createStateID already handles '[*]' special case
+      to: createStateID(to), // createStateID already handles '[*]' special case
       label,
     };
   }

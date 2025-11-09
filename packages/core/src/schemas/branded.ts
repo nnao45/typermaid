@@ -73,12 +73,29 @@ export const SectionIDSchema = BaseIDSchema.brand<'SectionID'>();
 export type SectionID = z.infer<typeof SectionIDSchema>;
 
 /**
- * Helper functions for creating branded IDs with runtime validation
+ * Edge ID (Zod branded type with runtime validation)
+ */
+export const EdgeIDSchema = BaseIDSchema.brand<'EdgeID'>();
+export type EdgeID = z.infer<typeof EdgeIDSchema>;
+
+/**
+ * Message ID for sequence diagrams (Zod branded type with runtime validation)
+ */
+export const MessageIDSchema = BaseIDSchema.brand<'MessageID'>();
+export type MessageID = z.infer<typeof MessageIDSchema>;
+
+/**
+ * Factory functions for creating branded IDs with runtime validation
+ * (Backward compatibility with existing function names)
  */
 
 /**
  * Create and validate a NodeID
  */
+export function nodeId(id: string): NodeID {
+  return NodeIDSchema.parse(id);
+}
+
 export function createNodeID(id: string): NodeID {
   return NodeIDSchema.parse(id);
 }
@@ -86,6 +103,10 @@ export function createNodeID(id: string): NodeID {
 /**
  * Create and validate a ParticipantID
  */
+export function participantId(id: string): ParticipantID {
+  return ParticipantIDSchema.parse(id);
+}
+
 export function createParticipantID(id: string): ParticipantID {
   return ParticipantIDSchema.parse(id);
 }
@@ -93,13 +114,25 @@ export function createParticipantID(id: string): ParticipantID {
 /**
  * Create and validate a StateID
  */
-export function createStateID(id: string): StateID {
+export function stateId(id: string): StateID {
+  // Special case for start/end states and their internal representations
+  if (id === '[*]' || id === '[*]_start' || id === '[*]_end') {
+    return id as StateID;
+  }
   return StateIDSchema.parse(id);
+}
+
+export function createStateID(id: string): StateID {
+  return stateId(id);
 }
 
 /**
  * Create and validate an EntityID
  */
+export function entityId(id: string): EntityID {
+  return EntityIDSchema.parse(id);
+}
+
 export function createEntityID(id: string): EntityID {
   return EntityIDSchema.parse(id);
 }
@@ -107,6 +140,10 @@ export function createEntityID(id: string): EntityID {
 /**
  * Create and validate a ClassID
  */
+export function classId(id: string): ClassID {
+  return ClassIDSchema.parse(id);
+}
+
 export function createClassID(id: string): ClassID {
   return ClassIDSchema.parse(id);
 }
@@ -114,6 +151,10 @@ export function createClassID(id: string): ClassID {
 /**
  * Create and validate a TaskID
  */
+export function taskId(id: string): TaskID {
+  return TaskIDSchema.parse(id);
+}
+
 export function createTaskID(id: string): TaskID {
   return TaskIDSchema.parse(id);
 }
@@ -121,6 +162,10 @@ export function createTaskID(id: string): TaskID {
 /**
  * Create and validate a SubgraphID
  */
+export function subgraphId(id: string): SubgraphID {
+  return SubgraphIDSchema.parse(id);
+}
+
 export function createSubgraphID(id: string): SubgraphID {
   return SubgraphIDSchema.parse(id);
 }
@@ -128,6 +173,10 @@ export function createSubgraphID(id: string): SubgraphID {
 /**
  * Create and validate a ClassDefID
  */
+export function classDefId(id: string): ClassDefID {
+  return ClassDefIDSchema.parse(id);
+}
+
 export function createClassDefID(id: string): ClassDefID {
   return ClassDefIDSchema.parse(id);
 }
@@ -137,6 +186,28 @@ export function createClassDefID(id: string): ClassDefID {
  */
 export function createSectionID(id: string): SectionID {
   return SectionIDSchema.parse(id);
+}
+
+/**
+ * Create and validate an EdgeID
+ */
+export function edgeId(id: string): EdgeID {
+  return EdgeIDSchema.parse(id);
+}
+
+export function createEdgeID(id: string): EdgeID {
+  return EdgeIDSchema.parse(id);
+}
+
+/**
+ * Create and validate a MessageID
+ */
+export function messageId(id: string): MessageID {
+  return MessageIDSchema.parse(id);
+}
+
+export function createMessageID(id: string): MessageID {
+  return MessageIDSchema.parse(id);
 }
 
 /**

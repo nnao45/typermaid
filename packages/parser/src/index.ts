@@ -31,6 +31,13 @@ export type {
   StateNote,
   StateTransition as Transition,
 } from '@typermaid/core';
+// Enhanced AST exports (only flowchart for now)
+// export { EnhancedClassDiagramAST } from './ast/enhanced-class.js';
+// export { EnhancedERASTNode } from './ast/enhanced-er.js';
+export { EnhancedFlowchartDiagramAST } from './ast/enhanced-flowchart.js';
+// export { EnhancedGanttASTNode } from './ast/enhanced-gantt.js';
+// export { EnhancedSequenceDiagramAST } from './ast/enhanced-sequence.js';
+// export { EnhancedStateDiagramAST } from './ast/enhanced-state.js';
 // AST exports
 export type {
   ASTNode,
@@ -47,9 +54,18 @@ export type {
   StateDiagramAST,
   SubgraphAST,
 } from './ast/nodes.js';
+
 // Parser exports
 export { ParserError } from './error.js';
 export { FlowchartParser } from './grammar/flowchart.js';
 export { LexerError, Tokenizer } from './lexer/tokenizer.js';
 export type { Position, Token, TokenType } from './lexer/tokens.js';
-export { parse, parseFlowchart } from './parser.js';
+export {
+  parse,
+  parseClass,
+  parseER,
+  parseFlowchart,
+  parseGantt,
+  parseSequence,
+  parseState,
+} from './parser.js';

@@ -70,7 +70,7 @@ export class GanttDiagramBuilder {
     let sectionId: SectionID;
     try {
       sectionId = createSectionID(normalizedName);
-    } catch (error) {
+    } catch (_error) {
       // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,
@@ -139,7 +139,7 @@ export class GanttDiagramBuilder {
     let taskId: TaskID;
     try {
       taskId = createTaskID(id);
-    } catch (error) {
+    } catch (_error) {
       // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,
@@ -247,7 +247,7 @@ export class GanttDiagramBuilder {
     let taskId: TaskID;
     try {
       taskId = createTaskID(id);
-    } catch (error) {
+    } catch (_error) {
       // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,

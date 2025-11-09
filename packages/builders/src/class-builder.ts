@@ -33,7 +33,7 @@ export class ClassDiagramBuilder {
     let classId: ClassID;
     try {
       classId = createClassID(name);
-    } catch (error) {
+    } catch (_error) {
       // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,

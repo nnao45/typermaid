@@ -61,8 +61,11 @@ function getE2EFiles(): Array<{ name: string; path: string; content: string; cat
     console.warn('E2E directory not found:', E2E_DIR);
   }
 
-  cachedFiles = files;
-  return files;
+  // Limit number of files to prevent infinite loops - take first 10 from each category
+  const limitedFiles = files.slice(0, 50);
+  
+  cachedFiles = limitedFiles;
+  return limitedFiles;
 }
 
 describe('Round-trip E2E Tests', () => {

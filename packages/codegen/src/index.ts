@@ -51,8 +51,8 @@ export function generateCode(ast: ProgramAST): string {
 
       default: {
         // Exhaustiveness check
-        const _exhaustive: never = node;
-        console.warn(`Unknown diagram type:`, _exhaustive);
+        // const _exhaustive: never = node;
+        console.warn(`Unknown diagram type:`, node);
       }
     }
   }

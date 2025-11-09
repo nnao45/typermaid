@@ -33,7 +33,7 @@ export class SequenceDiagramBuilder {
     let participantId: ParticipantID;
     try {
       participantId = createParticipantID(id);
-    } catch (error) {
+    } catch (_error) {
       // Convert ZodError to ValidationError for consistent API
       throw new ValidationError(
         ValidationErrorCode.INVALID_ID_FORMAT,
@@ -160,13 +160,13 @@ export class SequenceDiagramBuilder {
     const note: Note = {
       type: 'note',
       position,
-      actors: actors,  // ParticipantID[] is compatible with the schema
+      actors: actors, // ParticipantID[] is compatible with the schema
       text,
     };
 
     this.statements.push(note);
 
-    return this;  // Return self for fluent API
+    return this; // Return self for fluent API
   }
 
   /**
@@ -209,22 +209,9 @@ export class SequenceDiagramBuilder {
       statements: this.statements,
     };
 
-    // Add participants, messages and notes for test compatibility
-    // Map messages to include type as arrowType for test compatibility
-    const messagesWithType = messages.map((m) => ({
-      ...m,
-      type: m.arrowType,
-    }));
-
-    // Map notes to include 'note' property for test compatibility
-    const notesWithNote = notes.map((n) => ({
-      ...n,
-      note: n.text,
-    }));
-
     diagram.participants = Array.from(this.participants.values());
-    diagram.messages = messagesWithType as unknown as Message[];
-    diagram.notes = notesWithNote as unknown as Note[];
+    diagram.messages = messages;
+    diagram.notes = notes;
 
     return diagram;
   }

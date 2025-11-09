@@ -231,11 +231,11 @@ export class Tokenizer {
   }
 
   private scanWhitespace(): void {
-    let whitespace = this.input[this.position - 1] ?? '';
+    // Skip whitespace characters - don't create tokens for them
     while (this.peek() === ' ' || this.peek() === '\t' || this.peek() === '\r') {
-      whitespace += this.advance();
+      this.advance();
     }
-    this.tokens.push(this.createToken('WHITESPACE', whitespace));
+    // No token creation - whitespace is ignored
   }
 
   private scanComment(): void {

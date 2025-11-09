@@ -3,12 +3,15 @@
     "target": "ES2022",
     "module": "ESNext",
     "lib": ["ES2022"],
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "rootDir": "./src",
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
-      "@typermaid/core": ["../core/src"]
+      "@typermaid/core": ["../core/dist"],
+      "@typermaid/builders": ["../builders/dist"],
+      "@typermaid/codegen": ["../codegen/dist"],
+      "@typermaid/ast-tools": ["../ast-tools/dist"]
     },
 
     "strict": true,
@@ -21,6 +24,7 @@
     "noPropertyAccessFromIndexSignature": true,
 
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
@@ -32,6 +36,14 @@
     "incremental": true
   },
   "include": ["src/**/*"],
-  "exclude": ["**/*.test.ts", "**/*.spec.ts"],
+  "exclude": [
+    "**/*.test.ts", 
+    "**/*.spec.ts",
+    "src/ast/enhanced-class.ts",
+    "src/ast/enhanced-er.ts", 
+    "src/ast/enhanced-gantt.ts",
+    "src/ast/enhanced-sequence.ts",
+    "src/ast/enhanced-state.ts"
+  ],
   "references": [{ "path": "../core" }]
 }
