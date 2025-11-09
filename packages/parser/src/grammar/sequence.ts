@@ -26,7 +26,18 @@ export class SequenceParser {
 
   parse(input: string): SequenceDiagram {
     const tokenizer = new SequenceTokenizer(input);
-    this.tokens = tokenizer.tokenize().filter((t) => t.type !== 'COMMENT');
+    const allTokens = tokenizer.tokenize();
+    console.log('[DEBUG parse] Total tokens before filter:', allTokens.length);
+    allTokens.forEach((t, i) => {
+      console.log(`  [${i}] ${t.type} "${t.value.replace(/\n/g, '\\n')}"`);
+    });
+    
+    this.tokens = allTokens.filter((t) => t.type !== 'COMMENT');
+    console.log('[DEBUG parse] Total tokens after filter:', this.tokens.length);
+    this.tokens.forEach((t, i) => {
+      console.log(`  [${i}] ${t.type} "${t.value.replace(/\n/g, '\\n')}"`);
+    });
+    
     this.current = 0;
 
     return this.parseSequenceDiagram();
@@ -38,8 +49,19 @@ export class SequenceParser {
 
     const statements: SequenceStatement[] = [];
     let autonumber = false;
+    let iterations = 0;
+    const maxIterations = 100; // Reduced for faster detection
 
     while (!this.isAtEnd() && this.peek().type !== 'EOF') {
+      iterations++;
+      if (iterations > maxIterations) {
+        throw new Error(
+          `Infinite loop detected in parseSequenceDiagram at position ${this.current}. ` +
+          `Current token: ${JSON.stringify(this.peek())}, ` +
+          `Statements parsed: ${statements.length}`
+        );
+      }
+      
       this.skipNewlines();
 
       if (this.isAtEnd() || this.peek().type === 'EOF') break;
@@ -82,12 +104,17 @@ export class SequenceParser {
       } else if (token.type === 'BREAK') {
         statements.push(this.parseBreak());
       } else if (token.type === 'IDENTIFIER') {
+        console.log('[DEBUG main loop] Calling parseMessage(), current:', this.current, 'token:', token.value);
         statements.push(this.parseMessage());
+        console.log('[DEBUG main loop] parseMessage() returned, current:', this.current);
       } else {
+        console.log('[DEBUG main loop] Unknown token, advancing:', token.type);
         this.advance();
       }
 
+      console.log('[DEBUG main loop] Before skipNewlines, current:', this.current);
       this.skipNewlines();
+      console.log('[DEBUG main loop] After skipNewlines, current:', this.current, 'iterations:', iterations);
     }
 
     return {
@@ -177,14 +204,19 @@ export class SequenceParser {
   }
 
   private parseMessage(): Message {
+    console.log('[DEBUG parseMessage] Start, current:', this.current, 'token:', this.peek().type);
+    
     const from = createParticipantID(this.consume('IDENTIFIER').value);
+    console.log('[DEBUG parseMessage] from:', from);
 
     if (this.match('PLUS')) {
       this.advance();
     }
 
+    console.log('[DEBUG parseMessage] Before arrow, current:', this.current, 'token:', this.peek().type);
     const messageTypeToken = this.advance();
     const messageType = this.mapMessageType(messageTypeToken.type);
+    console.log('[DEBUG parseMessage] Arrow type:', messageType);
 
     if (this.match('PLUS')) {
       this.advance();
@@ -192,14 +224,19 @@ export class SequenceParser {
       this.advance();
     }
 
+    console.log('[DEBUG parseMessage] Before to, current:', this.current, 'token:', this.peek().type);
     const to = createParticipantID(this.consume('IDENTIFIER').value);
+    console.log('[DEBUG parseMessage] to:', to);
 
     let text: string | undefined;
     if (this.match('COLON')) {
+      console.log('[DEBUG parseMessage] Has colon, reading text...');
       this.advance();
       text = this.readText();
+      console.log('[DEBUG parseMessage] Text read:', text);
     }
 
+    console.log('[DEBUG parseMessage] Complete, current:', this.current);
     return {
       type: 'message',
       from,
@@ -501,14 +538,35 @@ export class SequenceParser {
   }
 
   private skipUntilNewline(): void {
+    let iterations = 0;
+    const maxIterations = 1000;
+    
     while (!this.isAtEnd() && !this.match('NEWLINE') && !this.match('EOF')) {
+      iterations++;
+      if (iterations > maxIterations) {
+        throw new Error(
+          `Infinite loop detected in skipUntilNewline at position ${this.current}. ` +
+          `Current token: ${JSON.stringify(this.peek())}`
+        );
+      }
       this.advance();
     }
   }
 
   private readUntilNewline(): string {
     let text = '';
+    let iterations = 0;
+    const maxIterations = 1000;
+    
     while (!this.isAtEnd() && this.peek().type !== 'NEWLINE' && this.peek().type !== 'EOF') {
+      iterations++;
+      if (iterations > maxIterations) {
+        throw new Error(
+          `Infinite loop detected in readUntilNewline at position ${this.current}. ` +
+          `Current token: ${JSON.stringify(this.peek())}`
+        );
+      }
+      
       const token = this.advance();
       if (text.length > 0 && token.type !== 'COLON') {
         text += ' ';
@@ -519,14 +577,34 @@ export class SequenceParser {
   }
 
   private skipNewlines(): void {
+    let iterations = 0;
+    const maxIterations = 1000;
+    
+    console.log('[DEBUG skipNewlines] Start, current:', this.current, 'token:', this.peek().type, 'value:', JSON.stringify(this.peek().value));
+    
     while (this.match('NEWLINE')) {
+      iterations++;
+      console.log('[DEBUG skipNewlines] Iteration', iterations, 'current:', this.current, 'advancing...');
+      
+      if (iterations > maxIterations) {
+        throw new Error(
+          `Infinite loop detected in skipNewlines at position ${this.current}. ` +
+          `Current token: ${JSON.stringify(this.peek())}`
+        );
+      }
       this.advance();
+      console.log('[DEBUG skipNewlines] After advance, current:', this.current, 'token:', this.peek().type);
     }
+    
+    console.log('[DEBUG skipNewlines] Done, current:', this.current, 'iterations:', iterations);
   }
 
   private peek(): Token {
     const token = this.tokens[this.current];
+    
     if (!token) {
+      console.log('[DEBUG peek] ERROR: No token at current:', this.current, 'tokens.length:', this.tokens.length);
+      console.log('[DEBUG peek] Returning:', this.tokens[this.tokens.length - 1] ? 'last token' : 'fallback EOF');
       return (
         this.tokens[this.tokens.length - 1] || {
           type: 'EOF',
@@ -543,6 +621,13 @@ export class SequenceParser {
     const token = this.tokens[this.current];
     if (!this.isAtEnd()) {
       this.current++;
+    } else {
+      // Safety: If we're at end but advance() is called, something is wrong
+      console.warn('[WARNING] advance() called at end of tokens!', {
+        current: this.current,
+        tokensLength: this.tokens.length,
+        lastToken: this.tokens[this.tokens.length - 1]
+      });
     }
     if (!token) {
       return (

@@ -18,8 +18,28 @@ export class SequenceTokenizer {
     this.line = 1;
     this.column = 1;
 
+    let iterations = 0;
+    const maxIterations = 100000;
+
     while (this.pos < this.input.length) {
+      iterations++;
+      if (iterations > maxIterations) {
+        throw new Error(
+          `Tokenizer infinite loop detected at position ${this.pos}, ` +
+          `line ${this.line}, column ${this.column}. ` +
+          `Current char: "${this.current()}", input length: ${this.input.length}`
+        );
+      }
+      
+      const prevPos = this.pos;
       this.scanToken();
+      
+      if (this.pos === prevPos) {
+        throw new Error(
+          `Tokenizer stuck at position ${this.pos}! ` +
+          `Character: "${this.current()}", line: ${this.line}, column: ${this.column}`
+        );
+      }
     }
 
     this.addToken('EOF', '');

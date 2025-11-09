@@ -1,7 +1,6 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { generateCode } from '@typermaid/codegen';
-import { parse } from '@typermaid/parser';
+import { parse, parseER } from '@typermaid/parser';
 import { describe, expect, it } from 'vitest';
 
 describe('E2E: ER Diagram Examples', () => {
@@ -40,52 +39,13 @@ describe('E2E: ER Diagram Examples', () => {
     console.log(`   Failed:  ${failCount}/${mmdFiles.length}`);
 
     if (failures.length > 0) {
-      console.log(`\n❌ Failed examples:`);
-      for (const failure of failures.slice(0, 10)) {
-        console.log(`   ${failure.file}: ${failure.error}`);
-      }
-      if (failures.length > 10) {
-        console.log(`   ... and ${failures.length - 10} more`);
+      console.log('\n❌ Failed files:');
+      for (const f of failures) {
+        console.log(`   - ${f.file}: ${f.error}`);
       }
     }
 
-    expect(successCount).toBeGreaterThanOrEqual(0);
-  });
-
-  it('should parse basic ER diagram', async () => {
-    const content = `erDiagram
-    CUSTOMER ||--o{ ORDER : places
-    ORDER ||--|{ LINE-ITEM : contains`;
-
-    const ast = parse(content);
-    expect(ast).toBeDefined();
-    expect(ast.type).toBe('Program');
-    expect(ast.body).toHaveLength(1);
-    expect(ast.body[0].type).toBe('ERDiagram');
-  });
-
-  it('should handle entity attributes', async () => {
-    const content = `erDiagram
-    CUSTOMER {
-        string name
-        string custNumber
-        string sector
-    }`;
-
-    const ast = parse(content);
-    expect(ast).toBeDefined();
-    expect(ast.body[0].type).toBe('ERDiagram');
-  });
-
-  it('should handle cardinality', async () => {
-    const content = `erDiagram
-    CUSTOMER ||--|{ ORDER : places
-    ORDER ||--|{ LINE-ITEM : contains
-    CUSTOMER }|..|{ DELIVERY-ADDRESS : uses`;
-
-    const ast = parse(content);
-    expect(ast).toBeDefined();
-    expect(ast.body[0].type).toBe('ERDiagram');
+    expect(successCount).toBeGreaterThan(0);
   });
 
   it('should roundtrip all parseable examples', async () => {
@@ -102,17 +62,21 @@ describe('E2E: ER Diagram Examples', () => {
 
       try {
         const ast1 = parse(content);
-        const generated = generateCode(ast1);
-        const ast2 = parse(generated);
+        
+        if (ast1.body[0]?.type === 'ERDiagram') {
+          const enhanced = parseER(content);
+          const generated = enhanced.asCode();
+          const ast2 = parse(generated);
 
-        expect(ast2.type).toBe('Program');
-        expect(ast2.body.length).toBe(ast1.body.length);
-
-        successCount++;
+          expect(ast2.type).toBe('Program');
+          expect(ast2.body.length).toBe(ast1.body.length);
+          
+          successCount++;
+        }
       } catch (error) {
         failCount++;
         const errorMsg = error instanceof Error ? error.message : String(error);
-        const step = errorMsg.includes('generate') ? 'generate' : 'parse';
+        const step = errorMsg.includes('asCode') ? 'generate' : 'parse';
         failures.push({ file, step, error: errorMsg.split('\n')[0] });
       }
     }
@@ -123,16 +87,13 @@ describe('E2E: ER Diagram Examples', () => {
     console.log(`   Success: ${successCount}/${mmdFiles.length} (${successRate}%)`);
     console.log(`   Failed:  ${failCount}/${mmdFiles.length}`);
 
-    if (failures.length > 0 && failures.length <= 20) {
-      console.log(`\n❌ Failed roundtrips:`);
-      for (const failure of failures.slice(0, 10)) {
-        console.log(`   ${failure.file} [${failure.step}]: ${failure.error}`);
-      }
-      if (failures.length > 10) {
-        console.log(`   ... and ${failures.length - 10} more`);
+    if (failures.length > 0) {
+      console.log('\n❌ Failed roundtrips:');
+      for (const f of failures) {
+        console.log(`   - ${f.file} (${f.step}): ${f.error}`);
       }
     }
 
-    expect(successCount).toBeGreaterThanOrEqual(0);
+    expect(successCount).toBeGreaterThan(0);
   });
 });

@@ -1,7 +1,6 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { generateCode } from '@typermaid/codegen';
-import { parse } from '@typermaid/parser';
+import { parse, parseSequence } from '@typermaid/parser';
 import { describe, expect, it } from 'vitest';
 
 describe('E2E: Sequence Diagram Examples', () => {
@@ -40,17 +39,13 @@ describe('E2E: Sequence Diagram Examples', () => {
     console.log(`   Failed:  ${failCount}/${mmdFiles.length}`);
 
     if (failures.length > 0) {
-      console.log(`\n❌ Failed examples:`);
-      for (const failure of failures.slice(0, 10)) {
-        console.log(`   ${failure.file}: ${failure.error}`);
-      }
-      if (failures.length > 10) {
-        console.log(`   ... and ${failures.length - 10} more`);
+      console.log('\n❌ Failed files:');
+      for (const f of failures) {
+        console.log(`   - ${f.file}: ${f.error}`);
       }
     }
 
-    // Track progress - start with low expectations and improve
-    expect(successCount).toBeGreaterThanOrEqual(0);
+    expect(successCount).toBeGreaterThan(0);
   });
 
   it('should parse basic sequence diagram', async () => {
@@ -99,17 +94,21 @@ describe('E2E: Sequence Diagram Examples', () => {
 
       try {
         const ast1 = parse(content);
-        const generated = generateCode(ast1);
-        const ast2 = parse(generated);
+        
+        if (ast1.body[0]?.type === 'SequenceDiagram') {
+          const enhanced = parseSequence(content);
+          const generated = enhanced.asCode();
+          const ast2 = parse(generated);
 
-        expect(ast2.type).toBe('Program');
-        expect(ast2.body.length).toBe(ast1.body.length);
-
-        successCount++;
+          expect(ast2.type).toBe('Program');
+          expect(ast2.body.length).toBe(ast1.body.length);
+          
+          successCount++;
+        }
       } catch (error) {
         failCount++;
         const errorMsg = error instanceof Error ? error.message : String(error);
-        const step = errorMsg.includes('generate') ? 'generate' : 'parse';
+        const step = errorMsg.includes('asCode') ? 'generate' : 'parse';
         failures.push({ file, step, error: errorMsg.split('\n')[0] });
       }
     }
@@ -120,16 +119,13 @@ describe('E2E: Sequence Diagram Examples', () => {
     console.log(`   Success: ${successCount}/${mmdFiles.length} (${successRate}%)`);
     console.log(`   Failed:  ${failCount}/${mmdFiles.length}`);
 
-    if (failures.length > 0 && failures.length <= 20) {
-      console.log(`\n❌ Failed roundtrips:`);
-      for (const failure of failures.slice(0, 10)) {
-        console.log(`   ${failure.file} [${failure.step}]: ${failure.error}`);
-      }
-      if (failures.length > 10) {
-        console.log(`   ... and ${failures.length - 10} more`);
+    if (failures.length > 0) {
+      console.log('\n❌ Failed roundtrips:');
+      for (const f of failures) {
+        console.log(`   - ${f.file} (${f.step}): ${f.error}`);
       }
     }
 
-    expect(successCount).toBeGreaterThanOrEqual(0);
+    expect(successCount).toBeGreaterThan(0);
   });
 });
